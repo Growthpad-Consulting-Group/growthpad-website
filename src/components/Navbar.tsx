@@ -22,11 +22,10 @@ export default function Navbar() {
 
   return (
     <header
-      data-nav-surface
-      className={`sticky top-0 z-50 w-full border-b border-transparent transition-[backdrop-filter,box-shadow] duration-300 ${
+      className={`theme-surface sticky top-0 z-50 w-full border-b transition-[backdrop-filter,box-shadow] duration-300 ${
         isScrolled
           ? "shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-xl"
-          : "shadow-none backdrop-blur-none"
+          : "border-transparent! bg-transparent! shadow-none backdrop-blur-none"
       }`}
     >
       <nav className="container-fluid flex h-24 items-center justify-between">
@@ -46,10 +45,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <div
-          data-nav-text
-          className="text-secondary hidden items-center gap-8 md:flex"
-        >
+        <div className="theme-fg hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
             const isActive = link.href === pathname;
 

@@ -7,10 +7,7 @@ export default function Hero() {
   return (
     <section className="relative flex h-[calc(100svh-6rem)] w-full flex-col overflow-hidden">
       <div className="relative flex-1">
-        <div
-          data-hero-text
-          className="container-fluid text-secondary relative z-10 flex h-full flex-col items-start justify-center gap-6"
-        >
+        <div className="container-fluid theme-fg relative z-10 flex h-full flex-col items-start justify-center gap-6">
           <p className="text-base opacity-60">
             A Cross-Africa Communication &amp; Technology Firm
           </p>
@@ -40,10 +37,7 @@ export default function Hero() {
             <span className="bg-primary group-hover:bg-primary/90 inline-flex h-11 items-center rounded-full px-7 text-base font-semibold text-white transition-colors">
               See Services
             </span>
-            <span
-              data-cta-circle
-              className="bg-secondary group-hover:bg-secondary/90 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors"
-            >
+            <span className="theme-invert-bg theme-invert-fg inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-opacity group-hover:opacity-90">
               <Arrow className="h-4 w-4" />
             </span>
           </Link>

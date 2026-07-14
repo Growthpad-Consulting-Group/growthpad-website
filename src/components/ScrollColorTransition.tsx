@@ -6,8 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DARK = "#231812";
 const LIGHT = "#ffffff";
-const DURATION = 0.6;
-const EASE = "power2.out";
+const DURATION = 1;
+const EASE = "sine.inOut";
 
 export default function ScrollColorTransition() {
   useEffect(() => {
@@ -20,36 +20,26 @@ export default function ScrollColorTransition() {
       const brandsSection = document.querySelector<HTMLElement>(
         "[data-brands-section]",
       );
-      const heroText = document.querySelector<HTMLElement>(
-        "[data-hero-text]",
-      );
-      const ctaCircle = document.querySelector<HTMLElement>(
-        "[data-cta-circle]",
-      );
-      const navSurface = document.querySelector<HTMLElement>(
-        "[data-nav-surface]",
-      );
-      const navText = document.querySelector<HTMLElement>("[data-nav-text]");
       const navLogoLight = document.querySelector<HTMLElement>(
         "[data-nav-logo-light]",
       );
+
+      // Client logo images (dark PNGs/SVGs) can't be recolored via a CSS
+      // variable, so they get a filter-invert exception.
       const logos = gsap.utils.toArray<HTMLElement>(".home-logo");
 
       const tweenAll = (dark: boolean) => {
         const opts = { duration: DURATION, ease: EASE, overwrite: "auto" as const };
 
-        gsap.to(document.body, { backgroundColor: dark ? DARK : LIGHT, ...opts });
+        // Everything using .theme-bg / .theme-fg / .theme-invert-* /
+        // .theme-surface updates automatically from these two variables —
+        // no per-element registration needed here.
+        gsap.to(document.documentElement, {
+          "--theme-bg": dark ? DARK : LIGHT,
+          "--theme-fg": dark ? LIGHT : DARK,
+          ...opts,
+        });
 
-        if (heroText) {
-          gsap.to(heroText, { color: dark ? "#ffffff" : "#231812", ...opts });
-        }
-        if (ctaCircle) {
-          gsap.to(ctaCircle, {
-            backgroundColor: dark ? "#ffffff" : "#231812",
-            color: dark ? "#231812" : "#ffffff",
-            ...opts,
-          });
-        }
         if (logos.length) {
           gsap.to(logos, {
             filter: dark
@@ -57,20 +47,6 @@ export default function ScrollColorTransition() {
               : "brightness(1) invert(0)",
             ...opts,
           });
-        }
-        if (navSurface) {
-          gsap.to(navSurface, {
-            backgroundColor: dark
-              ? "rgba(35,24,18,0.6)"
-              : "rgba(255,255,255,0.6)",
-            borderBottomColor: dark
-              ? "rgba(255,255,255,0.1)"
-              : "rgba(255,255,255,0.4)",
-            ...opts,
-          });
-        }
-        if (navText) {
-          gsap.to(navText, { color: dark ? "#ffffff" : "#231812", ...opts });
         }
         if (navLogoLight) {
           gsap.to(navLogoLight, { opacity: dark ? 1 : 0, ...opts });

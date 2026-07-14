@@ -5,6 +5,13 @@
   --foreground: #231812;
   --primary: #f05d23;
   --secondary: #231812;
+
+  /* Scroll-driven theme: animated by ScrollColorTransition as the page
+     moves between light and dark sections. Any element can opt in via
+     .theme-bg / .theme-fg / .theme-invert-bg / .theme-invert-fg / .theme-surface
+     without ScrollColorTransition needing to know it exists. */
+  --theme-bg: #ffffff;
+  --theme-fg: #231812;
 }
 
 @theme inline {
@@ -17,9 +24,30 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--theme-bg);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.theme-bg {
+  background-color: var(--theme-bg);
+}
+
+.theme-fg {
+  color: var(--theme-fg);
+}
+
+.theme-invert-bg {
+  background-color: var(--theme-fg);
+}
+
+.theme-invert-fg {
+  color: var(--theme-bg);
+}
+
+.theme-surface {
+  background-color: color-mix(in srgb, var(--theme-bg) 60%, transparent);
+  border-color: color-mix(in srgb, var(--theme-fg) 12%, transparent);
 }
 
 .container-fluid {

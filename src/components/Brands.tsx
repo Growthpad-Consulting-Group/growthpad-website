@@ -40,20 +40,23 @@ export default function Brands() {
   }, []);
 
   return (
-    <section data-brands-section className="bg-background relative w-full">
+    <section data-brands-section className=" relative w-full">
       <div
         ref={containerRef}
-        className="relative h-screen w-full overflow-hidden"
+        className="relative min-h-[70vh] w-full overflow-hidden"
       >
         <div className="container-fluid flex h-full flex-col justify-center gap-10 py-16">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <h2 className="font-display text-secondary max-w-xl text-3xl leading-tight sm:text-4xl lg:text-5xl">
+          <div
+            data-brands-text
+            className="text-secondary flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <h2 className="font-display max-w-xl text-3xl leading-tight sm:text-4xl lg:text-5xl">
               <span className="block font-light">Our Brands,</span>
               <span className="text-primary block font-bold">
                 Your Growth Partners
               </span>
             </h2>
-            <p className="text-secondary/70 max-w-sm text-lg leading-8">
+            <p className="max-w-sm text-lg leading-8 opacity-70">
               At Growthpad Consulting Group, our specialized brands provide
               tailored solutions in communication, market intelligence,
               compliance, and more—empowering businesses and organizations
