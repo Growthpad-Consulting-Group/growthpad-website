@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 768 582" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-2791,0)">
+        <g id="Influence-Now" serif:id="Influence Now" transform="matrix(0.309167,0,0,0.165789,2791.79,0)">
+            <rect x="0" y="0" width="2480.32" height="3507.87" style="fill:none;"/>
+            <g transform="matrix(10.9263,0,0,20.3756,320.78,305.016)">
+                <g transform="matrix(2.66667,0,0,2.66667,0,-68.8957)">
+                    <path d="M51.912,39.001C51.912,46.267 46.013,52.166 38.747,52.166C36.791,52.166 34.86,51.73 33.094,50.89C30.982,52.464 28.001,52.605 25.388,52.319C26.612,51.026 28.673,49.024 27.545,45.917C26.262,43.838 25.582,41.444 25.582,39.001C25.582,31.735 31.481,25.836 38.747,25.836C46.013,25.836 51.912,31.735 51.912,39.001ZM38.844,35.65L40.149,32.292L37.58,32.292L36.276,35.65L33.51,35.65L33.068,37.922L35.4,37.922L34.453,40.352L32.596,40.352L32.154,42.624L33.577,42.624L32.292,45.982L34.86,45.982L36.145,42.624L38.437,42.624L37.152,45.982L39.72,45.982L41.005,42.624L43.79,42.624L44.232,40.352L41.881,40.352L42.827,37.922L44.704,37.922L45.146,35.65L43.704,35.65L45.008,32.292L42.44,32.292L41.135,35.65L38.844,35.65ZM37.021,40.352L37.968,37.922L40.259,37.922L39.313,40.352L37.021,40.352Z" style="fill:rgb(240,93,35);"/>
+                </g>
+                <g transform="matrix(2.66667,0,0,2.66667,0,0)">
+                    <g transform="matrix(13.1039,0,0,13.1039,10.778,36.7703)">
+                    </g>
+                    <g transform="matrix(13.1039,0,0,13.1039,16.2914,36.7703)">
+                    </g>
+                    <g transform="matrix(13.1039,0,0,13.1039,57.3721,36.7703)">
+                    </g>
+                    <text x="-0.721px" y="36.77px" style="font-family:'Ubuntu-Bold', 'Ubuntu', sans-serif;font-weight:700;font-size:13.104px;fill:rgb(35,24,18);">inﬂuenc<tspan x="49.719px " y="36.77px ">e</tspan></text>
+                </g>
+                <g transform="matrix(2.66667,0,0,2.66667,0,0)">
+                    <g transform="matrix(17.3092,0,0,17.3092,49.2635,50.4193)">
+                    </g>
+                    <text x="6.266px" y="50.419px" style="font-family:'Ubuntu-Bold', 'Ubuntu', sans-serif;font-weight:700;font-size:17.309px;fill:rgb(35,24,18);">NO<tspan x="32.854px " y="50.419px ">W</tspan></text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
