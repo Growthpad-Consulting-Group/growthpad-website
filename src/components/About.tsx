@@ -3,7 +3,10 @@ import ArrowGroup from "@/components/ArrowGroup";
 
 export default function About() {
   return (
-    <section className="bg-secondary relative w-full py-20 lg:py-28">
+    <section
+      data-about-section
+      className="relative flex w-full flex-col justify-center overflow-hidden py-16 lg:h-[calc(100svh-6rem)] lg:py-0"
+    >
       <ArrowGroup
         variant="onDark"
         className="absolute top-8 right-6 lg:top-10 lg:right-10"
