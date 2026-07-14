@@ -144,7 +144,7 @@ function LogoWrap({ file, phase }: { file: string; phase: SlotPhase }) {
   }, [phase, file]);
 
   return (
-    <div className="logo-wrap flex h-full w-full items-center justify-center overflow-clip px-3 sm:px-5">
+    <div className="logo-wrap flex h-full w-full items-center justify-center overflow-clip">
       <div
         ref={innerRef}
         className="flex h-full w-full items-center justify-center will-change-[transform,opacity]"

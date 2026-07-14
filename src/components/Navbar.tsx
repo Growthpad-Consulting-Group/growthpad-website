@@ -1,14 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
-
-const links = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-];
+import { navLinks } from "@/data/nav";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <header className="w-full">
       <nav className="container-fluid flex h-24 items-center justify-between">
@@ -22,16 +22,24 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="hidden items-center gap-10 md:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-secondary/80 hover:text-secondary transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => {
+            const isActive = link.href === pathname;
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={
+                  isActive
+                    ? "bg-primary hover:bg-primary/90 inline-flex h-10 items-center rounded-full px-5 text-md font-semibold text-white transition-colors"
+                    : "text-secondary/80 hover:text-white hover:bg-primary -mx-5 inline-flex h-10 items-center rounded-full px-5 text-md font-medium transition-colors"
+                }
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         <button

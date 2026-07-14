@@ -12,7 +12,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  --font-sans: var(--font-questrial);
+  --font-sans: var(--font-figtree);
   --font-display: var(--font-clover-display);
 }
 
@@ -46,4 +46,17 @@ body {
 
 .hero-marquee {
   width: 100%;
+}
+
+.notch-image {
+  clip-path: polygon(
+    0% 0%,
+    82% 0%,
+    82% 18%,
+    100% 18%,
+    100% 100%,
+    18% 100%,
+    18% 82%,
+    0% 82%
+  );
 }

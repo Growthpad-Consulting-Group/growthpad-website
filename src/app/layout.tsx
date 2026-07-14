@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Questrial } from "next/font/google";
+import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
-const questrial = Questrial({
-  variable: "--font-questrial",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
-  weight: "400",
 });
 
 const cloverDisplay = localFont({
@@ -36,9 +36,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${questrial.variable} ${cloverDisplay.variable} h-full antialiased`}
+      className={`${figtree.variable} ${cloverDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
