@@ -4,6 +4,11 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+const DARK = "#231812";
+const LIGHT = "#ffffff";
+const DURATION = 0.6;
+const EASE = "power2.out";
+
 export default function ScrollColorTransition() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -11,6 +16,9 @@ export default function ScrollColorTransition() {
     const ctx = gsap.context(() => {
       const about = document.querySelector<HTMLElement>(
         "[data-about-section]",
+      );
+      const brandsSection = document.querySelector<HTMLElement>(
+        "[data-brands-section]",
       );
       const heroText = document.querySelector<HTMLElement>(
         "[data-hero-text]",
@@ -27,83 +35,67 @@ export default function ScrollColorTransition() {
       );
       const logos = gsap.utils.toArray<HTMLElement>(".home-logo");
 
-      if (!about) return;
+      const tweenAll = (dark: boolean) => {
+        const opts = { duration: DURATION, ease: EASE, overwrite: "auto" as const };
 
-      const timeline = gsap.timeline({
-        scrollTrigger: {
+        gsap.to(document.body, { backgroundColor: dark ? DARK : LIGHT, ...opts });
+
+        if (heroText) {
+          gsap.to(heroText, { color: dark ? "#ffffff" : "#231812", ...opts });
+        }
+        if (ctaCircle) {
+          gsap.to(ctaCircle, {
+            backgroundColor: dark ? "#ffffff" : "#231812",
+            color: dark ? "#231812" : "#ffffff",
+            ...opts,
+          });
+        }
+        if (logos.length) {
+          gsap.to(logos, {
+            filter: dark
+              ? "brightness(0) invert(1)"
+              : "brightness(1) invert(0)",
+            ...opts,
+          });
+        }
+        if (navSurface) {
+          gsap.to(navSurface, {
+            backgroundColor: dark
+              ? "rgba(35,24,18,0.6)"
+              : "rgba(255,255,255,0.6)",
+            borderBottomColor: dark
+              ? "rgba(255,255,255,0.1)"
+              : "rgba(255,255,255,0.4)",
+            ...opts,
+          });
+        }
+        if (navText) {
+          gsap.to(navText, { color: dark ? "#ffffff" : "#231812", ...opts });
+        }
+        if (navLogoLight) {
+          gsap.to(navLogoLight, { opacity: dark ? 1 : 0, ...opts });
+        }
+      };
+
+      const toDark = () => tweenAll(true);
+      const toLight = () => tweenAll(false);
+
+      if (about) {
+        ScrollTrigger.create({
           trigger: about,
-          start: "top bottom",
-          end: "top 60%",
-          scrub: true,
-        },
-      });
-
-      timeline.fromTo(
-        document.body,
-        { backgroundColor: "#ffffff" },
-        { backgroundColor: "#231812", ease: "none" },
-        0,
-      );
-
-      if (heroText) {
-        timeline.fromTo(
-          heroText,
-          { color: "#231812" },
-          { color: "#ffffff", ease: "none" },
-          0,
-        );
+          start: "top center",
+          onEnter: toDark,
+          onLeaveBack: toLight,
+        });
       }
 
-      if (ctaCircle) {
-        timeline.fromTo(
-          ctaCircle,
-          { backgroundColor: "#231812", color: "#ffffff" },
-          { backgroundColor: "#ffffff", color: "#231812", ease: "none" },
-          0,
-        );
-      }
-
-      if (logos.length) {
-        timeline.fromTo(
-          logos,
-          { filter: "brightness(1) invert(0)" },
-          { filter: "brightness(0) invert(1)", ease: "none" },
-          0,
-        );
-      }
-
-      if (navSurface) {
-        timeline.fromTo(
-          navSurface,
-          {
-            backgroundColor: "rgba(255,255,255,0.6)",
-            borderBottomColor: "rgba(255,255,255,0.4)",
-          },
-          {
-            backgroundColor: "rgba(35,24,18,0.6)",
-            borderBottomColor: "rgba(255,255,255,0.1)",
-            ease: "none",
-          },
-          0,
-        );
-      }
-
-      if (navText) {
-        timeline.fromTo(
-          navText,
-          { color: "#231812" },
-          { color: "#ffffff", ease: "none" },
-          0,
-        );
-      }
-
-      if (navLogoLight) {
-        timeline.fromTo(
-          navLogoLight,
-          { opacity: 0 },
-          { opacity: 1, ease: "none" },
-          0,
-        );
+      if (brandsSection) {
+        ScrollTrigger.create({
+          trigger: brandsSection,
+          start: "top center",
+          onEnter: toLight,
+          onLeaveBack: toDark,
+        });
       }
     });
 
