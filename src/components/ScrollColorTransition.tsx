@@ -8,14 +8,10 @@ const LIGHT = "#ffffff";
 const DURATION = 0.7;
 const EASE = "sine.inOut";
 
-// The crossing line sits at (1 + LOOKAHEAD_VH) viewport-heights from the
-// top of the viewport. 0 = crossing at the very bottom of the screen.
-// -0.5 = crossing at the vertical middle (matches the original "top
-// center" GSAP trigger). Positive values look further ahead, firing while
-// the next section is still off-screen — but that only works for
-// boundaries with enough scroll room before them; a section starting
-// close to one viewport height in (like About, right under a short Hero)
-// would already be "crossed" at page load with any positive value here.
+// Crossing line = (1 + LOOKAHEAD_VH) viewport-heights from the top.
+// -0.5 = vertical middle. Keep this ≤ 0: a positive (look-ahead) value
+// breaks the first boundary if that section starts less than one
+// viewport height down (e.g. right under a short Hero).
 const LOOKAHEAD_VH = -0.5;
 
 export default function ScrollColorTransition() {
@@ -66,16 +62,11 @@ export default function ScrollColorTransition() {
     const rootBottom = () =>
       window.innerHeight + window.innerHeight * LOOKAHEAD_VH;
 
-    // Recompute the correct theme from scratch — the last (lowest) section
-    // whose top has crossed the line — rather than reacting incrementally
-    // to each individual crossing event. Adjacent sections' edges can both
-    // cross the same observer line near their shared boundary (e.g. one
-    // section's bottom and the next section's top can occupy overlapping
-    // screen space), so incrementally flipping theme/prevTheme per crossing
-    // can end up reflecting whichever edge happened to fire last rather
-    // than the section that's actually in view. Recomputing fresh every
-    // time is immune to that regardless of which section's edge triggered
-    // the callback.
+    // Recompute from scratch each time (last section whose top has
+    // crossed the line) rather than reacting incrementally per crossing
+    // event — adjacent sections' edges can cross the same line near their
+    // shared boundary, so incremental flips can reflect whichever edge
+    // fired last instead of what's actually in view.
     const applyCurrentTheme = (instant = false) => {
       const bottom = rootBottom();
       let theme = "light";
@@ -91,13 +82,9 @@ export default function ScrollColorTransition() {
     // where we actually are on load/hydration, before the observer engages.
     applyCurrentTheme(true);
 
-    // IntersectionObserver, not GSAP ScrollTrigger, deliberately: it reads
-    // each section's live position on every scroll frame straight from the
-    // browser's own layout engine, so it can't drift out of sync the way
-    // ScrollTrigger's cached start/end values can when something elsewhere
-    // on the page uses pin:true (GSAP's cumulative pin-offset math is
-    // shared globally across every trigger, so an unrelated pinned section
-    // can throw this off by 1000+px — confirmed by direct measurement).
+    // IntersectionObserver, not GSAP ScrollTrigger: it reads live layout
+    // directly, so it can't drift out of sync with a pin:true elsewhere
+    // on the page corrupting GSAP's shared scroll-position cache.
     const observer = new IntersectionObserver(() => applyCurrentTheme(), {
       rootMargin: `0px 0px ${LOOKAHEAD_VH * 100}% 0px`,
       threshold: 0,

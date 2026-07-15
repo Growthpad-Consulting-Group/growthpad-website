@@ -7,13 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ArrowGroup from "@/components/ArrowGroup";
 import { howWeDoIt } from "@/data/howWeDoIt";
 
-// Adapted from the CodyHouse "stacking cards" pattern: a CSS Grid with
-// uniform row height + a LARGE gap between rows is what actually gives
-// earlier cards room to stay visible, peeking above the newer ones as
-// they land — not the row height itself. Each card is `position: sticky;
-// top: 0` with an increasing `padding-top` per index (the fan stagger),
-// so successive cards rest at progressively lower on-screen positions
-// instead of all piling up at the exact same spot.
 const CARD_TOP_OFFSET_PX = 20;
 const STICK_TOP_PX = 96;
 
@@ -71,13 +64,8 @@ export default function HowWeDoIt() {
               start: `top ${STICK_TOP_PX}px`,
               end: "bottom bottom",
               scrub: true,
-              // Derive the number from this exact same progress value
-              // (0–1 across the whole grid) instead of a separate
-              // per-card ScrollTrigger with its own "top X%" heuristic.
-              // That second approach needed re-tuning any time the gap
-              // or card height changed, and could desync from what's
-              // actually on screen; this can't, since it's the same
-              // single measurement already driving the fill line.
+              // Same progress value driving the fill line, so the number
+              // can't drift out of sync with it.
               onUpdate: (self) => {
                 const index = Math.min(
                   wrappers.length - 1,
@@ -95,9 +83,6 @@ export default function HowWeDoIt() {
           if (index === wrappers.length - 1) return;
 
           const nextWrapper = wrappers[index + 1];
-          // A subtle per-card recede as the next one lands on top — cards
-          // stay visible in the cascade (this isn't a full swap), just a
-          // gentle depth cue so the newest card clearly reads as "on top."
           const toScale = 1 - (wrappers.length - 1 - index) * 0.03;
           const toBrightness = 1 - (wrappers.length - 1 - index) * 0.08;
 
