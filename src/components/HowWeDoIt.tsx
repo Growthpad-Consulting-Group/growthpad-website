@@ -7,55 +7,50 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ArrowGroup from "@/components/ArrowGroup";
 import { howWeDoIt } from "@/data/howWeDoIt";
 
+// Adapted from the CodyHouse "stacking cards" pattern: a CSS Grid with
+// uniform row height + a LARGE gap between rows is what actually gives
+// earlier cards room to stay visible, peeking above the newer ones as
+// they land — not the row height itself. Each card is `position: sticky;
+// top: 0` with an increasing `padding-top` per index (the fan stagger),
+// so successive cards rest at progressively lower on-screen positions
+// instead of all piling up at the exact same spot.
+const CARD_TOP_OFFSET_PX = 28;
 const STICK_TOP_PX = 96;
-// Extra scroll distance reserved after each card besides its own height —
-// this is what gives CSS `position: sticky` room to actually hold the card
-// in place while the next one scrolls up over it. Deliberately CSS sticky
-// rather than GSAP's pin:true here: stacking several pin:true/
-// pinSpacing:false triggers previously corrupted GSAP's cumulative
-// pin-offset math for every OTHER ScrollTrigger on the page (confirmed —
-// it threw the unrelated Specialties/HowWeDoIt theme boundary off by over
-// 1000px, and the drift got worse, not better, while actually scrolling
-// through the pins live). Sticky has no such global side effect since it
-// never touches GSAP's pin bookkeeping.
-const SLACK_PX = 260;
 
 export default function HowWeDoIt() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const progressLineRef = useRef<HTMLDivElement>(null);
   const progressNumRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const section = sectionRef.current;
+    const grid = gridRef.current;
     const progressFill = progressLineRef.current;
     const progressNum = progressNumRef.current;
     const wrappers = wrappersRef.current.filter(Boolean) as HTMLDivElement[];
-    const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
-    if (!section || cards.length === 0) return;
+    const contents = contentsRef.current.filter(Boolean) as HTMLDivElement[];
+    if (!grid || contents.length === 0) return;
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 768px)", () => {
-        const setSlack = () => {
-          wrappers.forEach((wrapper, index) => {
-            if (index === wrappers.length - 1) return;
-            wrapper.style.height = `${cards[index].offsetHeight + SLACK_PX}px`;
-          });
+        const setCardHeight = () => {
+          const tallest = Math.max(...contents.map((c) => c.offsetHeight));
+          grid.style.setProperty("--card-height", `${tallest}px`);
           ScrollTrigger.refresh();
         };
 
-        setSlack();
+        setCardHeight();
 
         let prevWidth = window.innerWidth;
         const handleResize = () => {
           if (window.innerWidth !== prevWidth) {
             prevWidth = window.innerWidth;
-            setSlack();
+            setCardHeight();
           }
         };
         window.addEventListener("resize", handleResize);
@@ -65,7 +60,7 @@ export default function HowWeDoIt() {
             height: "100%",
             ease: "none",
             scrollTrigger: {
-              trigger: section,
+              trigger: grid,
               start: `top ${STICK_TOP_PX}px`,
               end: "bottom bottom",
               scrub: true,
@@ -75,37 +70,51 @@ export default function HowWeDoIt() {
 
         const updateNumber = (index: number) => {
           if (!progressNum) return;
-          const num = index + 1;
+          const num = Math.max(0, index) + 1;
           progressNum.innerText = num < 10 ? `0${num}` : `${num}`;
         };
         updateNumber(0);
 
-        cards.forEach((card, index) => {
+        wrappers.forEach((wrapper, index) => {
+          gsap.set(contents[index], { zIndex: 10 + index });
+
           ScrollTrigger.create({
-            trigger: card,
-            start: `top ${STICK_TOP_PX + 1}px`,
-            end: `top ${STICK_TOP_PX}px`,
+            trigger: wrapper,
+            // "top top" (matching the sticky mechanics) fires too late —
+            // thanks to the large gap between rows, a card already reads
+            // as the prominent one on screen well before it's technically
+            // locked into its sticky point. "center center" tracks visual
+            // prominence better, but is unreachable for the LAST card
+            // specifically (nothing pushes behind it, so the page can run
+            // out of scroll room before its center ever reaches viewport
+            // middle). "top 60%" needs less scroll to satisfy and still
+            // reads as "this card is now the prominent one."
+            start: "top 60%",
             onEnter: () => updateNumber(index),
             onLeaveBack: () => updateNumber(index - 1),
           });
 
-          if (index === cards.length - 1) return;
+          if (index === wrappers.length - 1) return;
 
           const nextWrapper = wrappers[index + 1];
-          const toScale = 1 - (cards.length - 1 - index) * 0.05;
+          // A subtle per-card recede as the next one lands on top — cards
+          // stay visible in the cascade (this isn't a full swap), just a
+          // gentle depth cue so the newest card clearly reads as "on top."
+          const toScale = 1 - (wrappers.length - 1 - index) * 0.03;
+          const toBrightness = 1 - (wrappers.length - 1 - index) * 0.08;
 
-          gsap.set(card, { transformOrigin: "center top" });
+          gsap.set(contents[index], { transformOrigin: "50% 0%" });
           gsap.fromTo(
-            card,
+            contents[index],
             { scale: 1, filter: "brightness(1)" },
             {
               scale: toScale,
-              filter: "brightness(0.85)",
+              filter: `brightness(${toBrightness})`,
               ease: "none",
               scrollTrigger: {
                 trigger: nextWrapper,
                 start: "top bottom",
-                end: `top ${STICK_TOP_PX}px`,
+                end: "top top",
                 scrub: true,
               },
             },
@@ -116,14 +125,13 @@ export default function HowWeDoIt() {
           window.removeEventListener("resize", handleResize);
         };
       });
-    }, section);
+    }, grid);
 
     return () => ctx.revert();
   }, []);
 
   return (
     <section
-      ref={sectionRef}
       data-theme-section="dark"
       className="theme-bg relative w-full py-20 lg:py-28"
     >
@@ -166,21 +174,32 @@ export default function HowWeDoIt() {
             </div>
           </div>
 
-          <div className="flex-1">
+          <div
+            ref={gridRef}
+            style={{
+              gridTemplateRows: `repeat(${howWeDoIt.length}, var(--card-height, auto))`,
+              gap: "calc(3rem + var(--card-height, 0px) / 3)",
+              paddingBottom: `${howWeDoIt.length * CARD_TOP_OFFSET_PX}px`,
+            }}
+            className="grid flex-1"
+          >
             {howWeDoIt.map((step, index) => (
               <div
                 key={step.title}
                 ref={(el) => {
                   wrappersRef.current[index] = el;
                 }}
-                className="relative"
+                style={{
+                  top: 0,
+                  paddingTop: `${(index + 1) * CARD_TOP_OFFSET_PX}px`,
+                }}
+                className="sticky"
               >
                 <div
                   ref={(el) => {
-                    cardsRef.current[index] = el;
+                    contentsRef.current[index] = el;
                   }}
-                  style={{ top: `${STICK_TOP_PX}px` }}
-                  className={`bg-secondary sticky grid items-center gap-10 rounded-3xl border border-white/10 p-6 shadow-xl will-change-transform md:p-10 lg:grid-cols-2 ${
+                  className={`bg-secondary grid items-center gap-10 rounded-3xl border border-white/10 p-6 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] will-change-transform md:p-10 lg:grid-cols-2 ${
                     index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
                 >
