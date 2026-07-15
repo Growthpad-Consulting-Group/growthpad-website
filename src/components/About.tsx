@@ -17,9 +17,10 @@ export default function About() {
 
       gsap.fromTo(
         imageWrapRef.current,
-        { x: -120 },
+        { x: -120, filter: "brightness(0.8)" },
         {
           x: 0,
+          filter: "brightness(1)",
           ease: "none",
           scrollTrigger: {
             trigger: imageWrapRef.current,
@@ -37,7 +38,7 @@ export default function About() {
   return (
     <section
       data-theme-section="dark"
-      className="relative flex w-full flex-col justify-center overflow-hidden py-16 lg:h-[calc(100svh-6rem)] lg:py-0"
+      className="theme-bg relative flex w-full flex-col justify-center overflow-hidden py-16 lg:h-[calc(100svh-6rem)] lg:py-0"
     >
       <ArrowGroup className="absolute top-8 right-6 lg:top-10 lg:right-10" />
 
@@ -60,7 +61,7 @@ export default function About() {
             <ArrowGroup count={4} className="mt-8" />
           </div>
 
-          <div className="flex flex-col gap-8 text-lg leading-8 text-white/90">
+          <div className="theme-fg flex flex-col gap-8 text-lg leading-8 opacity-90">
             <p className="text-2xl">
               At the heart, we are a company of people who love to help
               people. We love to help organizations win, and when they do, we

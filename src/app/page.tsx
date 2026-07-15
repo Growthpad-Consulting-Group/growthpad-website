@@ -2,6 +2,8 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Brands from "@/components/Brands";
 import Ambition from "@/components/Ambition";
+import Specialties from "@/components/Specialties";
+import HowWeDoIt from "@/components/HowWeDoIt";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 
 export default function Home() {
@@ -12,6 +14,8 @@ export default function Home() {
       <About />
       <Brands />
       <Ambition />
+      <Specialties />
+      <HowWeDoIt />
     </div>
   );
 }
