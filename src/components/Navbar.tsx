@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`theme-surface sticky top-0 z-50 w-full border-b transition-[backdrop-filter,box-shadow] duration-300 ${
+      className={`theme-surface sticky top-0 z-60 w-full border-b transition-[backdrop-filter,box-shadow] duration-300 ${
         isScrolled
           ? "shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-xl"
           : "border-transparent! bg-transparent! shadow-none backdrop-blur-none"
