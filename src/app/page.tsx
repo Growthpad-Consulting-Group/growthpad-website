@@ -5,6 +5,7 @@ import Ambition from "@/components/Ambition";
 import Specialties from "@/components/Specialties";
 import HowWeDoIt from "@/components/HowWeDoIt";
 import PickACard from "@/components/PickACard";
+import Clients from "@/components/Clients";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <Specialties />
       <HowWeDoIt />
       <PickACard />
+      <Clients />
     </div>
   );
 }
