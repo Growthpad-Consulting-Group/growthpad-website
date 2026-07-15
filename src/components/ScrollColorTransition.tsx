@@ -63,16 +63,33 @@ export default function ScrollColorTransition() {
       }
     };
 
+    const rootBottom = () =>
+      window.innerHeight + window.innerHeight * LOOKAHEAD_VH;
+
+    // Recompute the correct theme from scratch — the last (lowest) section
+    // whose top has crossed the line — rather than reacting incrementally
+    // to each individual crossing event. Adjacent sections' edges can both
+    // cross the same observer line near their shared boundary (e.g. one
+    // section's bottom and the next section's top can occupy overlapping
+    // screen space), so incrementally flipping theme/prevTheme per crossing
+    // can end up reflecting whichever edge happened to fire last rather
+    // than the section that's actually in view. Recomputing fresh every
+    // time is immune to that regardless of which section's edge triggered
+    // the callback.
+    const applyCurrentTheme = (instant = false) => {
+      const bottom = rootBottom();
+      let theme = "light";
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top < bottom) {
+          theme = section.dataset.themeSection ?? theme;
+        }
+      });
+      tweenAll(theme === "dark", instant);
+    };
+
     // Set the correct starting theme synchronously (no animation) based on
     // where we actually are on load/hydration, before the observer engages.
-    const rootBottom = window.innerHeight + window.innerHeight * LOOKAHEAD_VH;
-    let currentTheme = "light";
-    sections.forEach((section) => {
-      if (section.getBoundingClientRect().top < rootBottom) {
-        currentTheme = section.dataset.themeSection ?? currentTheme;
-      }
-    });
-    tweenAll(currentTheme === "dark", true);
+    applyCurrentTheme(true);
 
     // IntersectionObserver, not GSAP ScrollTrigger, deliberately: it reads
     // each section's live position on every scroll frame straight from the
@@ -81,38 +98,10 @@ export default function ScrollColorTransition() {
     // on the page uses pin:true (GSAP's cumulative pin-offset math is
     // shared globally across every trigger, so an unrelated pinned section
     // can throw this off by 1000+px — confirmed by direct measurement).
-    //
-    // observe() fires an initial synthetic callback reporting the current
-    // state for each target — that's not a real crossing event, so the
-    // first callback per section is recorded but not acted on (the
-    // starting theme above already accounts for it). Only genuine
-    // transitions after that trigger a tween.
-    const primed = new WeakSet<Element>();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!primed.has(entry.target)) {
-            primed.add(entry.target);
-            continue;
-          }
-
-          const index = sections.indexOf(entry.target as HTMLElement);
-          const theme = sections[index].dataset.themeSection;
-          const prevTheme =
-            index > 0 ? sections[index - 1].dataset.themeSection : "light";
-
-          if (entry.isIntersecting) {
-            // Section's top just crossed the look-ahead line, scrolling down.
-            tweenAll(theme === "dark");
-          } else if (entry.boundingClientRect.top > 0) {
-            // Left the line from below — scrolled back up above this section.
-            tweenAll(prevTheme === "dark");
-          }
-        }
-      },
-      { rootMargin: `0px 0px ${LOOKAHEAD_VH * 100}% 0px`, threshold: 0 },
-    );
+    const observer = new IntersectionObserver(() => applyCurrentTheme(), {
+      rootMargin: `0px 0px ${LOOKAHEAD_VH * 100}% 0px`,
+      threshold: 0,
+    });
 
     sections.forEach((section) => observer.observe(section));
 
