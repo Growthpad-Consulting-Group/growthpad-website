@@ -36,7 +36,7 @@ export default function About() {
 
   return (
     <section
-      data-about-section
+      data-theme-section="dark"
       className="relative flex w-full flex-col justify-center overflow-hidden py-16 lg:h-[calc(100svh-6rem)] lg:py-0"
     >
       <ArrowGroup className="absolute top-8 right-6 lg:top-10 lg:right-10" />

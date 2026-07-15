@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DARK = "#231812";
 const LIGHT = "#ffffff";
-const DURATION = 1;
+const DURATION = 0.7;
 const EASE = "sine.inOut";
 
 export default function ScrollColorTransition() {
@@ -14,11 +14,11 @@ export default function ScrollColorTransition() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      const about = document.querySelector<HTMLElement>(
-        "[data-about-section]",
-      );
-      const brandsSection = document.querySelector<HTMLElement>(
-        "[data-brands-section]",
+      // Any section can opt into the theme system by adding
+      // data-theme-section="dark" or "light" — no changes needed here to
+      // register a new boundary.
+      const sections = gsap.utils.toArray<HTMLElement>(
+        "[data-theme-section]",
       );
       const navLogoLight = document.querySelector<HTMLElement>(
         "[data-nav-logo-light]",
@@ -53,26 +53,18 @@ export default function ScrollColorTransition() {
         }
       };
 
-      const toDark = () => tweenAll(true);
-      const toLight = () => tweenAll(false);
+      sections.forEach((section, i) => {
+        const theme = section.dataset.themeSection;
+        // Default base theme (before the first marked section) is light.
+        const prevTheme = i > 0 ? sections[i - 1].dataset.themeSection : "light";
 
-      if (about) {
         ScrollTrigger.create({
-          trigger: about,
+          trigger: section,
           start: "top center",
-          onEnter: toDark,
-          onLeaveBack: toLight,
+          onEnter: () => tweenAll(theme === "dark"),
+          onLeaveBack: () => tweenAll(prevTheme === "dark"),
         });
-      }
-
-      if (brandsSection) {
-        ScrollTrigger.create({
-          trigger: brandsSection,
-          start: "top center",
-          onEnter: toLight,
-          onLeaveBack: toDark,
-        });
-      }
+      });
     });
 
     return () => ctx.revert();

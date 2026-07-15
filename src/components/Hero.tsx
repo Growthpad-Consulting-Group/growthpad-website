@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import LogoShowcase from "@/components/LogoShowcase";
+import HeroGrid from "@/components/HeroGrid";
 import { Arrow } from "@/components/ArrowGroup";
 
 export default function Hero() {
@@ -43,15 +43,8 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="pointer-events-none absolute top-1/2 right-0 hidden w-[40%] max-w-xl -translate-y-1/2 lg:block">
-          <Image
-            src="/assets/images/hero_img.svg"
-            alt=""
-            width={577}
-            height={435}
-            priority
-            className="h-auto w-full"
-          />
+        <div className="pointer-events-none absolute top-1/2 right-0 hidden w-[45%] max-w-2xl -translate-y-1/2 lg:block">
+          <HeroGrid />
         </div>
       </div>
 

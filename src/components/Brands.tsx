@@ -40,16 +40,13 @@ export default function Brands() {
   }, []);
 
   return (
-    <section data-brands-section className=" relative w-full">
+    <section data-theme-section="light" className="relative w-full">
       <div
         ref={containerRef}
         className="relative min-h-[70vh] w-full overflow-hidden"
       >
         <div className="container-fluid flex h-full flex-col justify-center gap-10 py-16">
-          <div
-            data-brands-text
-            className="text-secondary flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-          >
+          <div className="theme-fg flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="font-display max-w-xl text-3xl leading-tight sm:text-4xl lg:text-5xl">
               <span className="block font-light">Our Brands,</span>
               <span className="text-primary block font-bold">
@@ -68,7 +65,7 @@ export default function Brands() {
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="border-secondary/10 flex h-80 w-[300px] shrink-0 flex-col justify-between rounded-2xl border bg-white p-8 shadow-[0_1px_30px_rgba(35,24,18,0.06)] sm:w-[340px]"
+                className="border-secondary/10 hover:border-primary/30 flex h-80 w-75 shrink-0 flex-col justify-between rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-[0_1px_30px_rgba(35,24,18,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(35,24,18,0.12)] sm:w-85"
               >
                 <div className="flex h-12 items-start">
                   <Image
@@ -86,11 +83,13 @@ export default function Brands() {
 
                 <Link
                   href={brand.href}
-                  className="text-secondary group inline-flex items-center gap-2 text-sm font-semibold"
+                  className="group mt-2 inline-flex items-center gap-3"
                 >
-                  Visit site
-                  <span className="bg-secondary group-hover:bg-primary inline-flex h-7 w-7 items-center justify-center rounded-full text-white transition-colors">
-                    <Arrow className="h-3 w-3" />
+                  <span className="bg-primary group-hover:bg-primary/90 inline-flex h-9 items-center rounded-full px-5 text-sm font-semibold text-white transition-colors">
+                    Visit site
+                  </span>
+                  <span className="bg-primary group-hover:bg-primary/90 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition-colors">
+                    <Arrow className="h-3.5 w-3.5" />
                   </span>
                 </Link>
               </div>
