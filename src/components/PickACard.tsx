@@ -39,8 +39,15 @@ function PickBadge() {
     };
   }, []);
 
-  const text = "Pick a Card . ".repeat(5);
+  // repeat(4) guarantees more raw text than the circle needs; textLength
+  // + lengthAdjust then compresses it to exactly match the circumference,
+  // so the loop always meets seamlessly regardless of font metrics
+  // (repeat-count-by-trial-and-error was never going to be reliable —
+  // actual rendered text width varies by font/browser, but a forced
+  // textLength can't drift).
+  const text = "Pick a Card . ".repeat(4);
   const radius = 80;
+  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="relative flex h-64 w-64 items-center justify-center">
@@ -54,7 +61,12 @@ function PickBadge() {
           />
         </defs>
         <text className="fill-secondary text-xl font-semibold tracking-wide">
-          <textPath href="#pick-a-card-circle" startOffset="0%">
+          <textPath
+            href="#pick-a-card-circle"
+            startOffset="0%"
+            textLength={circumference}
+            lengthAdjust="spacingAndGlyphs"
+          >
             {text}
           </textPath>
         </text>
@@ -67,7 +79,17 @@ function PickBadge() {
 export default function PickACard() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const mobileCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const active = pickACard[activeIndex];
+
+  const pickMobile = (index: number) => {
+    setActiveIndex(index);
+    mobileCardRefs.current[index]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  };
 
   return (
     <section className="relative w-full bg-[#EDEBE8] py-20 lg:py-28">
@@ -76,7 +98,35 @@ export default function PickACard() {
           How we do it
         </h2>
 
-        <div className="mt-16 grid gap-16 pt-16 lg:grid-cols-[auto_1fr] lg:items-end lg:gap-10">
+        {/* Mobile/tablet: a swipeable horizontal row instead of the fan —
+            absolute-positioned overlapping rotated cards don't give touch
+            users equal, full-size tap targets, and there isn't room for a
+            7-card spread on a narrow screen. */}
+        <div className="mt-10 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 lg:hidden">
+          {pickACard.map((card, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={card.title}
+                ref={(el) => {
+                  mobileCardRefs.current[index] = el;
+                }}
+                type="button"
+                onClick={() => pickMobile(index)}
+                className={`bg-secondary relative h-64 w-48 shrink-0 snap-start overflow-hidden rounded-3xl text-left outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  isActive ? "ring-2 ring-primary" : ""
+                }`}
+              >
+                <p className="font-display absolute top-0 left-0 p-5 text-base leading-snug font-bold text-white">
+                  {card.title}
+                </p>
+                <CardStripe />
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-16 hidden gap-16 pt-16 lg:grid lg:grid-cols-[auto_1fr] lg:items-end lg:gap-10">
           <div className="lg:translate-y-12">
             <PickBadge />
           </div>
@@ -86,15 +136,6 @@ export default function PickACard() {
               const offset = index - (pickACard.length - 1) / 2;
               const isActive = index === activeIndex;
               const isHovered = index === hoveredIndex && !isActive;
-              // Nudge each card away from center based on ITS OWN fixed
-              // side (left half vs right half) — never based on which
-              // card is active. That way the other 6 cards never move
-              // when you pick a different one; only the picked card
-              // leaves its slot for the center, into the gap that's
-              // already open there. The one card that naturally sits at
-              // dead-center (offset 0) is the exception: it has to duck
-              // out of the way whenever any OTHER card is active, since
-              // otherwise it sits directly behind and gets fully hidden.
               const centerGap =
                 offset < 0
                   ? -40
@@ -140,7 +181,7 @@ export default function PickACard() {
           </div>
         </div>
 
-        <div className="mt-12 ml-auto max-w-md rounded-3xl bg-white p-8 shadow-[0_1px_30px_rgba(35,24,18,0.08)] ]">
+        <div className="mt-12 rounded-2xl bg-white p-8 shadow-[0_1px_30px_rgba(35,24,18,0.08)] lg:ml-auto lg:max-w-md">
           <p className="text-secondary/80 text-lg leading-8">
             {active.description}
           </p>

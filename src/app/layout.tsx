@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
-import Navbar from "@/components/Navbar";
-import "./globals.css";
+import Navbar from "@/layouts/Navbar";
+import "@/styles/globals.css";
 
 const figtree = Figtree({
   variable: "--font-figtree",

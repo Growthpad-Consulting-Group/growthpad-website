@@ -40,14 +40,16 @@ export default function Accordion({
             </span>
 
             <span
-              className="font-display order-2 pt-0.5 text-xl leading-tight font-bold transition-[flex-grow] duration-500 ease-in-out sm:min-w-64 sm:pt-1 sm:text-2xl"
+              className={`font-display order-2 pt-0.5 text-xl leading-tight font-bold transition-[flex-grow,translate] duration-700 ease-out sm:min-w-64 sm:pt-1 sm:text-2xl ${
+                isOpen ? "" : "group-hover:translate-x-3"
+              }`}
               style={{ flexGrow: isOpen ? 0 : 1, flexBasis: "auto" }}
             >
               {item.title}
             </span>
 
             <span
-              className={`order-3 hidden h-14 w-14 shrink-0 items-center justify-center self-center rounded-full transition-all duration-500 ease-in-out sm:order-4 sm:flex ${
+              className={`order-3 hidden h-14 w-14 shrink-0 items-center justify-center self-center rounded-full transition-all duration-700 ease-out sm:order-4 sm:flex ${
                 isOpen
                   ? "bg-primary rotate-90"
                   : "theme-invert-bg group-hover:opacity-80"
@@ -62,11 +64,11 @@ export default function Accordion({
                 re-wraps mid-transition — only opacity/clip move, so the
                 width reveal and height reveal can't fight each other. */}
             <div
-              className="order-4 min-w-0 basis-full overflow-hidden transition-[flex-grow] duration-500 ease-in-out sm:order-3 sm:basis-0"
+              className="order-4 min-w-0 basis-full overflow-hidden transition-[flex-grow] duration-700 ease-out sm:order-3 sm:basis-0"
               style={{ flexGrow: isOpen ? 1 : 0 }}
             >
               <div
-                className="grid transition-[grid-template-rows] duration-500 ease-in-out"
+                className="grid transition-[grid-template-rows] duration-700 ease-out"
                 style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
