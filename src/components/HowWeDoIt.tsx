@@ -192,7 +192,7 @@ export default function HowWeDoIt() {
                   ref={(el) => {
                     contentsRef.current[index] = el;
                   }}
-                  className={`bg-secondary grid items-center gap-8 rounded-3xl border border-white/10 p-5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] will-change-transform md:p-8 lg:grid-cols-2 ${
+                  className={`bg-secondary grid items-center gap-8 rounded-3xl border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] will-change-transform md:p-8 lg:grid-cols-2 ${
                     index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
                 >

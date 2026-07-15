@@ -37,17 +37,14 @@ function BigArrow({ className }: { className?: string }) {
     const ctx = gsap.context(() => {
       const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: path,
+          trigger: svg,
           start: "top 80%",
-          toggleActions: "play none none reverse",
+          // restart redraws when scrolling back up into view from below
+          toggleActions: "play none restart reverse",
         },
       });
 
-      // Draw the outline in, then "paint" the fill on with a diagonal wipe
-      // (an objectBoundingBox gradient mask, so it always fits the shape's
-      // own bounds exactly, however it's sized). Plays once per
-      // scroll-into-view; reverses if you scroll back out. Stays in place
-      // afterwards — no exit animation, so the space never goes blank.
+      // Draw the outline, then paint the fill via a diagonal gradient mask.
       timeline
         .to(path, {
           strokeDashoffset: 0,
