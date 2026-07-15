@@ -86,7 +86,26 @@ export default function PickACard() {
               const offset = index - (pickACard.length - 1) / 2;
               const isActive = index === activeIndex;
               const isHovered = index === hoveredIndex && !isActive;
-              const fanTransform = `translateX(calc(-50% + ${offset * FAN_OFFSET_X}px)) rotate(${offset * FAN_ROTATE_DEG}deg)`;
+              // Nudge each card away from center based on ITS OWN fixed
+              // side (left half vs right half) — never based on which
+              // card is active. That way the other 6 cards never move
+              // when you pick a different one; only the picked card
+              // leaves its slot for the center, into the gap that's
+              // already open there. The one card that naturally sits at
+              // dead-center (offset 0) is the exception: it has to duck
+              // out of the way whenever any OTHER card is active, since
+              // otherwise it sits directly behind and gets fully hidden.
+              const centerGap =
+                offset < 0
+                  ? -40
+                  : offset > 0
+                    ? 40
+                    : isActive
+                      ? 0
+                      : -110;
+              const fanTransform = `translateX(calc(-50% + ${
+                offset * FAN_OFFSET_X + centerGap
+              }px)) rotate(${offset * FAN_ROTATE_DEG}deg)`;
 
               return (
                 <button
@@ -103,7 +122,7 @@ export default function PickACard() {
                         : fanTransform,
                     zIndex: isActive ? 50 : isHovered ? 40 : 10 + index,
                   }}
-                  className={`bg-secondary absolute left-1/2 h-64 w-44 shrink-0 overflow-hidden rounded-3xl text-left transition-transform duration-300 ease-out sm:h-72 sm:w-52 ${
+                  className={`bg-secondary absolute left-1/2 h-64 w-44 shrink-0 overflow-hidden rounded-3xl text-left transition-transform duration-300 ease-out outline-none focus:outline-none focus-visible:ring-primary focus-visible:ring-2 sm:h-72 sm:w-52 ${
                     isActive
                       ? "shadow-[0_35px_60px_rgba(0,0,0,0.45)] ring-primary ring-1"
                       : isHovered
