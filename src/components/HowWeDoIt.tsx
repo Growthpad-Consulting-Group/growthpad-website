@@ -14,7 +14,7 @@ import { howWeDoIt } from "@/data/howWeDoIt";
 // top: 0` with an increasing `padding-top` per index (the fan stagger),
 // so successive cards rest at progressively lower on-screen positions
 // instead of all piling up at the exact same spot.
-const CARD_TOP_OFFSET_PX = 28;
+const CARD_TOP_OFFSET_PX = 20;
 const STICK_TOP_PX = 96;
 
 export default function HowWeDoIt() {
@@ -55,6 +55,13 @@ export default function HowWeDoIt() {
         };
         window.addEventListener("resize", handleResize);
 
+        const updateNumber = (index: number) => {
+          if (!progressNum) return;
+          const num = Math.max(0, index) + 1;
+          progressNum.innerText = num < 10 ? `0${num}` : `${num}`;
+        };
+        updateNumber(0);
+
         if (progressFill) {
           gsap.to(progressFill, {
             height: "100%",
@@ -64,35 +71,26 @@ export default function HowWeDoIt() {
               start: `top ${STICK_TOP_PX}px`,
               end: "bottom bottom",
               scrub: true,
+              // Derive the number from this exact same progress value
+              // (0–1 across the whole grid) instead of a separate
+              // per-card ScrollTrigger with its own "top X%" heuristic.
+              // That second approach needed re-tuning any time the gap
+              // or card height changed, and could desync from what's
+              // actually on screen; this can't, since it's the same
+              // single measurement already driving the fill line.
+              onUpdate: (self) => {
+                const index = Math.min(
+                  wrappers.length - 1,
+                  Math.floor(self.progress * wrappers.length),
+                );
+                updateNumber(index);
+              },
             },
           });
         }
 
-        const updateNumber = (index: number) => {
-          if (!progressNum) return;
-          const num = Math.max(0, index) + 1;
-          progressNum.innerText = num < 10 ? `0${num}` : `${num}`;
-        };
-        updateNumber(0);
-
-        wrappers.forEach((wrapper, index) => {
-          gsap.set(contents[index], { zIndex: 10 + index });
-
-          ScrollTrigger.create({
-            trigger: wrapper,
-            // "top top" (matching the sticky mechanics) fires too late —
-            // thanks to the large gap between rows, a card already reads
-            // as the prominent one on screen well before it's technically
-            // locked into its sticky point. "center center" tracks visual
-            // prominence better, but is unreachable for the LAST card
-            // specifically (nothing pushes behind it, so the page can run
-            // out of scroll room before its center ever reaches viewport
-            // middle). "top 60%" needs less scroll to satisfy and still
-            // reads as "this card is now the prominent one."
-            start: "top 60%",
-            onEnter: () => updateNumber(index),
-            onLeaveBack: () => updateNumber(index - 1),
-          });
+        contents.forEach((content, index) => {
+          gsap.set(content, { zIndex: 10 + index });
 
           if (index === wrappers.length - 1) return;
 
@@ -103,9 +101,9 @@ export default function HowWeDoIt() {
           const toScale = 1 - (wrappers.length - 1 - index) * 0.03;
           const toBrightness = 1 - (wrappers.length - 1 - index) * 0.08;
 
-          gsap.set(contents[index], { transformOrigin: "50% 0%" });
+          gsap.set(content, { transformOrigin: "50% 0%" });
           gsap.fromTo(
-            contents[index],
+            content,
             { scale: 1, filter: "brightness(1)" },
             {
               scale: toScale,
@@ -147,7 +145,17 @@ export default function HowWeDoIt() {
             </p>
           </div>
 
-          <ArrowGroup count={5} className="hidden sm:flex" />
+          <div className="hidden flex-col items-center gap-8 sm:flex">
+            <Image
+              src="/assets/images/who-resized.gif"
+              alt=""
+              width={121}
+              height={234}
+              unoptimized
+              className="h-60 w-auto object-contain"
+            />
+            <ArrowGroup count={5} />
+          </div>
         </div>
 
         <div className="mx-auto mt-16 flex max-w-5xl items-start gap-12 lg:gap-24">
@@ -178,7 +186,7 @@ export default function HowWeDoIt() {
             ref={gridRef}
             style={{
               gridTemplateRows: `repeat(${howWeDoIt.length}, var(--card-height, auto))`,
-              gap: "calc(3rem + var(--card-height, 0px) / 3)",
+              gap: "calc(0.5rem + var(--card-height, 0px) / 14)",
               paddingBottom: `${howWeDoIt.length * CARD_TOP_OFFSET_PX}px`,
             }}
             className="grid flex-1"
@@ -199,11 +207,11 @@ export default function HowWeDoIt() {
                   ref={(el) => {
                     contentsRef.current[index] = el;
                   }}
-                  className={`bg-secondary grid items-center gap-10 rounded-3xl border border-white/10 p-6 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] will-change-transform md:p-10 lg:grid-cols-2 ${
+                  className={`bg-secondary grid items-center gap-8 rounded-3xl border border-white/10 p-5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] will-change-transform md:p-8 lg:grid-cols-2 ${
                     index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
                 >
-                  <div className="notch-image relative aspect-4/3 w-full overflow-hidden rounded-2xl">
+                  <div className="notch-image relative aspect-16/10 w-full overflow-hidden rounded-2xl">
                     <span className="bg-primary absolute -top-4 -left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white shadow-lg md:hidden">
                       {index + 1}
                     </span>
@@ -211,7 +219,7 @@ export default function HowWeDoIt() {
                       src={step.image}
                       alt={step.title}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
 
