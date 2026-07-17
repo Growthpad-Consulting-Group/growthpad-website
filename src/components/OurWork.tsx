@@ -91,6 +91,7 @@ export default function OurWork() {
   const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
   const mobileScrollerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
 
   // Opacity-only fade-in, kept deliberately separate from the sticky-stack
   // scroll-scrub effect below and from SectionAnimate (which this section
@@ -218,8 +219,15 @@ export default function OurWork() {
                 scrub: true,
                 // Flip which card "owns" the shared nav buttons at the
                 // halfway point of this card's transition into the next.
+                // Guarded against redundant calls: this fires every
+                // scroll frame, but the target index only actually
+                // changes twice per transition.
                 onUpdate: (self) => {
-                  setActiveIndex(self.progress > 0.5 ? index + 1 : index);
+                  const next = self.progress > 0.5 ? index + 1 : index;
+                  if (activeIndexRef.current !== next) {
+                    activeIndexRef.current = next;
+                    setActiveIndex(next);
+                  }
                 },
               },
             },

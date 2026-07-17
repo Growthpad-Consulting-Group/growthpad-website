@@ -7,10 +7,9 @@ type CtaButtonProps = {
   circleClassName?: string;
   size?: "md" | "sm";
   onClick?: () => void;
-} & (
-  | { href: string; type?: never }
-  | { href?: never; type?: "submit" | "button" }
-);
+  href?: string;
+  type?: "submit" | "button";
+};
 
 const SIZES = {
   md: {

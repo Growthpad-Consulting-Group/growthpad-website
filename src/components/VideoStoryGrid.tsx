@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -86,12 +86,13 @@ export default function VideoStoryGrid({
   videos: VideoStory[];
   navLabel?: string;
 }) {
-  const pairs = chunk(videos, 2);
+  const pairs = useMemo(() => chunk(videos, 2), [videos]);
 
   const [activeVideoIndex, setActiveVideoIndex] = useState<number | null>(null);
   const activeVideo = activeVideoIndex !== null ? videos[activeVideoIndex] : null;
   const playVideo = (story: VideoStory) => setActiveVideoIndex(videos.indexOf(story));
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -236,7 +237,14 @@ export default function VideoStoryGrid({
 
                   // Flip which card "owns" the shared nav buttons at the
                   // halfway point of this card's transition into the next.
-                  setActiveIndex(p > 0.5 ? index + 1 : index);
+                  // Guarded against redundant calls: this fires every
+                  // scroll frame, but the target index only actually
+                  // changes twice per transition.
+                  const next = p > 0.5 ? index + 1 : index;
+                  if (activeIndexRef.current !== next) {
+                    activeIndexRef.current = next;
+                    setActiveIndex(next);
+                  }
                 },
               },
             },
@@ -289,7 +297,7 @@ export default function VideoStoryGrid({
             type="button"
             onClick={() => advanceMobile(-1)}
             aria-label={`Previous ${navLabel}`}
-            className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity"
+            className="theme-fg flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-opacity"
           >
             <Arrow className="h-4 w-4 -rotate-90" />
           </button>
@@ -360,7 +368,7 @@ export default function VideoStoryGrid({
               onClick={() => goTo(activeIndex - 1)}
               disabled={activeIndex === 0}
               aria-label={`Previous ${navLabel}`}
-              className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+              className="theme-fg flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
             >
               <Arrow className="h-4 w-4 -rotate-90" />
             </button>
