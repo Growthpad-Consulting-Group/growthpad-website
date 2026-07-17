@@ -24,9 +24,10 @@ export type CaseStudy = {
 export const ourWork: CaseStudy[] = [
   {
     brand: "Uber",
-    logoSrc: "/assets/images/misc/uber-card/uber-logo.png",
+    logoSrc: "/assets/images/clients/uber.png",
     logoWidth: 139,
     logoHeight: 90,
+    logoClassName: "w-44 brightness-0 invert",
     tagline: "A leading international ride-hailing service.",
     role: "We execute strategic media planning, creative design, influencer management, and videos for Uber across the East African market.",
     impact:
@@ -57,9 +58,10 @@ export const ourWork: CaseStudy[] = [
   },
   {
     brand: "IFAW",
-    logoSrc: "/assets/images/misc/iffaw-card/ifaw-white-logo.png",
+    logoSrc: "/assets/images/clients/ifaw.png",
     logoWidth: 147,
     logoHeight: 77,
+    logoClassName: "w-44 brightness-0 invert",
     tagline:
       "A global non-profit organization that protects animals and their habitats from threats.",
     role: "We partner with IFAW Africa to create digital media resources. We also do social listening and make fresh digital plans for their social networks.",
@@ -88,7 +90,7 @@ export const ourWork: CaseStudy[] = [
   },
   {
     brand: "Zenka",
-    logoSrc: "/assets/images/misc/zenka-card/zenka-logo.png",
+    logoSrc: "/assets/images/clients/zenka.png",
     logoWidth: 246,
     logoHeight: 78,
     tagline: "One of Kenya's biggest mobile lenders.",
@@ -96,7 +98,7 @@ export const ourWork: CaseStudy[] = [
     impact:
       "We've assisted Zenka in increasing its online presence, penetrating new markets, attracting more users, generating more revenue and profit, and ultimately maintaining its vision of providing financial inclusion to hordes of Kenyans.",
     className: "bg-[#5c1c52]",
-    logoClassName: "w-56",
+    logoClassName: "w-56 brightness-0 invert",
     media: [
       {
         type: "image",

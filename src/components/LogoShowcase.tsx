@@ -119,15 +119,14 @@ function LogoWrap({ file, phase }: { file: string; phase: SlotPhase }) {
     if (phase === "exit") {
       el.style.transition = transition;
       el.style.opacity = "0";
-      el.style.transform = "translate3d(0, -8px, 0)";
+      el.style.transform = "translate3d(24px, 0, 0)";
       return;
     }
 
     if (phase === "enter") {
       el.style.transition = "none";
       el.style.opacity = "0";
-      el.style.transform = "translate3d(0, 8px, 0)";
-
+      el.style.transform = "translate3d(-24px, 0, 0)";
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           el.style.transition = transition;
