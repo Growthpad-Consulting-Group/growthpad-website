@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
 import Navbar from "@/layouts/Navbar";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import "@/styles/globals.css";
 
 const figtree = Figtree({
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,10 +15,12 @@ function MobileMenu({
   isOpen,
   onNavigate,
   pathname,
+  topOffset,
 }: {
   isOpen: boolean;
   onNavigate: () => void;
   pathname: string;
+  topOffset: number;
 }) {
   // SSR has no document to portal into; the client render (post-hydration)
   // picks this up immediately after.
@@ -37,9 +39,30 @@ function MobileMenu({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="bg-secondary fixed inset-x-0 top-24 bottom-0 z-50 flex flex-col overflow-y-auto md:hidden"
+          style={{ top: topOffset + 8 }}
+          className="fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl md:hidden"
         >
-          <nav className="container-fluid flex flex-1 flex-col justify-center gap-1 py-8">
+          {/* Same "liquid glass" recipe as the header (distorted+blurred
+              backdrop, tint, specular ring), so the dropdown reads as an
+              extension of the pill rather than a different material —
+              just tinted dark instead of white, since this panel's nav
+              text is hardcoded white and needs a dark backdrop for
+              contrast regardless of what's scrolled behind it. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-[inherit] backdrop-blur-[3px]"
+            style={{ filter: "url(#glass-distortion)" }}
+          />
+          <div
+            aria-hidden
+            className="bg-secondary/70 pointer-events-none absolute inset-0 rounded-[inherit]"
+          />
+          <div
+            aria-hidden
+            className="ring-1 ring-white/10 shadow-lg shadow-black/20 pointer-events-none absolute inset-0 rounded-[inherit]"
+          />
+
+          <nav className="container-fluid relative flex flex-1 flex-col justify-center gap-1 py-8">
             {navLinks.map((link: NavLink, index: number) => {
               const isActive = link.href === pathname;
 
@@ -88,7 +111,7 @@ function MobileMenu({
               delay: 0.1 + navLinks.length * 0.06,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="container-fluid flex flex-col items-start gap-4 border-t border-white/10 py-6"
+            className="container-fluid relative flex flex-col items-start gap-4 border-t border-white/10 py-6"
           >
             <p className="text-sm text-white/50">
               A Cross-Africa Communication &amp; Technology Firm
@@ -96,6 +119,7 @@ function MobileMenu({
             <CtaButton
               href="#contact"
               size="sm"
+              fullWidth
               onClick={onNavigate}
               circleClassName="bg-primary text-white"
             >
@@ -111,16 +135,27 @@ function MobileMenu({
 
 export default function Navbar() {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  const [menuTop, setMenuTop] = useState(96);
 
   useEffect(() => {
     let lastY = window.scrollY;
 
+    const syncMenuTop = () => {
+      const bottom = headerRef.current?.getBoundingClientRect().bottom;
+      if (bottom) setMenuTop(bottom);
+    };
+
     const onScroll = () => {
       const y = window.scrollY;
       setIsScrolled(y > 8);
+      // Header height/margins shift between the full-width and pill
+      // states, so the mobile menu's own top offset (which measures the
+      // header, not a hardcoded value) has to stay in sync too.
+      syncMenuTop();
 
       if (isOpen) {
         lastY = y;
@@ -141,7 +176,11 @@ export default function Navbar() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", syncMenuTop);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", syncMenuTop);
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -154,15 +193,66 @@ export default function Navbar() {
 
   return (
     <>
+    {/* Liquid-glass refraction filter for the header background layer
+        below. Hidden via zero size + overflow (not display:none —
+        some browsers won't apply a filter referenced from a
+        display:none SVG). Tuned subtle (scale 18, not the 70-100 a
+        demo over a busy photo background would use) since this sits
+        behind readable nav text, not a decorative image. */}
+    <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
+      <defs>
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="2" seed="8" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="18" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+
     <header
+      ref={headerRef}
       style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
-      className={`sticky top-0 z-60 w-full bg-transparent transition-[translate,backdrop-filter,box-shadow] duration-500 ${
+      className={`sticky z-60 isolate overflow-hidden transition-[top,margin,border-radius,transform] duration-500 ${
         isScrolled
-          ? "shadow-lg shadow-secondary/6 backdrop-blur-[10px]"
-          : "shadow-none backdrop-blur-none"
-      } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
+          ? "top-4 mx-6 rounded-4xl lg:mx-24"
+          : "top-0 mx-0 w-full rounded-none"
+      } ${isHidden ? "-translate-y-[calc(100%+2rem)]" : "translate-y-0"}`}
     >
-      <nav className="container-fluid flex h-24 items-center justify-between">
+      {/* "Liquid glass": a distorted+blurred backdrop layer, a faint
+          white tint, and an inset specular highlight — stacked in that
+          order behind the nav content so the distortion never touches
+          the (crisp, on top) links/logo. Safari's SVG-filter +
+          backdrop-filter combination is inconsistent, so this degrades
+          to a plain frosted blur there rather than breaking. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 rounded-[inherit] backdrop-blur-[3px] transition-opacity duration-500 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ filter: isScrolled ? "url(#glass-distortion)" : undefined }}
+      />
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 rounded-[inherit] bg-white/20 transition-opacity duration-500 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 rounded-[inherit] shadow-lg shadow-secondary/6 ring-1 ring-white/25 ring-inset transition-opacity duration-500 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      <nav
+        style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
+        className={`relative mx-auto flex w-full max-w-350 items-center justify-between transition-[height,padding] duration-500 ${
+          // container-fluid's padding is sized for full-width sections;
+          // the pill is already inset by its own margin, so it only needs
+          // a small fixed padding to keep the logo close to its edge.
+          isScrolled ? "h-20 px-6 lg:px-8" : "h-24 px-4 sm:px-[5vw] lg:px-32"
+        }`}
+      >
         <Link href="/" className="relative block h-15.25 w-40 shrink-0">
           <Image
             src="/assets/images/gcg_logo_primary.svg"
@@ -230,6 +320,7 @@ export default function Navbar() {
       isOpen={isOpen}
       onNavigate={() => setIsOpen(false)}
       pathname={pathname ?? "/"}
+      topOffset={menuTop}
     />
     </>
   );

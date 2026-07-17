@@ -9,6 +9,7 @@ type CtaButtonProps = {
   onClick?: () => void;
   href?: string;
   type?: "submit" | "button";
+  fullWidth?: boolean;
 };
 
 const SIZES = {
@@ -34,13 +35,16 @@ export default function CtaButton({
   href,
   type,
   onClick,
+  fullWidth = false,
 }: CtaButtonProps) {
   const sizes = SIZES[size];
 
   const content = (
     <>
       <span
-        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white transition-colors ${sizes.pill}`}
+        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white transition-colors ${sizes.pill} ${
+          fullWidth ? "flex-1 justify-center" : ""
+        }`}
       >
         {children}
       </span>
@@ -52,7 +56,7 @@ export default function CtaButton({
     </>
   );
 
-  const sharedClassName = `group inline-flex items-center ${sizes.gap} ${className}`;
+  const sharedClassName = `group items-center ${sizes.gap} ${fullWidth ? "flex w-full" : "inline-flex"} ${className}`;
 
   if (href) {
     return (
