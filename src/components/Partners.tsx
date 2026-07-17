@@ -1,9 +1,31 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Script from "next/script";
 import ArrowGroup from "@/components/ArrowGroup";
 
+const CLUTCH_PROFILE_URL =
+  "https://clutch.co/profile/growthpad-consulting-group?utm_source=widget&utm_medium=3&utm_campaign=widget&utm_content=stars&utm_term=growthpad.co.ke";
+
 export default function Partners() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const [widgetFailed, setWidgetFailed] = useState(false);
+
+  useEffect(() => {
+    // Give the widget script time to inject its iframe — it fetches its
+    // content from Clutch's CDN, which can fail (ad blockers, Cloudflare
+    // bot challenges, network issues). If nothing shows up, fall back to a
+    // static screenshot linking to the profile instead of an empty box.
+    const timeout = setTimeout(() => {
+      if (!widgetRef.current?.querySelector("iframe")) {
+        setWidgetFailed(true);
+      }
+    }, 4000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <section
       data-theme-section="dark"
@@ -21,17 +43,36 @@ export default function Partners() {
         </div>
 
         <div className="mt-16 overflow-hidden rounded-2xl">
-          <div
-            className="clutch-widget"
-            data-url="https://widget.clutch.co"
-            data-widget-type="12"
-            data-height="375"
-            data-nofollow="true"
-            data-expandifr="true"
-            data-scale="100"
-            data-reviews="2159466,2055059,1971872,1818521,1792207,1772134,1382066,1388859"
-            data-clutchcompany-id="1367697"
-          />
+          {widgetFailed ? (
+            <a
+              href={CLUTCH_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <Image
+                src="/assets/images/clutch.png"
+                alt="Growthpad Consulting Group reviews on Clutch"
+                width={2010}
+                height={610}
+                sizes="100vw"
+                className="h-auto w-full"
+              />
+            </a>
+          ) : (
+            <div
+              ref={widgetRef}
+              className="clutch-widget"
+              data-url="https://widget.clutch.co"
+              data-widget-type="12"
+              data-height="375"
+              data-nofollow="true"
+              data-expandifr="true"
+              data-scale="100"
+              data-reviews="2159466,2055059,1971872,1818521,1792207,1772134,1382066,1388859"
+              data-clutchcompany-id="1367697"
+            />
+          )}
         </div>
       </div>
 
@@ -43,6 +84,7 @@ export default function Partners() {
       <Script
         src="https://widget.clutch.co/static/js/widget.js"
         strategy="afterInteractive"
+        onError={() => setWidgetFailed(true)}
       />
     </section>
   );

@@ -2,10 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Arrow } from "@/components/ArrowGroup";
+import CtaButton from "@/components/CtaButton";
 import { brands } from "@/data/brands";
 
 export default function Brands() {
@@ -81,17 +80,14 @@ export default function Brands() {
                   {brand.description}
                 </p>
 
-                <Link
+                <CtaButton
                   href={brand.href}
-                  className="group mt-2 inline-flex items-center gap-3"
+                  size="sm"
+                  className="mt-2"
+                  circleClassName="bg-primary group-hover:bg-primary/90 text-white"
                 >
-                  <span className="bg-primary group-hover:bg-primary/90 inline-flex h-9 items-center rounded-full px-5 text-sm font-semibold text-white transition-colors">
-                    Visit site
-                  </span>
-                  <span className="bg-primary group-hover:bg-primary/90 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition-colors">
-                    <Arrow className="h-3.5 w-3.5" />
-                  </span>
-                </Link>
+                  Visit site
+                </CtaButton>
               </div>
             ))}
           </div>

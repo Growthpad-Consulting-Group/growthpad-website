@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import Link from "next/link";
 import { Arrow } from "@/components/ArrowGroup";
+import CtaButton from "@/components/CtaButton";
 import { pickACard } from "@/data/pickACard";
 
 const FAN_ROTATE_DEG = 9;
@@ -192,14 +192,9 @@ export default function PickACard() {
             {active.description}
           </p>
 
-          <Link href="#contact" className="group mt-6 inline-flex items-center gap-4">
-            <span className="bg-primary group-hover:bg-primary/90 inline-flex h-11 items-center rounded-full px-7 text-base font-semibold text-white transition-colors">
-              Get Started
-            </span>
-            <span className="bg-secondary inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-opacity group-hover:opacity-90">
-              <Arrow className="h-4 w-4" />
-            </span>
-          </Link>
+          <CtaButton href="#contact" className="mt-6" circleClassName="bg-secondary text-white">
+            Get Started
+          </CtaButton>
         </div>
       </div>
     </section>

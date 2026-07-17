@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import gsap from "gsap";
 import LogoShowcase from "@/components/LogoShowcase";
 import HeroGrid from "@/components/HeroGrid";
-import { Arrow } from "@/components/ArrowGroup";
+import CtaButton from "@/components/CtaButton";
 
 export default function Hero() {
   const introRef = useRef<HTMLDivElement>(null);
@@ -91,17 +90,13 @@ export default function Hero() {
             intelligence - built for growth across Africa.
           </p>
 
-          <Link
+          <CtaButton
             href="#contact"
-            className="hero-reveal opacity-0 group mt-2 inline-flex items-center gap-4"
+            className="hero-reveal opacity-0 mt-2"
+            circleClassName="theme-invert-bg theme-invert-fg"
           >
-            <span className="bg-primary group-hover:bg-primary/90 inline-flex h-11 items-center rounded-full px-7 text-base font-semibold text-white transition-colors">
-              See Services
-            </span>
-            <span className="theme-invert-bg theme-invert-fg inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-opacity group-hover:opacity-90">
-              <Arrow className="h-4 w-4" />
-            </span>
-          </Link>
+            See Services
+          </CtaButton>
         </div>
 
         <div className="pointer-events-none absolute top-1/2 right-0 hidden w-[45%] max-w-2xl -translate-y-1/2 lg:block">
