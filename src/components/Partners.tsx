@@ -20,7 +20,7 @@ export default function Partners() {
           <ArrowGroup count={5} className="hidden sm:flex" />
         </div>
 
-        <div className="mt-16 overflow-hidden rounded-3xl">
+        <div className="mt-16 overflow-hidden rounded-2xl">
           <div
             className="clutch-widget"
             data-url="https://widget.clutch.co"

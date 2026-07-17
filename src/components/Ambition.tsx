@@ -134,8 +134,8 @@ export default function Ambition() {
 
   return (
     <section
-      data-theme-section="light"
-      className="relative w-full overflow-hidden bg-[#F7ECE4] py-20 lg:py-28"
+      data-theme-section="cream"
+      className="theme-bg relative w-full overflow-hidden py-20 lg:py-28"
     >
       <div className="container-fluid grid items-center gap-16 lg:grid-cols-2">
         <div
@@ -153,8 +153,8 @@ export default function Ambition() {
 
         <div className="relative flex flex-col gap-6">
           <div className="text-right">
-            <p className="text-secondary text-xl">No challenge is too</p>
-            <h2 className="font-display text-secondary text-6xl font-bold sm:text-7xl">
+            <p className="theme-fg text-xl">No challenge is too</p>
+            <h2 className="font-display theme-fg text-6xl font-bold sm:text-7xl">
               GREAT
             </h2>
           </div>
@@ -163,13 +163,13 @@ export default function Ambition() {
 
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-secondary text-xl">No goals is too</p>
-              <h2 className="font-display text-secondary text-6xl font-bold sm:text-7xl">
+              <p className="theme-fg text-xl">No goals is too</p>
+              <h2 className="font-display theme-fg text-6xl font-bold sm:text-7xl">
                 BIG
               </h2>
             </div>
 
-            <p className="text-secondary/70 max-w-xs text-lg leading-8">
+            <p className="theme-fg max-w-xs text-lg leading-8 opacity-70">
               We push the limits, tread paths others don&apos;t, and discover
               the magic that lies when you go beyond.
             </p>

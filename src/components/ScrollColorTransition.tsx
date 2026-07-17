@@ -11,6 +11,7 @@ const THEMES: Record<string, { bg: string; fg: string; foreground: "light" | "da
   light: { bg: "#ffffff", fg: "#231812", foreground: "dark" },
   dark: { bg: "#231812", fg: "#ffffff", foreground: "light" },
   gray: { bg: "#eeedec", fg: "#231812", foreground: "dark" },
+  cream: { bg: "#F7ECE4", fg: "#231812", foreground: "dark" },
 };
 const DEFAULT_THEME = "light";
 const DURATION = 0.7;

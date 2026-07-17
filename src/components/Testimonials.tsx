@@ -206,11 +206,11 @@ export default function Testimonials() {
   return (
     <section
       data-theme-section="light"
-      className="relative w-full bg-white py-20 lg:py-28"
+      className="theme-bg relative w-full py-20 lg:py-28"
     >
       <div className="container-fluid grid grid-cols-[1fr_auto_1fr] items-center gap-6">
         <div />
-        <h2 className="font-display text-secondary text-center text-4xl font-bold sm:text-5xl">
+        <h2 className="font-display theme-fg text-center text-4xl font-bold sm:text-5xl">
           What do clients say
           <br />
           about us?

@@ -187,9 +187,12 @@ export default function OurWork() {
   }, []);
 
   return (
-    <section className="relative w-full bg-white overflow-visible">
+    <section
+      data-theme-section="dark"
+      className="theme-bg relative w-full overflow-visible"
+    >
       <div className="container-fluid">
-        <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
+        <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
           Some of our work
         </h2>
       </div>
@@ -225,7 +228,7 @@ export default function OurWork() {
               type="button"
               onClick={() => advanceMobile(-1)}
               aria-label="Previous project"
-              className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity"
+              className="theme-fg flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-opacity"
             >
               <Arrow className="h-4 w-4 -rotate-90" />
             </button>
