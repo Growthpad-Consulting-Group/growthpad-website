@@ -2,14 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { Arrow } from "@/components/ArrowGroup";
 
 export default function Modal({
   open,
   onClose,
+  onPrev,
+  onNext,
+  prevDisabled = false,
+  nextDisabled = false,
   children,
 }: {
   open: boolean;
   onClose: () => void;
+  onPrev?: () => void;
+  onNext?: () => void;
+  prevDisabled?: boolean;
+  nextDisabled?: boolean;
   children: React.ReactNode;
 }) {
   const [visible, setVisible] = useState(false);
@@ -22,6 +31,8 @@ export default function Modal({
 
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && onPrev && !prevDisabled) onPrev();
+      if (e.key === "ArrowRight" && onNext && !nextDisabled) onNext();
     };
     document.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
@@ -36,7 +47,7 @@ export default function Modal({
       cancelAnimationFrame(raf);
       setVisible(false);
     };
-  }, [open, onClose]);
+  }, [open, onClose, onPrev, onNext, prevDisabled, nextDisabled]);
 
   useEffect(() => {
     if (open || !mounted) return;
@@ -72,6 +83,36 @@ export default function Modal({
           />
         </svg>
       </button>
+
+      {onPrev && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
+          disabled={prevDisabled}
+          aria-label="Previous"
+          className="absolute top-1/2 left-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-30 sm:left-6"
+        >
+          <Arrow className="h-4 w-4 -rotate-90" />
+        </button>
+      )}
+
+      {onNext && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          disabled={nextDisabled}
+          aria-label="Next"
+          className="bg-primary hover:bg-primary/90 absolute top-1/2 right-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white transition-colors disabled:cursor-not-allowed disabled:opacity-30 sm:right-6"
+        >
+          <Arrow className="h-4 w-4" />
+        </button>
+      )}
 
       <div
         onClick={(e) => e.stopPropagation()}

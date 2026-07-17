@@ -9,6 +9,7 @@ import Clients from "@/components/Clients";
 import OfficeGallery from "@/components/OfficeGallery";
 import OurWork from "@/components/OurWork";
 import Testimonials from "@/components/Testimonials";
+import TeamStories from "@/components/TeamStories";
 import Partners from "@/components/Partners";
 import Affiliations from "@/components/Affiliations";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
@@ -45,6 +46,7 @@ export default function Home() {
       <SectionAnimate variant="fade-up" delay={0.15}>
         <Affiliations />
       </SectionAnimate>
+      <TeamStories />
     </div>
   );
 }
