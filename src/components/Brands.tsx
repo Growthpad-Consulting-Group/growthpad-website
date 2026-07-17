@@ -7,7 +7,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Arrow } from "@/components/ArrowGroup";
 import { brands } from "@/data/brands";
-import ScrambleText from "@/components/ScrambleText";
 
 export default function Brands() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,11 +48,9 @@ export default function Brands() {
         <div className="container-fluid flex h-full flex-col justify-center gap-10 py-16">
           <div className="theme-fg flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="font-display max-w-xl text-3xl leading-tight sm:text-4xl lg:text-5xl">
-              <span className="block font-light">
-                <ScrambleText text="Our Brands," delay={0.1} />
-              </span>
+              <span className="block font-light">Our Brands,</span>
               <span className="text-primary block font-bold">
-                <ScrambleText text="Your Growth Partners" delay={0.3} />
+                Your Growth Partners
               </span>
             </h2>
             <p className="max-w-sm text-lg leading-8 opacity-70">

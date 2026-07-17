@@ -262,7 +262,7 @@ export default function LogoShowcase() {
   return (
     <div
       role="list"
-      className="home-new-marquee-wrap grid w-full overflow-clip max-h-[12.75rem] sm:max-h-[6.375rem] grid-cols-3 sm:grid-cols-6"
+      className="w-full gap-0 grid w-full overflow-clip max-h-[12.75rem] sm:max-h-[6.375rem] grid-cols-3 sm:grid-cols-6"
       data-anime-logo-count={DESKTOP_COUNT}
       data-anime-logo-count-mobile={MOBILE_COUNT}
       data-logo-stagger-count={visibleCount}

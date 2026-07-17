@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
 import { ourWork, type CaseStudy, type MediaItem } from "@/data/ourWork";
-import ScrambleText from "@/components/ScrambleText";
 
 const CARD_TOP_OFFSET_PX = 16;
 
@@ -180,7 +179,7 @@ export default function OurWork() {
     <section className="relative w-full bg-white overflow-visible">
       <div className="container-fluid">
         <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
-          <ScrambleText text="Some of our work" />
+          Some of our work
         </h2>
       </div>
 

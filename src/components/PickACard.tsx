@@ -5,7 +5,6 @@ import gsap from "gsap";
 import Link from "next/link";
 import { Arrow } from "@/components/ArrowGroup";
 import { pickACard } from "@/data/pickACard";
-import ScrambleText from "@/components/ScrambleText";
 
 const FAN_ROTATE_DEG = 9;
 const FAN_OFFSET_X = 130;
@@ -102,7 +101,7 @@ export default function PickACard() {
     >
       <div className="container-fluid">
         <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
-          <ScrambleText text="How we do it" />
+          How we do it
         </h2>
 
         {/* Mobile/tablet: a swipeable horizontal row instead of the fan —
@@ -175,7 +174,7 @@ export default function PickACard() {
                       ? "shadow-[0_35px_60px_rgba(0,0,0,0.45)] ring-primary ring-1"
                       : isHovered
                         ? "shadow-[0_25px_50px_rgba(240,93,35,0.35)]"
-                        : "shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
+                        : "shadow-[0_20px_45px_rgb(255_255_255_/_13%)]"
                   }`}
                 >
                   <p className="font-display absolute top-0 left-0 p-6 text-lg leading-snug font-bold text-white">

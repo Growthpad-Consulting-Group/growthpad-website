@@ -66,9 +66,35 @@ function PhotoTile({
 }
 
 export default function HeroGrid() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Second wave after the hero text's own stagger (delay 0.15 +
+      // ~4 * 0.12 stagger) finishes settling. Explicit "to" opacity
+      // (fromTo, not from): each row's own opacity-0 class already set it
+      // to 0 before this runs, so gsap.from's implicit current-value
+      // capture would read 0 and the rows would never fade back in.
+      gsap.fromTo(
+        ".hero-grid-row",
+        { opacity: 0, scale: 0.92 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          delay: 0.4,
+          ease: "power3.out",
+        },
+      );
+    }, gridRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-x-4">
+    <div ref={gridRef} className="flex flex-col gap-6">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
         <PhotoTile
           src="/assets/images/hero_image_inner_1.png"
           alt=""
@@ -78,7 +104,7 @@ export default function HeroGrid() {
         <ArrowTile variant="primary" />
       </div>
 
-      <div className="flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
         <ArrowTile variant="dark" />
         <PhotoTile
           src="/assets/images/hero_image_inner_2.png"
@@ -88,7 +114,7 @@ export default function HeroGrid() {
         <ArrowTile variant="muted" />
       </div>
 
-      <div className="flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
         <PhotoTile
           src="/assets/images/hero_image_inner_3.png"
           alt=""
@@ -99,7 +125,7 @@ export default function HeroGrid() {
         <ArrowTile variant="muted" />
       </div>
 
-      <div className="flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
         <ArrowTile variant="muted" />
         <ArrowTile variant="primary" />
         <ArrowTile variant="muted" />

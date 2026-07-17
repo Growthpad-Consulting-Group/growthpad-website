@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ArrowGroup from "@/components/ArrowGroup";
 import { howWeDoIt } from "@/data/howWeDoIt";
-import ScrambleText from "@/components/ScrambleText";
 
 const CARD_TOP_OFFSET_PX = 20;
 const STICK_TOP_PX = 96;
@@ -123,7 +122,7 @@ export default function SpecialtiesTimeline() {
         <div className="theme-fg flex items-start justify-between gap-6">
           <div>
             <h2 className="font-display text-4xl font-bold sm:text-5xl">
-              <ScrambleText text="Our Specialties" />
+              Our Specialties
             </h2>
             <p className="mt-4 max-w-md text-lg leading-8 opacity-60">
               We make bold moves to disrupt the present and build the future

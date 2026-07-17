@@ -8,7 +8,6 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
 import Modal from "@/components/Modal";
 import { testimonials, type Testimonial } from "@/data/testimonials";
-import ScrambleText from "@/components/ScrambleText";
 
 const CARD_TOP_OFFSET_PX = 16;
 
@@ -210,9 +209,9 @@ export default function Testimonials() {
       <div className="container-fluid grid grid-cols-[1fr_auto_1fr] items-center gap-6">
         <div />
         <h2 className="font-display text-secondary text-center text-4xl font-bold sm:text-5xl">
-          <ScrambleText text="What do clients say" delay={0.1} />
+          What do clients say
           <br />
-          <ScrambleText text="about us?" delay={0.3} />
+          about us?
         </h2>
         <ArrowGroup count={5} className="hidden justify-self-end sm:flex" />
       </div>
