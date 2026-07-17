@@ -7,15 +7,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Carousel from "@/components/Carousel";
 import { clients, type Client } from "@/data/clients";
 
-function LogoTile({ client }: { client: Client }) {
+function LogoTile({
+  client,
+  variant = "carousel",
+}: {
+  client: Client;
+  variant?: "grid" | "carousel";
+}) {
   return (
-    <div className="border-secondary/10 group flex aspect-square items-center justify-center border p-6 sm:p-8">
+    <div
+      className={`border-secondary/10 group relative flex aspect-square items-center justify-center border-r border-b p-6 transition-all duration-300 ease-out hover:z-20 hover:scale-[0.96] hover:rounded-2xl hover:border-transparent hover:bg-white hover:shadow-[0_20px_45px_rgba(35,24,18,0.18)] sm:p-8 ${
+        variant === "carousel" ? "border-t border-l" : ""
+      }`}
+    >
       <Image
         src={`/assets/images/clients/${client.logo}`}
         alt={client.name}
-        width={120}
-        height={120}
-        className="h-auto max-h-24 w-full object-contain grayscale transition-all duration-300 ease-out group-hover:scale-110 group-hover:grayscale-0"
+        width={160}
+        height={160}
+        className="h-auto max-h-32 w-full object-contain grayscale transition-all duration-300 ease-out group-hover:grayscale-0"
       />
     </div>
   );
@@ -68,7 +78,7 @@ export default function Clients() {
       <div className="mt-16 lg:hidden">
         <Carousel itemsPerView={2} className="container-fluid">
           {clients.map((client) => (
-            <LogoTile key={client.name} client={client} />
+            <LogoTile key={client.name} client={client} variant="carousel" />
           ))}
         </Carousel>
       </div>
@@ -78,18 +88,7 @@ export default function Clients() {
         className="border-secondary/10 mx-auto mt-16 hidden max-w-6xl border-t border-l lg:grid lg:grid-cols-6"
       >
         {clients.map((client) => (
-          <div
-            key={client.name}
-            className="border-secondary/10 group flex aspect-square items-center justify-center border-r border-b p-6 sm:p-8"
-          >
-            <Image
-              src={`/assets/images/clients/${client.logo}`}
-              alt={client.name}
-              width={120}
-              height={120}
-              className="h-auto max-h-24 w-full object-contain grayscale transition-all duration-300 ease-out group-hover:scale-110 group-hover:grayscale-0"
-            />
-          </div>
+          <LogoTile key={client.name} client={client} variant="grid" />
         ))}
       </div>
     </section>

@@ -3,8 +3,16 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 
-const DARK = "#231812";
-const LIGHT = "#ffffff";
+// Any section can opt into the theme system with data-theme-section="light"
+// | "dark" | "gray" — add a new key here (bg/fg colors + which auxiliary
+// treatment its foreground needs) and it's usable immediately, no other
+// changes required.
+const THEMES: Record<string, { bg: string; fg: string; foreground: "light" | "dark" }> = {
+  light: { bg: "#ffffff", fg: "#231812", foreground: "dark" },
+  dark: { bg: "#231812", fg: "#ffffff", foreground: "light" },
+  gray: { bg: "#eeedec", fg: "#231812", foreground: "dark" },
+};
+const DEFAULT_THEME = "light";
 const DURATION = 0.7;
 const EASE = "sine.inOut";
 
@@ -32,7 +40,9 @@ export default function ScrollColorTransition() {
       document.querySelectorAll<HTMLElement>(".home-logo"),
     );
 
-    const tweenAll = (dark: boolean, instant = false) => {
+    const tweenAll = (themeKey: string, instant = false) => {
+      const theme = THEMES[themeKey] ?? THEMES[DEFAULT_THEME];
+      const isLightForeground = theme.foreground === "light";
       const opts = {
         duration: instant ? 0 : DURATION,
         ease: EASE,
@@ -43,19 +53,21 @@ export default function ScrollColorTransition() {
       // .theme-surface updates automatically from these two variables —
       // no per-element registration needed here.
       gsap.to(document.documentElement, {
-        "--theme-bg": dark ? DARK : LIGHT,
-        "--theme-fg": dark ? LIGHT : DARK,
+        "--theme-bg": theme.bg,
+        "--theme-fg": theme.fg,
         ...opts,
       });
 
       if (logos.length) {
         gsap.to(logos, {
-          filter: dark ? "brightness(0) invert(1)" : "brightness(1) invert(0)",
+          filter: isLightForeground
+            ? "brightness(0) invert(1)"
+            : "brightness(1) invert(0)",
           ...opts,
         });
       }
       if (navLogoLight) {
-        gsap.to(navLogoLight, { opacity: dark ? 1 : 0, ...opts });
+        gsap.to(navLogoLight, { opacity: isLightForeground ? 1 : 0, ...opts });
       }
     };
 
@@ -69,13 +81,13 @@ export default function ScrollColorTransition() {
     // fired last instead of what's actually in view.
     const applyCurrentTheme = (instant = false) => {
       const bottom = rootBottom();
-      let theme = "light";
+      let theme = DEFAULT_THEME;
       sections.forEach((section) => {
         if (section.getBoundingClientRect().top < bottom) {
           theme = section.dataset.themeSection ?? theme;
         }
       });
-      tweenAll(theme === "dark", instant);
+      tweenAll(theme, instant);
     };
 
     // Set the correct starting theme synchronously (no animation) based on

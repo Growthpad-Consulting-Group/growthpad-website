@@ -3,9 +3,10 @@ import About from "@/components/About";
 import Brands from "@/components/Brands";
 import Ambition from "@/components/Ambition";
 import Specialties from "@/components/Specialties";
-import HowWeDoIt from "@/components/HowWeDoIt";
+import SpecialtiesTimeline from "@/components/SpecialtiesTimeline";
 import PickACard from "@/components/PickACard";
 import Clients from "@/components/Clients";
+import OurWork from "@/components/OurWork";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 
 export default function Home() {
@@ -17,9 +18,10 @@ export default function Home() {
       <Brands />
       <Ambition />
       <Specialties />
-      <HowWeDoIt />
+      <SpecialtiesTimeline />
       <PickACard />
       <Clients />
+      <OurWork />
     </div>
   );
 }

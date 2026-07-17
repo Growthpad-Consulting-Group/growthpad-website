@@ -10,7 +10,7 @@ import { howWeDoIt } from "@/data/howWeDoIt";
 const CARD_TOP_OFFSET_PX = 20;
 const STICK_TOP_PX = 96;
 
-export default function HowWeDoIt() {
+export default function SpecialtiesTimeline() {
   const gridRef = useRef<HTMLDivElement>(null);
   const progressLineRef = useRef<HTMLDivElement>(null);
   const progressNumRef = useRef<HTMLDivElement>(null);
@@ -122,7 +122,7 @@ export default function HowWeDoIt() {
         <div className="theme-fg flex items-start justify-between gap-6">
           <div>
             <h2 className="font-display text-4xl font-bold sm:text-5xl">
-              How we do it
+              Our Specialties
             </h2>
             <p className="mt-4 max-w-md text-lg leading-8 opacity-60">
               We make bold moves to disrupt the present and build the future

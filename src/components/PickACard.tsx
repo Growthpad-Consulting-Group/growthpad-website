@@ -60,7 +60,10 @@ function PickBadge() {
             },0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
           />
         </defs>
-        <text className="fill-secondary text-xl font-semibold tracking-wide">
+        <text
+          style={{ fill: "var(--theme-fg)" }}
+          className="text-xl font-semibold tracking-wide"
+        >
           <textPath
             href="#pick-a-card-circle"
             startOffset="0%"
@@ -71,7 +74,7 @@ function PickBadge() {
           </textPath>
         </text>
       </svg>
-      <Arrow className="text-secondary h-20 w-20" />
+      <Arrow className="theme-fg h-20 w-20" />
     </div>
   );
 }
@@ -92,9 +95,12 @@ export default function PickACard() {
   };
 
   return (
-    <section className="relative w-full bg-[#EDEBE8] py-20 lg:py-28">
+    <section
+      data-theme-section="gray"
+      className="theme-bg relative w-full py-20 lg:py-28"
+    >
       <div className="container-fluid">
-        <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
+        <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
           How we do it
         </h2>
 
