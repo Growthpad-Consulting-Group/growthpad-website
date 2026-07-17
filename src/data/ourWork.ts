@@ -18,6 +18,8 @@ export type CaseStudy = {
   className: string;
   bgImage?: string;
   logoClassName?: string;
+  /** Header theme while this card is pinned under it. Defaults to "dark". */
+  theme?: "light" | "dark";
   media: MediaItem[];
 };
 

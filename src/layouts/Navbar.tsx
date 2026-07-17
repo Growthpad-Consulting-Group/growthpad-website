@@ -12,21 +12,45 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    let lastY = window.scrollY;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 8);
+
+      if (isOpen) {
+        lastY = y;
+        return;
+      }
+
+      const delta = y - lastY;
+      if (y <= 8) {
+        setIsHidden(false);
+      } else if (delta > 4) {
+        setIsHidden(true);
+      } else if (delta < -4) {
+        setIsHidden(false);
+      }
+
+      lastY = y;
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isOpen]);
 
   return (
     <header
-      className={`theme-surface sticky top-0 z-60 w-full border-b transition-[backdrop-filter,box-shadow] duration-300 ${
+      style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
+      className={`sticky top-0 z-60 w-full bg-transparent transition-[translate,backdrop-filter,box-shadow] duration-500 ${
         isScrolled
-          ? "shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-xl"
-          : "border-transparent! bg-transparent! shadow-none backdrop-blur-none"
-      }`}
+          ? "shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-[10px]"
+          : "shadow-none backdrop-blur-none"
+      } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       <nav className="container-fluid flex h-24 items-center justify-between">
         <Link href="/" className="relative block h-15.25 w-40 shrink-0">
@@ -70,7 +94,7 @@ export default function Navbar() {
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
-          className="text-secondary relative flex h-10 w-10 items-center justify-center rounded-full md:hidden"
+          className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full md:hidden"
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span

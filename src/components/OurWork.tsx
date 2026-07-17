@@ -136,6 +136,7 @@ export default function OurWork() {
               ref={(el) => {
                 wrappersRef.current[index] = el;
               }}
+              data-theme-section={project.theme ?? "dark"}
               style={{
                 top: 0,
                 paddingTop: `${(index + 1) * CARD_TOP_OFFSET_PX}px`,

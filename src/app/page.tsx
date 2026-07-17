@@ -7,6 +7,7 @@ import SpecialtiesTimeline from "@/components/SpecialtiesTimeline";
 import PickACard from "@/components/PickACard";
 import Clients from "@/components/Clients";
 import OurWork from "@/components/OurWork";
+import Testimonials from "@/components/Testimonials";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <PickACard />
       <Clients />
       <OurWork />
+      <Testimonials />
     </div>
   );
 }
