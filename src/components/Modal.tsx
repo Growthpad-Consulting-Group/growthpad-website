@@ -117,7 +117,7 @@ export default function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{ transitionTimingFunction: ease }}
-        className={`w-full max-w-4xl rounded-4xl bg-linear-to-b from-white/15 to-white/0 p-px shadow-[0_40px_100px_rgba(0,0,0,0.6)] transition-all duration-500 ${
+        className={`w-full max-w-4xl rounded-4xl bg-linear-to-b from-white/15 to-white/0 p-px shadow-2xl shadow-black/60 transition-all duration-500 ${
           visible ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
       >

@@ -171,10 +171,10 @@ export default function PickACard() {
                   }}
                   className={`bg-secondary absolute left-1/2 h-64 w-44 shrink-0 overflow-hidden rounded-3xl text-left transition-transform duration-300 ease-out outline-none focus:outline-none focus-visible:ring-primary focus-visible:ring-2 sm:h-72 sm:w-52 ${
                     isActive
-                      ? "shadow-[0_35px_60px_rgba(0,0,0,0.45)] ring-primary ring-1"
+                      ? "shadow-2xl shadow-black/45 ring-primary ring-1"
                       : isHovered
-                        ? "shadow-[0_25px_50px_rgba(240,93,35,0.35)]"
-                        : "shadow-[0_20px_45px_rgb(255_255_255_/_13%)]"
+                        ? "shadow-2xl shadow-primary/35"
+                        : "shadow-xl shadow-white/13"
                   }`}
                 >
                   <p className="font-display absolute top-0 left-0 p-6 text-lg leading-snug font-bold text-white">
@@ -187,7 +187,7 @@ export default function PickACard() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-2xl bg-white p-8 shadow-[0_1px_30px_rgba(35,24,18,0.08)] lg:ml-auto lg:max-w-md">
+        <div className="mt-12 rounded-2xl bg-white p-8 shadow-lg shadow-secondary/8 transition-shadow duration-700 ease-out hover:shadow-xl hover:shadow-primary/20 lg:ml-auto lg:max-w-md">
           <p className="text-secondary/80 text-lg leading-8">
             {active.description}
           </p>

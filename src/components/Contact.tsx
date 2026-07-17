@@ -14,7 +14,7 @@ export default function Contact() {
     <section
       id="contact"
       data-theme-section="light"
-      className="theme-bg relative w-full overflow-hidden py-20 lg:py-28"
+      className="theme-bg relative w-full overflow-hidden py-20 lg:pt-28 lg:pb-60"
     >
       <ArrowGroup
         count={4}
@@ -24,7 +24,7 @@ export default function Contact() {
       <div className="container-fluid grid items-center gap-16 lg:grid-cols-[7fr_3fr]">
         <form
           onSubmit={handleSubmit}
-          className="bg-secondary flex flex-col gap-4 rounded-2xl p-8 sm:p-10"
+          className="bg-secondary order-2 flex flex-col gap-4 rounded-2xl p-8 sm:p-10 lg:order-1"
         >
           <input
             type="text"
@@ -64,7 +64,7 @@ export default function Contact() {
           </div>
         </form>
 
-        <div className="flex flex-col gap-6">
+        <div className="order-1 flex flex-col gap-6 lg:order-2">
           <h2 className="font-display theme-fg text-6xl leading-[1.05] font-bold sm:text-7xl">
             Let&apos;s Design,
             <br />

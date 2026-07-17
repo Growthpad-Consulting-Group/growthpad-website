@@ -6,9 +6,10 @@ type CtaButtonProps = {
   className?: string;
   circleClassName?: string;
   size?: "md" | "sm";
+  onClick?: () => void;
 } & (
-  | { href: string; type?: never; onClick?: never }
-  | { href?: never; type?: "submit" | "button"; onClick?: () => void }
+  | { href: string; type?: never }
+  | { href?: never; type?: "submit" | "button" }
 );
 
 const SIZES = {
@@ -40,7 +41,7 @@ export default function CtaButton({
   const content = (
     <>
       <span
-        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold text-white transition-colors ${sizes.pill}`}
+        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white transition-colors ${sizes.pill}`}
       >
         {children}
       </span>
@@ -56,7 +57,7 @@ export default function CtaButton({
 
   if (href) {
     return (
-      <Link href={href} className={sharedClassName}>
+      <Link href={href} onClick={onClick} className={sharedClassName}>
         {content}
       </Link>
     );

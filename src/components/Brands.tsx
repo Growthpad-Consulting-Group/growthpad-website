@@ -64,7 +64,7 @@ export default function Brands() {
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="border-secondary/10 hover:border-primary/30 flex h-80 w-75 shrink-0 flex-col justify-between rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-[0_1px_30px_rgba(35,24,18,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(35,24,18,0.12)] sm:w-85"
+                className="border-secondary/10 hover:border-primary/30 flex h-80 w-75 shrink-0 flex-col justify-between rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-lg shadow-secondary/6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-secondary/12 sm:w-85"
               >
                 <div className="relative flex h-12 w-40 items-start">
                   <Image

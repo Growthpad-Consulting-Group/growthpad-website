@@ -48,13 +48,13 @@ export default function OfficeGallery() {
                 key={item.src}
                 className={`flex flex-col gap-6 ${isOffset ? "lg:mt-16 lg:flex-col-reverse" : ""}`}
               >
-                <div className="relative aspect-359/216 w-full overflow-hidden rounded-3xl">
+                <div className="group relative aspect-359/216 w-full overflow-hidden rounded-3xl shadow-lg shadow-secondary/10 transition-shadow duration-300 ease-out hover:shadow-xl hover:shadow-primary/35">
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     sizes="(min-width: 1024px) 33vw, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
                 </div>
 

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
 import { ourWork, type CaseStudy, type MediaItem } from "@/data/ourWork";
 
@@ -31,13 +32,7 @@ function MediaTile({ item }: { item: MediaItem }) {
   );
 }
 
-function WorkCardBody({
-  project,
-  mediaExtra,
-}: {
-  project: CaseStudy;
-  mediaExtra?: React.ReactNode;
-}) {
+function WorkCardBody({ project }: { project: CaseStudy }) {
   return (
     <>
       {project.bgImage && (
@@ -84,34 +79,83 @@ function WorkCardBody({
             <MediaTile key={i} item={item} />
           ))}
         </div>
-
-        {mediaExtra}
       </div>
     </>
   );
 }
 
 export default function OurWork() {
+  const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
   const mobileScrollerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Opacity-only fade-in, kept deliberately separate from the sticky-stack
+  // scroll-scrub effect below and from SectionAnimate (which this section
+  // isn't wrapped in): animating opacity never touches layout/position, so
+  // it can't skew the offsetTop/getBoundingClientRect measurements the
+  // scroll-scrub and goTo() logic below depend on — a `transform`-based
+  // reveal (like SectionAnimate's) could.
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        section,
+        { autoAlpha: 0 },
+        {
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   const goTo = (index: number) => {
     const current = wrappersRef.current[index];
-    const next = wrappersRef.current[index + 1];
     if (!current) return;
 
-    if (!next) {
-      current.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
+    // offsetTop is a static layout value, unaffected by position:sticky —
+    // unlike getBoundingClientRect(), which reports rect.top as 0 for any
+    // wrapper that's currently pinned. It's relative to offsetParent (the
+    // nearest positioned ancestor — the section, not necessarily the grid
+    // div), so we read that dynamically rather than assuming which one it is.
+    const next = wrappersRef.current[index + 1];
+    const target = next ?? current;
+    const offsetParent = target.offsetParent as HTMLElement | null;
+    if (!offsetParent) return;
 
-    // Land one viewport-height before the next card's entrance transition
-    // starts, since sticky cards always report rect.top as 0 (breaks scrollIntoView).
-    const targetY =
-      next.getBoundingClientRect().top + window.scrollY - window.innerHeight;
-    window.scrollTo({ top: targetY, behavior: "smooth" });
+    const parentTop = offsetParent.getBoundingClientRect().top + window.scrollY;
+
+    const targetY = next
+      ? // Land one viewport-height before the card after `next` starts
+        // entering.
+        parentTop + next.offsetTop - window.innerHeight
+      : // Last card: just reach the point where it becomes pinned.
+        parentTop + current.offsetTop;
+
+    // Native window.scrollTo({behavior:"smooth"}) gets cut short here: our
+    // own scrub tweens mutate filter/transform on every scroll tick, which
+    // interrupts Chromium's smooth-scroll animation mid-flight. GSAP's own
+    // scrollTo runs on the same ticker driving ScrollTrigger, so it doesn't
+    // fight itself.
+    gsap.to(window, {
+      scrollTo: { y: targetY },
+      duration: 1,
+      ease: "power2.inOut",
+    });
   };
 
   const advanceMobile = (direction: 1 | -1) => {
@@ -123,7 +167,7 @@ export default function OurWork() {
   };
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     const grid = gridRef.current;
     const contents = contentsRef.current.filter(Boolean) as HTMLDivElement[];
@@ -172,6 +216,11 @@ export default function OurWork() {
                 start: "top bottom",
                 end: "top top",
                 scrub: true,
+                // Flip which card "owns" the shared nav buttons at the
+                // halfway point of this card's transition into the next.
+                onUpdate: (self) => {
+                  setActiveIndex(self.progress > 0.5 ? index + 1 : index);
+                },
               },
             },
           );
@@ -188,6 +237,7 @@ export default function OurWork() {
 
   return (
     <section
+      ref={sectionRef}
       data-theme-section="dark"
       className="theme-bg relative w-full overflow-visible"
     >
@@ -273,34 +323,33 @@ export default function OurWork() {
                 }}
                 className={`relative grid gap-10 overflow-hidden rounded-3xl p-8 will-change-transform sm:p-12 lg:grid-cols-2 lg:items-center lg:p-16 ${project.className}`}
               >
-                <WorkCardBody
-                  project={project}
-                  mediaExtra={
-                    <div className="mt-6 flex items-center justify-end gap-3">
-                      <button
-                        type="button"
-                        onClick={() => goTo(index - 1)}
-                        disabled={index === 0}
-                        aria-label="Previous project"
-                        className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <Arrow className="h-4 w-4 -rotate-90" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => goTo(index + 1)}
-                        disabled={index === ourWork.length - 1}
-                        aria-label="Next project"
-                        className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <Arrow className="h-4 w-4" />
-                      </button>
-                    </div>
-                  }
-                />
+                <WorkCardBody project={project} />
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="sticky bottom-8 z-20 mt-8 flex items-center justify-end gap-3">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex - 1)}
+              disabled={activeIndex === 0}
+              aria-label="Previous project"
+              className="theme-fg flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <Arrow className="h-4 w-4 -rotate-90" />
+            </button>
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex + 1)}
+              disabled={activeIndex === ourWork.length - 1}
+              aria-label="Next project"
+              className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <Arrow className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </section>

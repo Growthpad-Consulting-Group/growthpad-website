@@ -43,7 +43,7 @@ function VideoTile({
 }) {
   return (
     <div
-      className={`group aspect-video overflow-hidden rounded-2xl shadow-[0_10px_25px_rgba(35,24,18,0.1)] transition-shadow duration-300 ease-out hover:shadow-[0_20px_45px_rgba(240,93,35,0.35)] ${className}`}
+      className={`group aspect-video overflow-hidden rounded-2xl shadow-lg shadow-secondary/10 transition-shadow duration-300 ease-out hover:shadow-xl hover:shadow-primary/35 ${className}`}
     >
       <button
         type="button"
@@ -92,10 +92,42 @@ export default function VideoStoryGrid({
   const activeVideo = activeVideoIndex !== null ? videos[activeVideoIndex] : null;
   const playVideo = (story: VideoStory) => setActiveVideoIndex(videos.indexOf(story));
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
   const mobileScrollerRef = useRef<HTMLDivElement>(null);
+
+  // Opacity-only fade-in, kept deliberately separate from the sticky-stack
+  // scroll-scrub effect below and from SectionAnimate (which this section
+  // isn't wrapped in): animating opacity never touches layout/position, so
+  // it can't skew the offsetTop/getBoundingClientRect measurements the
+  // scroll-scrub and goTo() logic below depend on — a `transform`-based
+  // reveal (like SectionAnimate's) could.
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        section,
+        { autoAlpha: 0 },
+        {
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   const advanceMobile = (direction: 1 | -1) => {
     const el = mobileScrollerRef.current;
@@ -222,6 +254,7 @@ export default function VideoStoryGrid({
 
   return (
     <section
+      ref={sectionRef}
       data-theme-section={theme}
       className="theme-bg relative w-full py-20 lg:py-28"
     >

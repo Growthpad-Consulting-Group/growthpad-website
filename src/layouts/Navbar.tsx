@@ -1,12 +1,113 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { navLinks } from "@/data/nav";
+import { navLinks, type NavLink } from "@/data/nav";
+import { Arrow } from "@/components/ArrowGroup";
+import CtaButton from "@/components/CtaButton";
+
+function MobileMenu({
+  isOpen,
+  onNavigate,
+  pathname,
+}: {
+  isOpen: boolean;
+  onNavigate: () => void;
+  pathname: string;
+}) {
+  // SSR has no document to portal into; the client render (post-hydration)
+  // picks this up immediately after.
+  if (typeof document === "undefined") return null;
+
+  // Portalled to document.body: the header this menu toggles from has its
+  // own transform (translate-y) for the hide-on-scroll behavior, and a
+  // transform on an ancestor turns position:fixed descendants into
+  // behaving like position:absolute relative to *that* ancestor instead
+  // of the viewport — which silently collapsed this panel to nothing.
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-secondary fixed inset-x-0 top-24 bottom-0 z-50 flex flex-col overflow-y-auto md:hidden"
+        >
+          <nav className="container-fluid flex flex-1 flex-col justify-center gap-1 py-8">
+            {navLinks.map((link: NavLink, index: number) => {
+              const isActive = link.href === pathname;
+
+              return (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.1 + index * 0.06,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="border-b border-white/10 py-4 first:pt-0"
+                >
+                  <Link
+                    href={link.href}
+                    onClick={onNavigate}
+                    className="group flex items-center justify-between gap-4"
+                  >
+                    <span
+                      className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
+                        isActive
+                          ? "text-primary"
+                          : "text-white group-hover:text-primary"
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                    <Arrow
+                      className={`h-5 w-5 shrink-0 -rotate-45 text-white/40 transition-all group-hover:rotate-0 group-hover:text-primary ${
+                        isActive ? "rotate-0 text-primary" : ""
+                      }`}
+                    />
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </nav>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.1 + navLinks.length * 0.06,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="container-fluid flex flex-col items-start gap-4 border-t border-white/10 py-6"
+          >
+            <p className="text-sm text-white/50">
+              A Cross-Africa Communication &amp; Technology Firm
+            </p>
+            <CtaButton
+              href="#contact"
+              size="sm"
+              onClick={onNavigate}
+              circleClassName="bg-primary text-white"
+            >
+              Get in touch
+            </CtaButton>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body,
+  );
+}
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -43,12 +144,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
+    <>
     <header
       style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
       className={`sticky top-0 z-60 w-full bg-transparent transition-[translate,backdrop-filter,box-shadow] duration-500 ${
         isScrolled
-          ? "shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-[10px]"
+          ? "shadow-lg shadow-secondary/6 backdrop-blur-[10px]"
           : "shadow-none backdrop-blur-none"
       } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
     >
@@ -114,49 +224,13 @@ export default function Navbar() {
           </AnimatePresence>
         </button>
       </nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-white/40 bg-white/70 shadow-[0_1px_20px_rgba(35,24,18,0.06)] backdrop-blur-xl md:hidden"
-          >
-            <div className="container-fluid flex flex-col gap-2 py-4">
-              {navLinks.map((link, index) => {
-                const isActive = link.href === pathname;
-
-                return (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.25,
-                      delay: index * 0.04,
-                      ease: "easeOut",
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={
-                        isActive
-                          ? "bg-primary inline-flex h-11 items-center rounded-full px-5 text-md font-semibold text-white"
-                          : "text-secondary/80 inline-flex h-11 items-center rounded-full px-5 text-md font-medium"
-                      }
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
+
+    <MobileMenu
+      isOpen={isOpen}
+      onNavigate={() => setIsOpen(false)}
+      pathname={pathname ?? "/"}
+    />
+    </>
   );
 }

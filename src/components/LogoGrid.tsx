@@ -20,7 +20,7 @@ function LogoTile({
 }) {
   return (
     <div
-      className={`border-secondary/10 group relative flex aspect-square items-center justify-center border-r border-b p-6 transition-all duration-500 ease-out hover:z-20 hover:scale-[0.96] hover:rounded-2xl hover:border-transparent hover:bg-white hover:shadow-[0_20px_45px_rgba(35,24,18,0.18)] sm:p-8 ${
+      className={`border-secondary/10 group relative flex aspect-square items-center justify-center border-r border-b p-6 transition-all duration-700 ease-out hover:z-20 hover:scale-[0.96] hover:rounded-2xl hover:border-transparent hover:bg-white hover:shadow-xl hover:shadow-primary/20 sm:p-8 ${
         variant === "carousel" ? "border-t border-l" : ""
       }`}
     >
@@ -29,7 +29,7 @@ function LogoTile({
         alt={item.name}
         width={160}
         height={160}
-        className="h-auto max-h-32 w-full object-contain grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
+        className="h-auto max-h-32 w-full object-contain grayscale transition-all duration-700 ease-out group-hover:grayscale-0"
       />
     </div>
   );

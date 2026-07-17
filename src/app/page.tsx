@@ -40,7 +40,9 @@ export default function Home() {
       </SectionAnimate>
       <OurWork />
       <Testimonials />
-      <Partners />
+      <SectionAnimate variant="fade-up" delay={0.05}>
+        <Partners />
+      </SectionAnimate>
       <SectionAnimate variant="fade-up" delay={0.1}>
         <OfficeGallery />
       </SectionAnimate>
