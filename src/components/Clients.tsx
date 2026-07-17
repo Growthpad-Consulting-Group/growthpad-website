@@ -46,9 +46,9 @@ export default function Clients() {
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.9,
+          duration: 0.1,
           ease: "power2.out",
-          stagger: 0.9,
+          stagger: 0.1,
           scrollTrigger: {
             trigger: gridRef.current,
             start: "top 85%",

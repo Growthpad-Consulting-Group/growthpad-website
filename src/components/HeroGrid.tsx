@@ -59,7 +59,7 @@ function PhotoTile({
   return (
     <div className="relative h-16 flex-1 overflow-hidden rounded-full sm:h-20">
       <div ref={imgWrapRef} className="absolute inset-0">
-        <Image src={src} alt={alt} fill className="object-cover" />
+        <Image src={src} alt={alt} fill sizes="80px" className="object-cover" />
       </div>
     </div>
   );

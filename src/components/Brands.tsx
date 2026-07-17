@@ -67,13 +67,13 @@ export default function Brands() {
                 key={brand.name}
                 className="border-secondary/10 hover:border-primary/30 flex h-80 w-75 shrink-0 flex-col justify-between rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-[0_1px_30px_rgba(35,24,18,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(35,24,18,0.12)] sm:w-85"
               >
-                <div className="flex h-12 items-start">
+                <div className="relative flex h-12 w-40 items-start">
                   <Image
                     src={`/assets/images/brands/${brand.logo}`}
                     alt={brand.name}
-                    width={160}
-                    height={48}
-                    className="h-full w-auto object-contain"
+                    fill
+                    sizes="160px"
+                    className="object-contain object-left"
                   />
                 </div>
 

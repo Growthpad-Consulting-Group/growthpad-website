@@ -146,14 +146,14 @@ function LogoWrap({ file, phase }: { file: string; phase: SlotPhase }) {
     <div className="logo-wrap flex h-full w-full items-center justify-center overflow-clip">
       <div
         ref={innerRef}
-        className="flex h-full w-full items-center justify-center will-change-[transform,opacity]"
+        className="relative flex h-full w-full items-center justify-center will-change-[transform,opacity]"
       >
         <Image
           src={`/assets/images/clients/${file}`}
           alt=""
-          width={200}
-          height={80}
-          className="home-logo h-full w-full object-contain"
+          fill
+          sizes="200px"
+          className="home-logo object-contain"
         />
       </div>
     </div>

@@ -53,6 +53,8 @@ function VideoTile({
           alt={testimonial.name}
           fill
           unoptimized
+          sizes="(min-width: 1024px) 33vw, 100vw"
+          loading="eager"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/25 transition-colors duration-300 group-hover:bg-black/35" />

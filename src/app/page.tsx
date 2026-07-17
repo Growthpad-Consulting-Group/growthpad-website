@@ -8,6 +8,7 @@ import PickACard from "@/components/PickACard";
 import Clients from "@/components/Clients";
 import OurWork from "@/components/OurWork";
 import Testimonials from "@/components/Testimonials";
+import Partners from "@/components/Partners";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 import SectionAnimate from "@/components/SectionAnimate";
 
@@ -35,6 +36,7 @@ export default function Home() {
       </SectionAnimate>
       <OurWork />
       <Testimonials />
+      <Partners />
     </div>
   );
 }

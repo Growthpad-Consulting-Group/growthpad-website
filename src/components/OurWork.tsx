@@ -20,6 +20,11 @@ function MediaTile({ item }: { item: MediaItem }) {
         src={item.src}
         alt={item.alt}
         fill
+        sizes={
+          item.fullRow
+            ? "(min-width: 1024px) 45vw, 90vw"
+            : "(min-width: 1024px) 22vw, 45vw"
+        }
         className=" object-contain transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
@@ -36,7 +41,13 @@ function WorkCardBody({
   return (
     <>
       {project.bgImage && (
-        <Image src={project.bgImage} alt="" fill className="object-cover" />
+        <Image
+          src={project.bgImage}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
       )}
 
       <div className="relative flex flex-col gap-8">

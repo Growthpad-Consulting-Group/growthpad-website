@@ -146,6 +146,7 @@ export default function Ambition() {
             src="/assets/images/misc/nochallenge.png"
             alt="A community looking out over the city, embracing ambition"
             fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

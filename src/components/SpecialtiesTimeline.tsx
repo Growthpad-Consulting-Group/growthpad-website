@@ -204,6 +204,7 @@ export default function SpecialtiesTimeline() {
                       src={step.image}
                       alt={step.title}
                       fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-contain"
                     />
                   </div>
