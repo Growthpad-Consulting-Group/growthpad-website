@@ -49,7 +49,7 @@ export default function About() {
 
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div ref={imageWrapRef} className="relative">
-            <div className="notch-image relative aspect-595/409 w-full max-w-xl overflow-hidden">
+            <div className="relative aspect-595/409 w-full max-w-xl overflow-hidden">
               <Image
                 src="/assets/images/about.png"
                 alt="The Growthpad team collaborating"

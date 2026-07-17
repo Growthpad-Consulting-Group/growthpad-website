@@ -140,6 +140,15 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [menuTop, setMenuTop] = useState(96);
+  const navLinksRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [hoverRect, setHoverRect] = useState<{ left: number; width: number } | null>(null);
+  // Kept around after the mouse leaves so the highlight has a position to
+  // fade out from — without it, dropping `left`/`width` from `animate`
+  // lets them snap to the pill's un-animated base (left-0), so it looked
+  // like it was darting to the left edge before fading, instead of just
+  // fading out in place.
+  const [lastHoverRect, setLastHoverRect] = useState<{ left: number; width: number } | null>(null);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -226,19 +235,24 @@ export default function Navbar() {
           to a plain frosted blur there rather than breaking. */}
       <div
         aria-hidden
+        style={{
+          filter: isScrolled ? "url(#glass-distortion)" : undefined,
+          transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
         className={`pointer-events-none absolute inset-0 rounded-[inherit] backdrop-blur-[3px] transition-opacity duration-500 ${
           isScrolled ? "opacity-100" : "opacity-0"
         }`}
-        style={{ filter: isScrolled ? "url(#glass-distortion)" : undefined }}
       />
       <div
         aria-hidden
+        style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
         className={`pointer-events-none absolute inset-0 rounded-[inherit] bg-white/20 transition-opacity duration-500 ${
           isScrolled ? "opacity-100" : "opacity-0"
         }`}
       />
       <div
         aria-hidden
+        style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
         className={`pointer-events-none absolute inset-0 rounded-[inherit] shadow-lg shadow-secondary/6 ring-1 ring-white/25 ring-inset transition-opacity duration-500 ${
           isScrolled ? "opacity-100" : "opacity-0"
         }`}
@@ -246,7 +260,7 @@ export default function Navbar() {
 
       <nav
         style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
-        className={`relative mx-auto flex w-full max-w-350 items-center justify-between transition-[height,padding] duration-500 ${
+        className={`relative mx-auto flex w-full items-center justify-between transition-[height,padding] duration-500 ${
           // container-fluid's padding is sized for full-width sections;
           // the pill is already inset by its own margin, so it only needs
           // a small fixed padding to keep the logo close to its edge.
@@ -269,7 +283,29 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="theme-fg hidden items-center gap-8 md:flex">
+        <div
+          ref={navLinksRef}
+          onMouseLeave={() => setHoverRect(null)}
+          className="theme-fg relative ml-auto hidden items-center gap-1 md:flex"
+        >
+          {/* One persistent highlight, measured off whichever link is
+              hovered and animated via `animate` (not layoutId): a
+              layoutId'd element that mounts fresh per-link unmounts
+              whenever the pointer briefly has no target between two
+              links (onMouseLeave firing before the next onMouseEnter is
+              common), which kills the FLIP interpolation and makes it
+              fade in at the new spot instead of sliding. This element
+              never unmounts, so its position always animates smoothly. */}
+          <motion.span
+            animate={{
+              opacity: hoverRect ? 1 : 0,
+              left: (hoverRect ?? lastHoverRect)?.left,
+              width: (hoverRect ?? lastHoverRect)?.width,
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 36, mass: 0.6 }}
+            className="bg-primary/80 ring-1 ring-primary/40 ring-inset shadow-lg shadow-black/10 pointer-events-none absolute top-0 left-0 z-0 h-10 w-10 rounded-full backdrop-blur-md"
+          />
+
           {navLinks.map((link) => {
             const isActive = link.href === pathname;
 
@@ -277,11 +313,27 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={
+                ref={(el) => {
+                  linkRefs.current[link.href] = el;
+                }}
+                onMouseEnter={() => {
+                  const el = linkRefs.current[link.href];
+                  const container = navLinksRef.current;
+                  if (!el || !container) return;
+                  const elRect = el.getBoundingClientRect();
+                  const containerRect = container.getBoundingClientRect();
+                  const rect = {
+                    left: elRect.left - containerRect.left,
+                    width: elRect.width,
+                  };
+                  setHoverRect(rect);
+                  setLastHoverRect(rect);
+                }}
+                className={`relative inline-flex h-10 items-center rounded-full px-5 text-md transition-colors ${
                   isActive
-                    ? "bg-primary hover:bg-primary/90 inline-flex h-10 items-center rounded-full px-5 text-md font-semibold text-white transition-colors"
-                    : "hover:bg-primary -mx-5 inline-flex h-10 items-center rounded-full px-5 text-md font-medium opacity-80 transition-colors hover:text-white hover:opacity-100"
-                }
+                    ? "bg-primary font-semibold text-white"
+                    : "font-medium opacity-80 hover:text-white hover:opacity-100"
+                }`}
               >
                 {link.label}
               </Link>

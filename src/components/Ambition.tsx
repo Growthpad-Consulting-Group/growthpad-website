@@ -140,7 +140,7 @@ export default function Ambition() {
       <div className="container-fluid grid items-center gap-16 lg:grid-cols-2">
         <div
           ref={imageWrapRef}
-          className="notch-image relative aspect-589/421 w-full overflow-hidden"
+          className="relative aspect-589/421 w-full overflow-hidden"
         >
           <Image
             src="/assets/images/misc/nochallenge.png"

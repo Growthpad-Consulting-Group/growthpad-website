@@ -196,7 +196,7 @@ export default function SpecialtiesTimeline() {
                     index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
                 >
-                  <div className="notch-image relative aspect-16/10 w-full overflow-hidden rounded-2xl">
+                  <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl">
                     <span className="bg-primary absolute -top-4 -left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white shadow-lg md:hidden">
                       {index + 1}
                     </span>

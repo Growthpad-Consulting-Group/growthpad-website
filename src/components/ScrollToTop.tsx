@@ -50,7 +50,7 @@ export default function ScrollToTop() {
       style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
       className={`group fixed right-6 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full backdrop-blur-sm transition-all duration-500 sm:right-10 sm:bottom-10 ${
         visible
-          ? "translate-y-0 opacity-100"
+          ? "-translate-y-10 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >

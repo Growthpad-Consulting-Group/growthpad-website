@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { useRef, useState } from "react";
 import { Arrow } from "@/components/ArrowGroup";
 import CtaButton from "@/components/CtaButton";
+import RotatingBadge from "@/components/RotatingBadge";
 import { pickACard } from "@/data/pickACard";
 
 const FAN_ROTATE_DEG = 9;
@@ -18,63 +18,6 @@ function CardStripe() {
           className={`h-6 w-6 shrink-0 ${i % 2 === 0 ? "text-primary" : "text-white"}`}
         />
       ))}
-    </div>
-  );
-}
-
-function PickBadge() {
-  const ringRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    if (!ringRef.current) return;
-    const anim = gsap.to(ringRef.current, {
-      rotate: 360,
-      duration: 14,
-      repeat: -1,
-      ease: "none",
-      transformOrigin: "50% 50%",
-    });
-    return () => {
-      anim.kill();
-    };
-  }, []);
-
-  // repeat(4) guarantees more raw text than the circle needs; textLength
-  // + lengthAdjust then compresses it to exactly match the circumference,
-  // so the loop always meets seamlessly regardless of font metrics
-  // (repeat-count-by-trial-and-error was never going to be reliable —
-  // actual rendered text width varies by font/browser, but a forced
-  // textLength can't drift).
-  const text = "Pick a Card . ".repeat(4);
-  const radius = 80;
-  const circumference = 2 * Math.PI * radius;
-
-  return (
-    <div className="relative flex h-64 w-64 items-center justify-center">
-      <svg ref={ringRef} viewBox="0 0 240 240" className="absolute inset-0">
-        <defs>
-          <path
-            id="pick-a-card-circle"
-            d={`M 120, 120 m -${radius}, 0 a ${radius},${radius} 0 1,1 ${
-              radius * 2
-            },0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
-          />
-        </defs>
-        <text
-          style={{ fill: "var(--theme-fg)" }}
-          className="text-xl font-semibold tracking-wide"
-        >
-          <textPath
-            href="#pick-a-card-circle"
-            startOffset="0%"
-            textLength={circumference}
-            lengthAdjust="spacingAndGlyphs"
-          >
-            {text}
-          </textPath>
-        </text>
-      </svg>
-      <Arrow className="theme-fg h-20 w-20" />
     </div>
   );
 }
@@ -134,7 +77,7 @@ export default function PickACard() {
 
         <div className="mt-16 hidden gap-16 pt-16 lg:grid lg:grid-cols-[auto_1fr] lg:items-end lg:gap-10">
           <div className="lg:translate-y-12">
-            <PickBadge />
+            <RotatingBadge text="Pick a Card" />
           </div>
 
           <div className="relative h-72 sm:h-80">

@@ -56,16 +56,3 @@ body {
   margin-inline: auto;
   padding-inline: clamp(1rem, 5vw, 8rem);
 }
-
-.notch-image {
-  clip-path: polygon(
-    0% 0%,
-    82% 0%,
-    82% 18%,
-    100% 18%,
-    100% 100%,
-    18% 100%,
-    18% 82%,
-    0% 82%
-  );
-}
