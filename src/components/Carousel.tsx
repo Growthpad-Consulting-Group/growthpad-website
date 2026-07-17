@@ -152,7 +152,7 @@ export default function Carousel({
           aria-label="Previous"
           className="bg-secondary flex h-11 w-11 items-center justify-center rounded-full text-white"
         >
-          <Arrow className="h-4 w-4 rotate-180" />
+          <Arrow className="h-4 w-4 -rotate-90" />
         </button>
         <button
           type="button"

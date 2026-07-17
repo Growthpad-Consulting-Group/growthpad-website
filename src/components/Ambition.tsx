@@ -4,6 +4,7 @@ import { useEffect, useId, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrambleText from "@/components/ScrambleText";
 
 const ARROW_PATH =
   "M359.869 331L359.869 97.6809C359.869 43.7638 316.154 -6.10352e-05 262.228 -6.10352e-05L-3.05176e-05 -6.10352e-05L-3.05176e-05 40.8696L262.228 40.8696C264.184 40.8696 266.118 40.9563 268.027 41.1291C270.773 41.3883 273.122 43.2454 274.055 45.8375C274.987 48.4297 274.34 51.3252 272.388 53.2693C223.276 102.434 42.3693 283.284 42.3693 283.284C56.1478 291.967 67.8193 303.675 76.4249 317.5L306.59 87.3991C308.551 85.455 311.461 84.8063 314.069 85.7136C316.677 86.664 318.512 88.9966 318.784 91.7616C318.944 93.7057 319.047 95.6935 319.047 97.6809L319.047 331L359.869 331Z";
@@ -48,12 +49,12 @@ function BigArrow({ className }: { className?: string }) {
       timeline
         .to(path, {
           strokeDashoffset: 0,
-          duration: 2.6,
+          duration: 2.2,
           ease: "sine.inOut",
         })
         .to(
           [edgeStop, edgeStop2],
-          { attr: { offset: 1 }, duration: 2.2, ease: "power1.inOut" },
+          { attr: { offset: 1 }, duration: 2.0, ease: "power1.inOut" },
           "-=0.4",
         );
     });
@@ -154,7 +155,7 @@ export default function Ambition() {
           <div className="text-right">
             <p className="text-secondary text-xl">No challenge is too</p>
             <h2 className="font-display text-secondary text-6xl font-bold sm:text-7xl">
-              GREAT
+              <ScrambleText text="GREAT" />
             </h2>
           </div>
 
@@ -164,7 +165,7 @@ export default function Ambition() {
             <div>
               <p className="text-secondary text-xl">No goals is too</p>
               <h2 className="font-display text-secondary text-6xl font-bold sm:text-7xl">
-                BIG
+                <ScrambleText text="BIG" />
               </h2>
             </div>
 

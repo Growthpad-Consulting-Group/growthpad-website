@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Carousel from "@/components/Carousel";
 import { clients, type Client } from "@/data/clients";
+import ScrambleText from "@/components/ScrambleText";
 
 function LogoTile({
   client,
@@ -65,7 +66,7 @@ export default function Clients() {
     <section className="relative w-full bg-white py-20 lg:py-28">
       <div className="container-fluid flex flex-col items-center text-center">
         <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
-          You&apos;re in good hands.
+          <ScrambleText text="You're in good hands." />
         </h2>
         <p className="text-secondary/70 mt-4 text-lg leading-8">
           Growthpad is trusted by industry leaders

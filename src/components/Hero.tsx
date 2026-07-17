@@ -48,7 +48,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero-marquee container-fluid relative z-10 pb-8">
+      <div className="hero-marquee container-fluid relative z-10 pt-4 pb-4 sm:pt-0 sm:pb-8">
         <LogoShowcase />
       </div>
     </section>

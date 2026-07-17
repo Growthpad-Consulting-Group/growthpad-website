@@ -42,7 +42,7 @@ const POOL = [
 ];
 
 const DESKTOP_COUNT = 6;
-const MOBILE_COUNT = 9;
+const MOBILE_COUNT = 6;
 const MOBILE_MQ = "(max-width: 767px)";
 const EXIT_MS = 700;
 const ENTER_MS = 700;
@@ -259,12 +259,10 @@ export default function LogoShowcase() {
     return () => timeouts.forEach(clearTimeout);
   }, [isMobile]);
 
-  const hiddenItems = allItems.slice(visibleCount);
-
   return (
     <div
       role="list"
-      className="home-new-marquee-wrap grid w-full overflow-clip"
+      className="home-new-marquee-wrap grid w-full overflow-clip max-h-[12.75rem] sm:max-h-[6.375rem] grid-cols-3 sm:grid-cols-6"
       data-anime-logo-count={DESKTOP_COUNT}
       data-anime-logo-count-mobile={MOBILE_COUNT}
       data-logo-stagger-count={visibleCount}
@@ -280,28 +278,6 @@ export default function LogoShowcase() {
           data-initially-visible={groupIndex === 0 ? "True" : "False"}
         >
           <LogoWrap file={file} phase={slotPhases[index] ?? "idle"} />
-        </div>
-      ))}
-
-      {hiddenItems.map((item) => (
-        <div
-          key={`${item.group}-${item.order}-${item.file}`}
-          role="listitem"
-          className="home-logos-wrap flex h-[6.375rem] w-full items-center justify-center overflow-clip"
-          style={{ display: "none" }}
-          data-logo-group={item.group}
-          data-logo-order={item.order}
-          data-initially-visible={item.initiallyVisible ? "True" : "False"}
-        >
-          <div className="logo-wrap flex h-full w-full items-center justify-center px-3 sm:px-5">
-            <Image
-              src={`/assets/images/clients/${item.file}`}
-              alt=""
-              width={200}
-              height={80}
-              className="home-logo h-full w-full object-contain"
-            />
-          </div>
         </div>
       ))}
     </div>

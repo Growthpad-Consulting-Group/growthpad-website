@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
 import Modal from "@/components/Modal";
 import { testimonials, type Testimonial } from "@/data/testimonials";
+import ScrambleText from "@/components/ScrambleText";
 
 const CARD_TOP_OFFSET_PX = 16;
 
@@ -75,26 +77,53 @@ export default function Testimonials() {
   const gridRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileScrollerRef = useRef<HTMLDivElement>(null);
+
+  const advanceMobile = (direction: 1 | -1) => {
+    const el = mobileScrollerRef.current;
+    const tile = el?.firstElementChild as HTMLElement | null;
+    if (!el || !tile) return;
+    const step = tile.getBoundingClientRect().width + 16; // tile + gap-4
+    el.scrollBy({ left: direction * step, behavior: "smooth" });
+  };
 
   const goTo = (index: number) => {
     const current = wrappersRef.current[index];
-    const next = wrappersRef.current[index + 1];
     if (!current) return;
 
-    if (!next) {
-      current.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
+    // offsetTop is a static layout value, unaffected by position:sticky —
+    // unlike getBoundingClientRect(), which reports rect.top as 0 for any
+    // wrapper that's currently pinned. It's relative to offsetParent (the
+    // nearest positioned ancestor — the section, not necessarily the grid
+    // div), so we read that dynamically rather than assuming which one it is.
+    const next = wrappersRef.current[index + 1];
+    const target = next ?? current;
+    const offsetParent = target.offsetParent as HTMLElement | null;
+    if (!offsetParent) return;
 
-    // Land one viewport-height before the next card's entrance transition
-    // starts, since sticky cards always report rect.top as 0 (breaks scrollIntoView).
-    const targetY =
-      next.getBoundingClientRect().top + window.scrollY - window.innerHeight;
-    window.scrollTo({ top: targetY, behavior: "smooth" });
+    const parentTop = offsetParent.getBoundingClientRect().top + window.scrollY;
+
+    const targetY = next
+      ? // Land one viewport-height before the card after `next` starts
+        // entering.
+        parentTop + next.offsetTop - window.innerHeight
+      : // Last card: just reach the point where it becomes pinned.
+        parentTop + current.offsetTop;
+
+    // Native window.scrollTo({behavior:"smooth"}) gets cut short here: our
+    // own scrub tweens mutate filter/transform on every scroll tick, which
+    // interrupts Chromium's smooth-scroll animation mid-flight. GSAP's own
+    // scrollTo runs on the same ticker driving ScrollTrigger, so it doesn't
+    // fight itself.
+    gsap.to(window, {
+      scrollTo: { y: targetY },
+      duration: 1,
+      ease: "power2.inOut",
+    });
   };
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     const grid = gridRef.current;
     const contents = contentsRef.current.filter(Boolean) as HTMLDivElement[];
@@ -178,18 +207,55 @@ export default function Testimonials() {
       data-theme-section="light"
       className="relative w-full bg-white py-20 lg:py-28"
     >
-      <div className="container-fluid">
-        <div className="flex items-start justify-between gap-6">
-          <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
-            What do clients say
-            <br />
-            about us?
-          </h2>
-          <ArrowGroup count={5} className="hidden sm:flex" />
+      <div className="container-fluid grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+        <div />
+        <h2 className="font-display text-secondary text-center text-4xl font-bold sm:text-5xl">
+          <ScrambleText text="What do clients say" delay={0.1} />
+          <br />
+          <ScrambleText text="about us?" delay={0.3} />
+        </h2>
+        <ArrowGroup count={5} className="hidden justify-self-end sm:flex" />
+      </div>
+
+      {/* Mobile/tablet: a swipeable horizontal row, one video per view —
+          the desktop sticky-stack pairs are too cramped as 54%-wide tiles
+          on a narrow screen. Mirrors PickACard's mobile treatment. */}
+      <div className="container-fluid mt-10 lg:hidden">
+        <div
+          ref={mobileScrollerRef}
+          className="hide-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4"
+        >
+          {testimonials.map((testimonial) => (
+            <VideoTile
+              key={testimonial.name}
+              testimonial={testimonial}
+              className="relative aspect-video w-[85%] shrink-0 snap-start sm:w-[60%]"
+              onPlay={setActiveVideo}
+            />
+          ))}
+        </div>
+
+        <div className="mt-4 flex items-center justify-end gap-3">
+          <button
+            type="button"
+            onClick={() => advanceMobile(-1)}
+            aria-label="Previous testimonials"
+            className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity"
+          >
+            <Arrow className="h-4 w-4 -rotate-90" />
+          </button>
+          <button
+            type="button"
+            onClick={() => advanceMobile(1)}
+            aria-label="Next testimonials"
+            className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity"
+          >
+            <Arrow className="h-4 w-4" />
+          </button>
         </div>
       </div>
 
-      <div className="container-fluid mt-16">
+      <div className="container-fluid mt-16 hidden lg:block">
         <div
           ref={gridRef}
           style={{
@@ -236,25 +302,29 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <div className="sticky bottom-8 z-20 mt-8 hidden justify-end gap-3 lg:flex">
-          <button
-            type="button"
-            onClick={() => goTo(activeIndex - 1)}
-            disabled={activeIndex === 0}
-            aria-label="Previous testimonials"
-            className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-          >
-            <Arrow className="h-4 w-4 -rotate-90" />
-          </button>
-          <button
-            type="button"
-            onClick={() => goTo(activeIndex + 1)}
-            disabled={activeIndex === pairs.length - 1}
-            aria-label="Next testimonials"
-            className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-          >
-            <Arrow className="h-4 w-4" />
-          </button>
+        <div className="sticky bottom-8 z-20 mt-8 hidden items-center justify-between gap-3 lg:flex">
+          <ArrowGroup count={5} />
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex - 1)}
+              disabled={activeIndex === 0}
+              aria-label="Previous testimonials"
+              className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <Arrow className="h-4 w-4 -rotate-90" />
+            </button>
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex + 1)}
+              disabled={activeIndex === pairs.length - 1}
+              aria-label="Next testimonials"
+              className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <Arrow className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
 

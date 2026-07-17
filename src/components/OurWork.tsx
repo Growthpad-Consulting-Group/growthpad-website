@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Arrow } from "@/components/ArrowGroup";
-import { ourWork, type MediaItem } from "@/data/ourWork";
+import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
+import { ourWork, type CaseStudy, type MediaItem } from "@/data/ourWork";
+import ScrambleText from "@/components/ScrambleText";
 
 const CARD_TOP_OFFSET_PX = 16;
 
@@ -26,10 +27,65 @@ function MediaTile({ item }: { item: MediaItem }) {
   );
 }
 
+function WorkCardBody({
+  project,
+  mediaExtra,
+}: {
+  project: CaseStudy;
+  mediaExtra?: React.ReactNode;
+}) {
+  return (
+    <>
+      {project.bgImage && (
+        <Image src={project.bgImage} alt="" fill className="object-cover" />
+      )}
+
+      <div className="relative flex flex-col gap-8">
+        <Image
+          src={project.logoSrc}
+          alt={project.brand}
+          width={project.logoWidth}
+          height={project.logoHeight}
+          className={`h-auto object-contain ${project.logoClassName ?? "w-44"}`}
+        />
+
+        <p className="text-lg font-semibold text-white sm:text-xl">
+          {project.tagline}
+        </p>
+
+        <div>
+          <span className="text-lg font-bold text-yellow-400">Role</span>
+          <p className="mt-3 text-base leading-7 whitespace-pre-line text-white/80 sm:text-lg sm:leading-8">
+            {project.role}
+          </p>
+        </div>
+
+        <div>
+          <span className="text-lg font-bold text-yellow-400 ">Impact</span>
+          <p className="mt-3 text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
+            {project.impact}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+          {project.media.map((item, i) => (
+            <MediaTile key={i} item={item} />
+          ))}
+        </div>
+
+        {mediaExtra}
+      </div>
+    </>
+  );
+}
+
 export default function OurWork() {
   const gridRef = useRef<HTMLDivElement>(null);
   const wrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const contentsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileScrollerRef = useRef<HTMLDivElement>(null);
 
   const goTo = (index: number) => {
     const current = wrappersRef.current[index];
@@ -46,6 +102,14 @@ export default function OurWork() {
     const targetY =
       next.getBoundingClientRect().top + window.scrollY - window.innerHeight;
     window.scrollTo({ top: targetY, behavior: "smooth" });
+  };
+
+  const advanceMobile = (direction: 1 | -1) => {
+    const el = mobileScrollerRef.current;
+    const tile = el?.firstElementChild as HTMLElement | null;
+    if (!el || !tile) return;
+    const step = tile.getBoundingClientRect().width + 16; // tile + gap-4
+    el.scrollBy({ left: direction * step, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -113,14 +177,61 @@ export default function OurWork() {
   }, []);
 
   return (
-    <section className="relative w-full bg-white ">
+    <section className="relative w-full bg-white overflow-visible">
       <div className="container-fluid">
         <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
-          Some of our work
+          <ScrambleText text="Some of our work" />
         </h2>
       </div>
 
-      <div className="mt-10 w-full px-4 sm:px-6">
+      {/* Mobile/tablet: a swipeable horizontal row, one case study per
+          view — the desktop sticky-stack cards are a very tall list once
+          unstuck on a narrow screen. Mirrors PickACard/Testimonials. */}
+      <div className="mt-10 lg:hidden">
+        <div
+          ref={mobileScrollerRef}
+          className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:px-6"
+        >
+          {ourWork.map((project) => (
+            // No data-theme-section here: this row is display:none above
+            // lg, and a hidden element's getBoundingClientRect() is all
+            // zeros, which ScrollColorTransition would misread as "always
+            // in view" and use to corrupt the header theme everywhere else
+            // on the page. The always-visible desktop cards below carry it.
+            <div
+              key={project.brand}
+              className={`relative grid w-[88%] shrink-0 snap-start gap-8 overflow-hidden rounded-3xl p-8 sm:p-12 ${project.className}`}
+            >
+              <WorkCardBody project={project} />
+            </div>
+          ))}
+        </div>
+
+        <div className="container-fluid mt-4 flex items-center justify-between">
+          <ArrowGroup count={5} />
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => advanceMobile(-1)}
+              aria-label="Previous project"
+              className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-black/5 transition-opacity"
+            >
+              <Arrow className="h-4 w-4 -rotate-90" />
+            </button>
+            <button
+              type="button"
+              onClick={() => advanceMobile(1)}
+              aria-label="Next project"
+              className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity"
+            >
+              <Arrow className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10 hidden w-full px-4 sm:px-6 lg:block">
         <div
           ref={gridRef}
           style={{
@@ -141,7 +252,7 @@ export default function OurWork() {
                 top: 0,
                 paddingTop: `${(index + 1) * CARD_TOP_OFFSET_PX}px`,
               }}
-              className="static lg:sticky"
+              className="sticky"
             >
               <div
                 ref={(el) => {
@@ -149,75 +260,31 @@ export default function OurWork() {
                 }}
                 className={`relative grid gap-10 overflow-hidden rounded-3xl p-8 will-change-transform sm:p-12 lg:grid-cols-2 lg:items-center lg:p-16 ${project.className}`}
               >
-                {project.bgImage && (
-                  <Image
-                    src={project.bgImage}
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                )}
-
-                <div className="relative flex flex-col gap-8">
-                  <Image
-                    src={project.logoSrc}
-                    alt={project.brand}
-                    width={project.logoWidth}
-                    height={project.logoHeight}
-                    className={`h-auto object-contain ${project.logoClassName ?? "w-44"}`}
-                  />
-
-                  <p className="text-lg font-semibold text-white sm:text-xl">
-                    {project.tagline}
-                  </p>
-
-                  <div>
-                    <span className="text-lg font-bold text-yellow-400">
-                      Role
-                    </span>
-                    <p className="mt-3 text-base leading-7 whitespace-pre-line text-white/80 sm:text-lg sm:leading-8">
-                      {project.role}
-                    </p>
-                  </div>
-
-                  <div>
-                    <span className="text-lg font-bold text-yellow-400 ">
-                      Impact
-                    </span>
-                    <p className="mt-3 text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
-                      {project.impact}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    {project.media.map((item, i) => (
-                      <MediaTile key={i} item={item} />
-                    ))}
-                  </div>
-
-                  <div className="mt-6 flex items-center justify-end gap-3">
-                    <button
-                      type="button"
-                      onClick={() => goTo(index - 1)}
-                      disabled={index === 0}
-                      aria-label="Previous project"
-                      className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-                    >
-                      <Arrow className="h-4 w-4 -rotate-90" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goTo(index + 1)}
-                      disabled={index === ourWork.length - 1}
-                      aria-label="Next project"
-                      className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
-                    >
-                      <Arrow className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
+                <WorkCardBody
+                  project={project}
+                  mediaExtra={
+                    <div className="mt-6 flex items-center justify-end gap-3">
+                      <button
+                        type="button"
+                        onClick={() => goTo(index - 1)}
+                        disabled={index === 0}
+                        aria-label="Previous project"
+                        className="text-secondary flex h-11 w-11 items-center justify-center rounded-full bg-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        <Arrow className="h-4 w-4 -rotate-90" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goTo(index + 1)}
+                        disabled={index === ourWork.length - 1}
+                        aria-label="Next project"
+                        className="bg-primary flex h-11 w-11 items-center justify-center rounded-full text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        <Arrow className="h-4 w-4" />
+                      </button>
+                    </div>
+                  }
+                />
               </div>
             </div>
           ))}
@@ -226,4 +293,3 @@ export default function OurWork() {
     </section>
   );
 }
-

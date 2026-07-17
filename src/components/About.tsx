@@ -44,7 +44,7 @@ export default function About() {
 
       <div className="container-fluid relative">
         <p className="font-display text-primary mb-10 text-2xl font-bold sm:text-3xl">
-          A Little bit about us
+          <ScrambleText text="A Little bit about us" />
         </p>
 
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
