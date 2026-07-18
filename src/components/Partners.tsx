@@ -8,7 +8,13 @@ import ArrowGroup from "@/components/ArrowGroup";
 const CLUTCH_PROFILE_URL =
   "https://clutch.co/profile/growthpad-consulting-group?utm_source=widget&utm_medium=3&utm_campaign=widget&utm_content=stars&utm_term=growthpad.co.ke";
 
-export default function Partners() {
+export default function Partners({
+  showHeading = true,
+  theme = "dark",
+}: {
+  showHeading?: boolean;
+  theme?: "dark" | "light" | "gray" | "cream";
+}) {
   const widgetRef = useRef<HTMLDivElement>(null);
   const [widgetFailed, setWidgetFailed] = useState(false);
 
@@ -28,21 +34,23 @@ export default function Partners() {
 
   return (
     <section
-      data-theme-section="dark"
+      data-theme-section={theme}
       className="theme-bg relative flex w-full flex-col justify-center overflow-hidden py-16 lg:min-h-[calc(100svh-6rem)] lg:py-24"
     >
       <div className="container-fluid relative">
-        <div className="flex items-start justify-between gap-6">
-          <h2 className="font-display theme-fg text-4xl leading-tight font-bold sm:text-5xl">
-            What Our Partners Say
-            <br />
-            Impact That Speaks for Itself
-          </h2>
+        {showHeading && (
+          <div className="flex items-start justify-between gap-6">
+            <h2 className="font-display theme-fg text-4xl leading-tight font-bold sm:text-5xl">
+              What Our Partners Say
+              <br />
+              Impact That Speaks for Itself
+            </h2>
 
-          <ArrowGroup count={5} className="hidden sm:flex" />
-        </div>
+            <ArrowGroup count={5} className="hidden sm:flex" />
+          </div>
+        )}
 
-        <div className="mt-16 overflow-hidden rounded-2xl">
+        <div className={`overflow-hidden rounded-2xl ${showHeading ? "mt-16" : ""}`}>
           {widgetFailed ? (
             <a
               href={CLUTCH_PROFILE_URL}

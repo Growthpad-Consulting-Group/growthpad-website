@@ -4,7 +4,8 @@ import OurHeritage from "@/components/OurHeritage";
 import CoreValues from "@/components/CoreValues";
 import PurposeAndPromise from "@/components/PurposeAndPromise";
 import WhyUs from "@/components/WhyUs";
-import Contact from "@/components/Contact";
+import ContactCream from "@/components/ContactCream";
+import Partners from "@/components/Partners";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 import SectionAnimate from "@/components/SectionAnimate";
 
@@ -27,7 +28,10 @@ export default function OurDnaPage() {
         <WhyUs />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
-        <Contact />
+        <ContactCream />
+      </SectionAnimate>
+      <SectionAnimate variant="fade-up">
+        <Partners showHeading={false} theme="light" />
       </SectionAnimate>
     </div>
   );
