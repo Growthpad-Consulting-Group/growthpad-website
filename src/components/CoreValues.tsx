@@ -27,19 +27,19 @@ export default function CoreValues() {
           Our Core Values
         </h2>
 
-        <div className="relative mt-16 aspect-1120/422 w-full">
+        <div className="relative mt-16 flex flex-col gap-6 lg:aspect-1120/422 lg:block lg:w-full lg:gap-0">
           <Image
             src="/assets/images/core-value-card.svg"
             alt=""
             fill
-            className="object-contain"
+            className="hidden object-contain lg:block"
           />
 
-          <div className="absolute inset-0 grid gap-10 px-12 py-14 sm:px-20 sm:py-16 lg:grid-cols-3 lg:divide-x lg:divide-white/30">
+          <div className="flex flex-col gap-6 lg:absolute lg:inset-0 lg:grid lg:grid-cols-3 lg:gap-10 lg:divide-x lg:divide-white/30 lg:px-20 lg:py-16">
             {values.map((value, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center justify-center gap-6 px-4 text-center"
+                className="bg-primary flex flex-col items-center justify-center gap-6 rounded-2xl px-6 py-10 text-center lg:rounded-none lg:bg-transparent lg:px-4 lg:py-0"
               >
                 <span className="text-secondary flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white text-2xl font-bold">
                   {i + 1}

@@ -14,6 +14,7 @@ export default function RotatingBadge({
   bgClassName = "",
   duration = 14,
   className = "",
+  onClick,
 }: {
   text: string;
   size?: string;
@@ -24,6 +25,7 @@ export default function RotatingBadge({
   bgClassName?: string;
   duration?: number;
   className?: string;
+  onClick?: () => void;
 }) {
   const ringRef = useRef<SVGSVGElement>(null);
   const pathId = useId();
@@ -52,9 +54,14 @@ export default function RotatingBadge({
   const radius = 80;
   const circumference = 2 * Math.PI * radius;
 
+  const Tag = onClick ? "button" : "div";
+
   return (
-    <div
-      className={`relative flex items-center justify-center rounded-full ${size} ${bgClassName} ${className}`}
+    <Tag
+      type={onClick ? "button" : undefined}
+      onClick={onClick}
+      aria-label={onClick ? text : undefined}
+      className={`relative flex items-center justify-center rounded-full ${onClick ? "cursor-pointer" : ""} ${size} ${bgClassName} ${className}`}
     >
       <svg ref={ringRef} viewBox="0 0 240 240" className="absolute inset-0">
         <defs>
@@ -80,6 +87,6 @@ export default function RotatingBadge({
         className={arrowClassName}
         style={{ transform: `rotate(${arrowRotate}deg)` }}
       />
-    </div>
+    </Tag>
   );
 }

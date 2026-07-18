@@ -9,6 +9,13 @@ import RotatingBadge from "@/components/RotatingBadge";
 export default function DnaHero() {
   const introRef = useRef<HTMLDivElement>(null);
 
+  const handleExplore = () => {
+    introRef.current?.nextElementSibling?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Explicit numeric "to" opacity per element (rather than gsap.from's
@@ -54,16 +61,19 @@ export default function DnaHero() {
             />
           </div>
 
-          <RotatingBadge
-            text="Explore more"
-            size="h-48 w-48"
-            bgClassName="bg-primary"
-            textFill="black"
-            textClassName="text-4xl font-medium tracking-wide"
-            arrowClassName="text-black h-10 w-10"
-            arrowRotate={90}
-            className="dna-hero-reveal opacity-0 absolute bottom-6 -mt-40 left-6 sm:bottom-8 sm:left-20 shadow-lg shadow-black/20"
-          />
+          <div className="hidden sm:block">
+            <RotatingBadge
+              text="Explore more"
+              size="h-36 w-36 lg:h-48 lg:w-48"
+              bgClassName="bg-primary"
+              textFill="black"
+              textClassName="text-2xl font-medium tracking-wide lg:text-4xl"
+              arrowClassName="text-black h-8 w-8 lg:h-10 lg:w-10"
+              arrowRotate={90}
+              onClick={handleExplore}
+              className="dna-hero-reveal opacity-0 absolute -mt-40 left-6 shadow-lg shadow-black/20 sm:left-20 "
+            />
+          </div>
         </div>
 
         <div className="relative mt-10 flex flex-col items-center gap-10 sm:mt-14">

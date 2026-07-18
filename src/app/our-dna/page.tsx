@@ -3,6 +3,8 @@ import DnaIntro from "@/components/DnaIntro";
 import OurHeritage from "@/components/OurHeritage";
 import CoreValues from "@/components/CoreValues";
 import PurposeAndPromise from "@/components/PurposeAndPromise";
+import WhyUs from "@/components/WhyUs";
+import Contact from "@/components/Contact";
 import ScrollColorTransition from "@/components/ScrollColorTransition";
 import SectionAnimate from "@/components/SectionAnimate";
 
@@ -20,6 +22,12 @@ export default function OurDnaPage() {
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
         <PurposeAndPromise />
+      </SectionAnimate>
+      <SectionAnimate variant="fade-up">
+        <WhyUs />
+      </SectionAnimate>
+      <SectionAnimate variant="fade-up">
+        <Contact />
       </SectionAnimate>
     </div>
   );
