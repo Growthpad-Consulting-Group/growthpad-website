@@ -1,34 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import gsap from "gsap";
 import ArrowGroup from "@/shared/components/ArrowGroup";
+import { useRevealAnimation } from "@/shared/hooks/useRevealAnimation";
 
 export default function ServicesHero() {
   const introRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const els = gsap.utils.toArray<HTMLElement>(".services-hero-reveal");
-      els.forEach((el, i) => {
-        const restOpacity = Number(el.dataset.restOpacity ?? 1);
-        gsap.fromTo(
-          el,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: restOpacity,
-            duration: 0.9,
-            delay: 0.15 + i * 0.12,
-            ease: "power3.out",
-          },
-        );
-      });
-    }, introRef);
-
-    return () => ctx.revert();
-  }, []);
+  useRevealAnimation(introRef, ".services-hero-reveal");
 
   return (
     <section ref={introRef} className="w-full pt-6 sm:pt-10">

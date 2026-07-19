@@ -1,28 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useRef } from "react";
+import { useRevealAnimation } from "@/shared/hooks/useRevealAnimation";
 
 export default function ProductsHero() {
   const introRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".products-hero-reveal",
-        { y: 28, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          delay: 0.15,
-          ease: "power3.out",
-        },
-      );
-    }, introRef);
-
-    return () => ctx.revert();
-  }, []);
+  useRevealAnimation(introRef, ".products-hero-reveal");
 
   return (
     <section

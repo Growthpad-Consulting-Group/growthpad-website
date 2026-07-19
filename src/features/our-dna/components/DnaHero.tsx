@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import gsap from "gsap";
 import ArrowGroup from "@/shared/components/ArrowGroup";
 import RotatingBadge from "@/shared/components/RotatingBadge";
+import { useRevealAnimation } from "@/shared/hooks/useRevealAnimation";
 
 export default function DnaHero() {
   const introRef = useRef<HTMLDivElement>(null);
@@ -16,32 +16,7 @@ export default function DnaHero() {
     });
   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Explicit numeric "to" opacity per element (rather than gsap.from's
-      // implicit current-value capture): each element's own opacity-0
-      // class already set it to 0 before this runs, so an implicit
-      // capture would read 0 as the resting target and elements would
-      // never fade back in. Same approach as Hero.tsx.
-      const els = gsap.utils.toArray<HTMLElement>(".dna-hero-reveal");
-      els.forEach((el, i) => {
-        const restOpacity = Number(el.dataset.restOpacity ?? 1);
-        gsap.fromTo(
-          el,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: restOpacity,
-            duration: 0.9,
-            delay: 0.15 + i * 0.12,
-            ease: "power3.out",
-          },
-        );
-      });
-    }, introRef);
-
-    return () => ctx.revert();
-  }, []);
+  useRevealAnimation(introRef, ".dna-hero-reveal");
 
   return (
     <section

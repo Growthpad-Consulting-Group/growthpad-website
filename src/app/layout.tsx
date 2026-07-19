@@ -3,7 +3,7 @@ import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
 import Navbar from "@/shared/layouts/Navbar";
 import Footer from "@/shared/layouts/Footer";
-import ScrollToTop from "@/shared/components/ScrollToTop";
+import ScrollToTop from "@/shared/layouts/ScrollToTop";
 import "@/styles/globals.css";
 
 const figtree = Figtree({

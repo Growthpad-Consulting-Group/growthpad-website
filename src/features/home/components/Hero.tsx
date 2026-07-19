@@ -5,35 +5,15 @@ import gsap from "gsap";
 import LogoShowcase from "@/shared/components/LogoShowcase";
 import HeroGrid from "@/features/home/components/HeroGrid";
 import CtaButton from "@/shared/components/CtaButton";
+import { useRevealAnimation } from "@/shared/hooks/useRevealAnimation";
 
 export default function Hero() {
   const introRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Explicit numeric "to" opacity per element (rather than gsap.from's
-      // implicit current-value capture): each element's own opacity-0
-      // class already set it to 0 before this runs, so an implicit
-      // capture would read 0 as the resting target and elements would
-      // never fade back in.
-      const els = gsap.utils.toArray<HTMLElement>(".hero-reveal");
-      els.forEach((el, i) => {
-        const restOpacity = Number(el.dataset.restOpacity ?? 1);
-        gsap.fromTo(
-          el,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: restOpacity,
-            duration: 0.9,
-            delay: 0.15 + i * 0.12,
-            ease: "power3.out",
-          },
-        );
-      });
-    }, introRef);
+  useRevealAnimation(introRef, ".hero-reveal");
 
+  useEffect(() => {
     // Third wave, after the text (~0.15s) and HeroGrid (~0.4s) reveals.
     const marqueeCtx = gsap.context(() => {
       gsap.fromTo(
@@ -49,10 +29,7 @@ export default function Hero() {
       );
     }, marqueeRef);
 
-    return () => {
-      ctx.revert();
-      marqueeCtx.revert();
-    };
+    return () => marqueeCtx.revert();
   }, []);
 
   return (

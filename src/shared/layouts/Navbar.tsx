@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { navLinks, type NavLink } from "@/shared/data/nav";
+import { navLinks, type NavLink } from "@/shared/layouts/nav";
 import { Arrow } from "@/shared/components/ArrowGroup";
 import CtaButton from "@/shared/components/CtaButton";
 
