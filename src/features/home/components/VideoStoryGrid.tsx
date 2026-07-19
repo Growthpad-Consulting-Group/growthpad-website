@@ -2,8 +2,8 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
-import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
-import Modal from "@/components/Modal";
+import ArrowGroup, { Arrow } from "@/shared/components/ArrowGroup";
+import Modal from "@/features/home/components/Modal";
 import { useStickyStackScroll } from "@/hooks/useStickyStackScroll";
 
 export type VideoStory = {

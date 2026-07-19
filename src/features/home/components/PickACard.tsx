@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Arrow } from "@/components/ArrowGroup";
-import CtaButton from "@/components/CtaButton";
-import RotatingBadge from "@/components/RotatingBadge";
-import { pickACard } from "@/data/pickACard";
+import { Arrow } from "@/shared/components/ArrowGroup";
+import CtaButton from "@/shared/components/CtaButton";
+import RotatingBadge from "@/shared/components/RotatingBadge";
+import { pickACard } from "@/features/home/data/pickACard";
 
 const FAN_ROTATE_DEG = 9;
 const FAN_OFFSET_X = 130;

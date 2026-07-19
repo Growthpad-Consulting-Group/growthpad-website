@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ArrowGroup from "@/components/ArrowGroup";
+import ArrowGroup from "@/shared/components/ArrowGroup";
 
 export default function About() {
   const imageWrapRef = useRef<HTMLDivElement>(null);

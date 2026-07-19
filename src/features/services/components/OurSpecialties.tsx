@@ -3,11 +3,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Accordion from "@/components/Accordion";
-import ArrowGroup from "@/components/ArrowGroup";
-import { specialties } from "@/data/specialties";
+import Accordion from "@/features/services/components/Accordion";
+import { specialties } from "@/features/services/data/specialties";
 
-export default function Specialties() {
+export default function Specialties({ showHeader = true }: { showHeader?: boolean }) {
   const headerRef = useRef<HTMLDivElement>(null);
   const accordionRef = useRef<HTMLDivElement>(null);
 
@@ -56,22 +55,9 @@ export default function Specialties() {
       data-theme-section="light"
       className="relative w-full py-20 lg:py-28"
     >
-      <div className="container-fluid">
-        <div ref={headerRef} className="theme-fg">
-          <div className="flex items-center justify-between gap-6">
-            <h2 className="font-display text-4xl font-bold sm:text-5xl">
-              Our Specialties
-            </h2>
-            <ArrowGroup count={5} className="hidden sm:flex" />
-          </div>
+      <div className="container-fluid">        
 
-          <p className="mt-4 max-w-xl text-lg leading-8 opacity-70">
-            We make bold moves to disrupt the present and build the future
-            for your organization.
-          </p>
-        </div>
-
-        <div ref={accordionRef} className="mt-14 ml-auto max-w-6xl">
+        <div ref={accordionRef} className={`ml-auto max-w-6xl ${showHeader ? "mt-14" : ""}`}>
           <Accordion items={specialties} />
         </div>
       </div>

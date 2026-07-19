@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ArrowGroup from "@/components/ArrowGroup";
-import { howWeDoIt } from "@/data/howWeDoIt";
+import ArrowGroup from "@/shared/components/ArrowGroup";
+import { howWeDoIt } from "@/features/home/data/howWeDoIt";
 
 const CARD_TOP_OFFSET_PX = 20;
 const STICK_TOP_PX = 96;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Arrow } from "@/components/ArrowGroup";
+import { Arrow } from "@/shared/components/ArrowGroup";
 
 type CtaButtonProps = {
   children: React.ReactNode;
@@ -42,21 +42,21 @@ export default function CtaButton({
   const content = (
     <>
       <span
-        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white transition-colors ${sizes.pill} ${
+        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white shadow-transparent transition-all duration-700 ease-out group-hover:shadow-xl group-hover:shadow-primary/30 ${sizes.pill} ${
           fullWidth ? "flex-1 justify-center" : ""
         }`}
       >
         {children}
       </span>
       <span
-        className={`inline-flex shrink-0 items-center justify-center rounded-full transition-opacity group-hover:opacity-90 ${sizes.circle} ${circleClassName}`}
+        className={`inline-flex shrink-0 items-center justify-center rounded-full transition-all duration-700 ease-out group-hover:rotate-45 ${sizes.circle} ${circleClassName}`}
       >
         <Arrow className={sizes.icon} />
       </span>
     </>
   );
 
-  const sharedClassName = `group items-center ${sizes.gap} ${fullWidth ? "flex w-full" : "inline-flex"} ${className}`;
+  const sharedClassName = `group items-center transition-all duration-700 ease-out hover:-translate-y-1 ${sizes.gap} ${fullWidth ? "flex w-full" : "inline-flex"} ${className}`;
 
   if (href) {
     return (

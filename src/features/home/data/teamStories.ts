@@ -1,4 +1,4 @@
-import type { VideoStory } from "@/components/VideoStoryGrid";
+import type { VideoStory } from "@/features/home/components/VideoStoryGrid";
 
 export const teamStories: VideoStory[] = [
   {

@@ -1,5 +1,5 @@
-import LogoGrid from "@/components/LogoGrid";
-import { affiliations } from "@/data/affiliations";
+import LogoGrid from "@/features/home/components/LogoGrid";
+import { affiliations } from "@/features/home/data/affiliations";
 
 export default function Affiliations() {
   return (

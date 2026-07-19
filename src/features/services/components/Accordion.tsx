@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Arrow } from "@/components/ArrowGroup";
+import { Arrow } from "@/shared/components/ArrowGroup";
 
 export type AccordionItemData = {
   title: string;

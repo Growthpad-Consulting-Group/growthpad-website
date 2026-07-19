@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { Arrow } from "@/components/ArrowGroup";
+import { Arrow } from "@/shared/components/ArrowGroup";
 
 function ArrowTile({ variant }: { variant: "muted" | "primary" | "dark" }) {
   const color =

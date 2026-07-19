@@ -1,13 +1,13 @@
-import DnaHero from "@/components/DnaHero";
-import DnaIntro from "@/components/DnaIntro";
-import OurHeritage from "@/components/OurHeritage";
-import CoreValues from "@/components/CoreValues";
-import PurposeAndPromise from "@/components/PurposeAndPromise";
-import WhyUs from "@/components/WhyUs";
-import ContactCream from "@/components/ContactCream";
-import Partners from "@/components/Partners";
-import ScrollColorTransition from "@/components/ScrollColorTransition";
-import SectionAnimate from "@/components/SectionAnimate";
+import DnaHero from "@/features/our-dna/components/DnaHero";
+import DnaIntro from "@/features/our-dna/components/DnaIntro";
+import OurHeritage from "@/features/our-dna/components/OurHeritage";
+import CoreValues from "@/features/our-dna/components/CoreValues";
+import PurposeAndPromise from "@/features/our-dna/components/PurposeAndPromise";
+import WhyUs from "@/features/our-dna/components/WhyUs";
+import ContactForm from "@/shared/components/ContactForm";
+import Partners from "@/shared/components/Partners";
+import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
+import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export default function OurDnaPage() {
   return (
@@ -28,7 +28,7 @@ export default function OurDnaPage() {
         <WhyUs />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
-        <ContactCream />
+        <ContactForm theme="cream" />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
         <Partners showHeading={false} theme="light" />

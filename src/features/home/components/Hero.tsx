@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import LogoShowcase from "@/components/LogoShowcase";
-import HeroGrid from "@/components/HeroGrid";
-import CtaButton from "@/components/CtaButton";
+import LogoShowcase from "@/shared/components/LogoShowcase";
+import HeroGrid from "@/features/home/components/HeroGrid";
+import CtaButton from "@/shared/components/CtaButton";
 
 export default function Hero() {
   const introRef = useRef<HTMLDivElement>(null);

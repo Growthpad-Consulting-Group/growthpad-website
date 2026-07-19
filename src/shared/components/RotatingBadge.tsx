@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import gsap from "gsap";
-import { Arrow } from "@/components/ArrowGroup";
+import { Arrow } from "@/shared/components/ArrowGroup";
 
 export default function RotatingBadge({
   text,

@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CtaButton from "@/components/CtaButton";
-import { brands } from "@/data/brands";
+import CtaButton from "@/shared/components/CtaButton";
+import { brands } from "@/features/home/data/brands";
 
 export default function Brands() {
   const containerRef = useRef<HTMLDivElement>(null);

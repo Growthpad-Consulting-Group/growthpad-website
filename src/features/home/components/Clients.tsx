@@ -1,5 +1,5 @@
-import LogoGrid from "@/components/LogoGrid";
-import { clients } from "@/data/clients";
+import LogoGrid from "@/features/home/components/LogoGrid";
+import { clients } from "@/features/home/data/clients";
 
 export default function Clients() {
   return (

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/features/home/components/Carousel";
 
 export type LogoItem = {
   name: string;

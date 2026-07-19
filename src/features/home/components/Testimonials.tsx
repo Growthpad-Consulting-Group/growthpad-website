@@ -1,5 +1,5 @@
-import VideoStoryGrid from "@/components/VideoStoryGrid";
-import { testimonials } from "@/data/testimonials";
+import VideoStoryGrid from "@/features/home/components/VideoStoryGrid";
+import { testimonials } from "@/features/home/data/testimonials";
 
 export default function Testimonials() {
   return (

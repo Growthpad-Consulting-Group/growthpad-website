@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { Arrow } from "@/components/ArrowGroup";
+import { Arrow } from "@/shared/components/ArrowGroup";
 
 const captions = [
   "In 2017, our founder took a leap of faith to establish a people and technology-driven start-up that would seek to help businesses build their next phase of growth through digital media.",

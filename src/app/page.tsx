@@ -1,19 +1,19 @@
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Brands from "@/components/Brands";
-import Ambition from "@/components/Ambition";
-import SpecialtiesTimeline from "@/components/SpecialtiesTimeline";
-import PickACard from "@/components/PickACard";
-import Clients from "@/components/Clients";
-import OfficeGallery from "@/components/OfficeGallery";
-import OurWork from "@/components/OurWork";
-import Testimonials from "@/components/Testimonials";
-import TeamStories from "@/components/TeamStories";
-import Partners from "@/components/Partners";
-import Affiliations from "@/components/Affiliations";
-import Contact from "@/components/Contact";
-import ScrollColorTransition from "@/components/ScrollColorTransition";
-import SectionAnimate from "@/components/SectionAnimate";
+import Hero from "@/features/home/components/Hero";
+import About from "@/features/home/components/About";
+import Brands from "@/features/home/components/Brands";
+import Ambition from "@/features/home/components/Ambition";
+import SpecialtiesTimeline from "@/features/home/components/SpecialtiesTimeline";
+import PickACard from "@/features/home/components/PickACard";
+import Clients from "@/features/home/components/Clients";
+import OfficeGallery from "@/features/home/components/OfficeGallery";
+import OurWork from "@/features/home/components/OurWork";
+import Testimonials from "@/features/home/components/Testimonials";
+import TeamStories from "@/features/home/components/TeamStories";
+import Partners from "@/shared/components/Partners";
+import Affiliations from "@/features/home/components/Affiliations";
+import ContactForm from "@/shared/components/ContactForm";
+import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
+import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export default function Home() {
   return (
@@ -49,7 +49,7 @@ export default function Home() {
       </SectionAnimate>
       <TeamStories />
       <SectionAnimate variant="fade-up" delay={0.1}>
-        <Contact />
+        <ContactForm variant="home" />
       </SectionAnimate>
     </div>
   );

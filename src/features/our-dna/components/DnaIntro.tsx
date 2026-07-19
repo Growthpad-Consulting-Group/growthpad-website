@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ArrowGroup from "@/components/ArrowGroup";
+import ArrowGroup from "@/shared/components/ArrowGroup";
 
 export default function DnaIntro() {
   return (
@@ -28,15 +28,13 @@ export default function DnaIntro() {
             <div className="flex flex-col gap-8 text-lg leading-8 opacity-90">
               <p>
                 We are a digital media and{" "}
-                <span className="underline">tech consulting firm</span>{" "}
-                headquartered in Nairobi, Kenya, with operations across East
+                tech consulting firm headquartered in Nairobi, Kenya, with operations across East
                 Africa.
               </p>
               <p>
-                Our suite of{" "}
-                <span className="underline">digital and Tech services</span>{" "}
-                is built upon a foundation of intent—understanding how
-                consumers decide—across all paid, owned, and earned media
+                Our suite of digital and Tech services{" "}
+                is built upon a foundation of intent - understanding how
+                consumers decide - across all paid, owned, and earned media
                 touchpoints.
               </p>
             </div>

@@ -7,9 +7,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { navLinks, type NavLink } from "@/data/nav";
-import { Arrow } from "@/components/ArrowGroup";
-import CtaButton from "@/components/CtaButton";
+import { navLinks, type NavLink } from "@/shared/data/nav";
+import { Arrow } from "@/shared/components/ArrowGroup";
+import CtaButton from "@/shared/components/CtaButton";
 
 function MobileMenu({
   isOpen,
@@ -220,12 +220,16 @@ export default function Navbar() {
 
     <header
       ref={headerRef}
-      style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
-      className={`sticky z-60 isolate overflow-hidden transition-[top,margin,border-radius,transform] duration-500 ${
+      style={{
+        transform: isHidden ? "translateY(calc(-100% - 2rem))" : "translateY(0)",
+        transition:
+          "top 500ms cubic-bezier(0.22, 1, 0.36, 1), margin 500ms cubic-bezier(0.22, 1, 0.36, 1), border-radius 500ms cubic-bezier(0.22, 1, 0.36, 1), transform 550ms cubic-bezier(0.65, 0, 0.35, 1)",
+      }}
+      className={`sticky z-60 isolate overflow-hidden ${
         isScrolled
           ? "top-4 mx-6 rounded-4xl lg:mx-24"
           : "top-0 mx-0 w-full rounded-none"
-      } ${isHidden ? "-translate-y-[calc(100%+2rem)]" : "translate-y-0"}`}
+      }`}
     >
       {/* "Liquid glass": a distorted+blurred backdrop layer, a faint
           white tint, and an inset specular highlight — stacked in that

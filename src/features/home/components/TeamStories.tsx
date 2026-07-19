@@ -1,5 +1,5 @@
-import VideoStoryGrid from "@/components/VideoStoryGrid";
-import { teamStories } from "@/data/teamStories";
+import VideoStoryGrid from "@/features/home/components/VideoStoryGrid";
+import { teamStories } from "@/features/home/data/teamStories";
 
 export default function TeamStories() {
   return (

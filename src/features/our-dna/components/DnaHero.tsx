@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import ArrowGroup from "@/components/ArrowGroup";
-import RotatingBadge from "@/components/RotatingBadge";
+import ArrowGroup from "@/shared/components/ArrowGroup";
+import RotatingBadge from "@/shared/components/RotatingBadge";
 
 export default function DnaHero() {
   const introRef = useRef<HTMLDivElement>(null);

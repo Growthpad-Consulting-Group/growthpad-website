@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ArrowGroup from "@/components/ArrowGroup";
+import ArrowGroup from "@/shared/components/ArrowGroup";
 
 export default function PurposeAndPromise() {
   return (

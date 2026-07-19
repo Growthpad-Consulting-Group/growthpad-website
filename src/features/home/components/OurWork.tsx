@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import ArrowGroup, { Arrow } from "@/components/ArrowGroup";
+import ArrowGroup, { Arrow } from "@/shared/components/ArrowGroup";
 import { useStickyStackScroll } from "@/hooks/useStickyStackScroll";
-import { ourWork, type CaseStudy, type MediaItem } from "@/data/ourWork";
+import { ourWork, type CaseStudy, type MediaItem } from "@/features/home/data/ourWork";
 
 const CARD_TOP_OFFSET_PX = 16;
 

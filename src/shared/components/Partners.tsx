@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Script from "next/script";
-import ArrowGroup from "@/components/ArrowGroup";
+import ArrowGroup from "@/shared/components/ArrowGroup";
 
 const CLUTCH_PROFILE_URL =
   "https://clutch.co/profile/growthpad-consulting-group?utm_source=widget&utm_medium=3&utm_campaign=widget&utm_content=stars&utm_term=growthpad.co.ke";
@@ -35,7 +35,7 @@ export default function Partners({
   return (
     <section
       data-theme-section={theme}
-      className="theme-bg relative flex w-full flex-col justify-center overflow-hidden py-16 lg:min-h-[calc(100svh-6rem)] lg:py-24"
+      className="theme-bg relative flex w-full flex-col justify-center overflow-hidden py-16 lg:min-h-[calc(80svh-6rem)] lg:py-0"
     >
       <div className="container-fluid relative">
         {showHeading && (
@@ -50,7 +50,7 @@ export default function Partners({
           </div>
         )}
 
-        <div className={`overflow-hidden rounded-2xl ${showHeading ? "mt-16" : ""}`}>
+        <div className={`overflow-hidden shadow-2xl shadow-secondary/10 transition-all duration-600 ease-out hover:shadow-2xl hover:shadow-primary/10 rounded-2xl ${showHeading ? "mt-16" : ""}`}>
           {widgetFailed ? (
             <a
               href={CLUTCH_PROFILE_URL}
@@ -93,6 +93,7 @@ export default function Partners({
         src="https://widget.clutch.co/static/js/widget.js"
         strategy="afterInteractive"
         onError={() => setWidgetFailed(true)}
+        className="rounded-full"
       />
     </section>
   );

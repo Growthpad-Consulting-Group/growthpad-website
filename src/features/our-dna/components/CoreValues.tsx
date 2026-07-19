@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ArrowGroup from "@/components/ArrowGroup";
+import ArrowGroup from "@/shared/components/ArrowGroup";
 
 const values = [
   {
@@ -39,9 +39,9 @@ export default function CoreValues() {
             {values.map((value, i) => (
               <div
                 key={i}
-                className="bg-primary flex flex-col items-center justify-center gap-6 rounded-2xl px-6 py-10 text-center lg:rounded-none lg:bg-transparent lg:px-4 lg:py-0"
+                className="group bg-primary flex flex-col items-center justify-center gap-6 rounded-2xl px-6 py-10 text-center transition-all duration-700 ease-out lg:rounded-none lg:bg-transparent lg:px-4 lg:py-0 lg:hover:-translate-y-2 lg:hover:scale-[0.97]"
               >
-                <span className="text-secondary flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white text-2xl font-bold">
+                <span className="text-secondary flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white text-2xl font-bold transition-all duration-700 ease-out group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-black/20">
                   {i + 1}
                 </span>
                 <p className="max-w-xs text-lg leading-8 text-white">
