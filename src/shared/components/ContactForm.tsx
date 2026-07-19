@@ -113,7 +113,7 @@ export default function ContactForm({
   const textBlock = (
     <div className={`flex flex-col gap-6 ${isHome ? "" : ""}`}>
       <h2
-        className={`font-display theme-fg font-bold leading-[1.05] ${
+        className={`font-display theme-fg font-light leading-[1.05] ${
           isHome
             ? "text-6xl sm:text-7xl"
             : "text-4xl leading-[1.1] sm:text-5xl lg:text-6xl"

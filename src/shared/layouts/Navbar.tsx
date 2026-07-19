@@ -40,7 +40,7 @@ function MobileMenu({
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           style={{ top: topOffset + 8 }}
-          className="fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl md:hidden"
+          className="fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl xl:hidden"
         >
           {/* Same "liquid glass" recipe as the header (distorted+blurred
               backdrop, tint, specular ring), so the dropdown reads as an
@@ -290,7 +290,7 @@ export default function Navbar() {
         <div
           ref={navLinksRef}
           onMouseLeave={() => setHoverRect(null)}
-          className="theme-fg relative ml-auto hidden items-center gap-1 md:flex"
+          className="theme-fg relative ml-auto hidden items-center gap-1 lg:flex"
         >
           {/* One persistent highlight, measured off whichever link is
               hovered and animated via `animate` (not layoutId): a
@@ -333,7 +333,7 @@ export default function Navbar() {
                   setHoverRect(rect);
                   setLastHoverRect(rect);
                 }}
-                className={`relative inline-flex h-10 items-center rounded-full px-5 text-md transition-colors ${
+                className={`relative inline-flex h-10 items-center rounded-full px-5 text-md whitespace-nowrap transition-colors ${
                   isActive
                     ? "bg-primary font-semibold text-white"
                     : "font-medium opacity-80 hover:text-white hover:opacity-100"
@@ -350,7 +350,7 @@ export default function Navbar() {
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
-          className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full md:hidden"
+          className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full xl:hidden"
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
