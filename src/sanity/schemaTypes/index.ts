@@ -1,7 +1,9 @@
 import type { SchemaTypeDefinition } from "sanity";
+import { blog } from "./blog";
 import { insight } from "./insight";
 import { jobOpening } from "./jobOpening";
+import { tender } from "./tender";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [insight, jobOpening],
+  types: [blog, insight, jobOpening, tender],
 };

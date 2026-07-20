@@ -1,0 +1,116 @@
+import { defineField, defineType } from "sanity";
+import { AutoSlugInput } from "@/sanity/components/AutoSlugInput";
+
+export const blog = defineType({
+  name: "blog",
+  title: "Blog",
+  type: "document",
+  fields: [
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      description: "Auto-generated from the title as you type.",
+      options: { source: "title", maxLength: 96 },
+      components: { input: AutoSlugInput },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "coverImage",
+      title: "Cover image",
+      type: "image",
+      options: { hotspot: true },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: ["Strategy", "Communications", "Digital", "Technology", "Company News"],
+      },
+      initialValue: "Strategy",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "author",
+      title: "Author",
+      type: "string",
+      initialValue: "Growthpad Team",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "excerpt",
+      title: "Excerpt",
+      description: "A short summary of the post shown in the list grid.",
+      type: "text",
+      rows: 3,
+      validation: (rule) => rule.required().max(200),
+    }),
+    defineField({
+      name: "content",
+      title: "Content",
+      type: "array",
+      of: [
+        { type: "block" },
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative Text",
+            },
+          ],
+        },
+        {
+          name: "youtube",
+          type: "object",
+          title: "YouTube Video",
+          fields: [
+            {
+              name: "url",
+              type: "url",
+              title: "YouTube Video URL",
+              validation: (rule) => rule.required(),
+            },
+          ],
+        },
+      ],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO Title",
+      description: "Optional — custom Title tag for search engines. Falls back to post title if left empty.",
+      type: "string",
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO Description",
+      description: "Optional — custom Meta Description for search engines. Falls back to excerpt if left empty.",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "publishedAt",
+      title: "Published at",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (rule) => rule.required(),
+    }),
+  ],
+  preview: {
+    select: { title: "title", category: "category", media: "coverImage" },
+    prepare({ title, category, media }) {
+      return { title, subtitle: category, media };
+    },
+  },
+});

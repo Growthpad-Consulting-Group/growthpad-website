@@ -8,6 +8,7 @@ export default function ContactFormCard({
   bordered = false,
   layout = "stacked",
   serviceOptions,
+  jobRole,
   className = "",
 }: {
   /** Optional copy rendered inside the card. */
@@ -24,6 +25,9 @@ export default function ContactFormCard({
   layout?: "stacked" | "split";
   /** If provided, adds a "Service" <select> (before the message field) with these options. */
   serviceOptions?: string[];
+  /** If provided, pins the form to a specific job opening (e.g. a job's detail page) —
+   * shows a read-only "Applying for" field and includes the role in the submission. */
+  jobRole?: string;
   className?: string;
 }) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +42,19 @@ export default function ContactFormCard({
 
   const fields = (
     <div className="flex flex-1 flex-col gap-4">
+      {jobRole && (
+        <>
+          <input type="hidden" name="role" value={jobRole} />
+          <input
+            type="text"
+            value={`Applying for: ${jobRole}`}
+            readOnly
+            disabled
+            className={`${inputBase} text-secondary/60 cursor-not-allowed`}
+          />
+        </>
+      )}
+
       <input
         type="text"
         name="name"

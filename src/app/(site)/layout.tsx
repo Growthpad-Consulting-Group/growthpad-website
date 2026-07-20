@@ -1,5 +1,5 @@
 import Navbar from "@/shared/layouts/Navbar";
-import Footer from "@/shared/layouts/Footer";
+import ConditionalFooter from "@/shared/layouts/ConditionalFooter";
 import ScrollToTop from "@/shared/layouts/ScrollToTop";
 
 export default function SiteLayout({
@@ -11,7 +11,7 @@ export default function SiteLayout({
     <>
       <Navbar />
       {children}
-      <Footer />
+      <ConditionalFooter />
       <ScrollToTop />
     </>
   );

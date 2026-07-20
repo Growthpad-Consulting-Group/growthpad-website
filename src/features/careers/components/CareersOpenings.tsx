@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ArrowGroup from "@/shared/components/ArrowGroup";
 import CtaButton from "@/shared/components/CtaButton";
 import { getJobOpenings, type JobOpeningItem } from "@/sanity/queries";
@@ -20,7 +21,10 @@ function formatDeadline(dateString: string) {
 
 function OpeningCard({ opening }: { opening: JobOpeningItem }) {
   return (
-    <div className="group transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[0.98]">
+    <Link
+      href={`/careers/${opening.slug}`}
+      className="group block transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[0.98]"
+    >
       <svg
         viewBox={`0 0 455 ${CANVAS_HEIGHT}`}
         className="h-auto w-full overflow-visible transition-all duration-700 ease-out group-hover:drop-shadow-[0_25px_45px_rgba(240,93,35,0.28)]"
@@ -35,15 +39,11 @@ function OpeningCard({ opening }: { opening: JobOpeningItem }) {
             className="flex h-full flex-col justify-between"
           >
             <div className="flex flex-col gap-3">
-              <span className="text-primary text-sm font-bold tracking-wide uppercase">
-                {opening.department}
-              </span>
-
               <h3 className="font-display text-2xl font-bold text-white">
                 {opening.title}
               </h3>
 
-              <div className="mt-1 flex flex-wrap gap-2">
+              <div className="mt-1 mb-4 flex flex-wrap gap-2">
                 <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
                   {opening.employmentType}
                 </span>
@@ -52,26 +52,24 @@ function OpeningCard({ opening }: { opening: JobOpeningItem }) {
                 </span>
               </div>
 
-              <p className="mt-1 text-base leading-7 text-white/70">
-                {opening.city}
+              <p className="mt-1 text-lg leading-7 text-white/70">
+                <span className="font-semibold text-white">Location:</span> {opening.city}
               </p>
-              <p className="text-base leading-7 text-white/70">
-                Deadline: {formatDeadline(opening.deadline)}
+              <p className="text-lg leading-7 text-white/70">
+                <span className="font-semibold text-white">Deadline:</span>{" "}
+                {formatDeadline(opening.deadline)}
               </p>
             </div>
 
-            <CtaButton
-              href={opening.applyUrl ?? "#contact"}
-              size="md"
-              className="pb-6"
-              circleClassName="bg-primary text-white"
-            >
-              Apply now
-            </CtaButton>
+            <div className="pointer-events-none pb-6" aria-hidden>
+              <CtaButton size="md" circleClassName="bg-primary text-white">
+                View role
+              </CtaButton>
+            </div>
           </div>
         </foreignObject>
       </svg>
-    </div>
+    </Link>
   );
 }
 
