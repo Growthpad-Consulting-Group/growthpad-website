@@ -26,3 +26,31 @@ const INSIGHTS_QUERY = /* groq */ `
 export async function getInsights(): Promise<InsightListItem[]> {
   return client.fetch(INSIGHTS_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+export type JobOpeningItem = {
+  _id: string;
+  title: string;
+  department: string;
+  employmentType: string;
+  workMode: string;
+  city: string;
+  deadline: string;
+  applyUrl: string | null;
+};
+
+const JOB_OPENINGS_QUERY = /* groq */ `
+  *[_type == "jobOpening" && isOpen != false] | order(deadline asc) {
+    _id,
+    title,
+    department,
+    employmentType,
+    workMode,
+    city,
+    deadline,
+    applyUrl
+  }
+`;
+
+export async function getJobOpenings(): Promise<JobOpeningItem[]> {
+  return client.fetch(JOB_OPENINGS_QUERY, {}, { next: { revalidate: 60 } });
+}

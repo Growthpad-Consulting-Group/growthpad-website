@@ -1,24 +1,6 @@
 import ArrowGroup from "@/shared/components/ArrowGroup";
 import CtaButton from "@/shared/components/CtaButton";
-
-const openings = [
-  {
-    department: "Client Services",
-    title: "Client Growth Executive",
-    type: "Full-time",
-    workMode: "Hybrid",
-    city: "Nairobi, Kenya",
-    deadline: "31st August, 2026",
-  },
-  {
-    department: "Delivery",
-    title: "Client Delivery Lead",
-    type: "Full-time",
-    workMode: "Hybrid",
-    city: "Nairobi, Kenya",
-    deadline: "31st August, 2026",
-  },
-];
+import { getJobOpenings, type JobOpeningItem } from "@/sanity/queries";
 
 // Same notch silhouette as NotchCard/NotchPlaceholder, stretched taller
 // (via a scale transform rather than recomputing every path point) since
@@ -28,11 +10,15 @@ const NOTCH_PATH =
 const CANVAS_HEIGHT = 380;
 const SCALE_Y = CANVAS_HEIGHT / 232;
 
-function OpeningCard({
-  opening,
-}: {
-  opening: (typeof openings)[number];
-}) {
+function formatDeadline(dateString: string) {
+  return new Date(dateString).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function OpeningCard({ opening }: { opening: JobOpeningItem }) {
   return (
     <div className="group transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[0.98]">
       <svg
@@ -59,7 +45,7 @@ function OpeningCard({
 
               <div className="mt-1 flex flex-wrap gap-2">
                 <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
-                  {opening.type}
+                  {opening.employmentType}
                 </span>
                 <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
                   {opening.workMode}
@@ -70,12 +56,12 @@ function OpeningCard({
                 {opening.city}
               </p>
               <p className="text-base leading-7 text-white/70">
-                Deadline: {opening.deadline}
+                Deadline: {formatDeadline(opening.deadline)}
               </p>
             </div>
 
             <CtaButton
-              href="#"
+              href={opening.applyUrl ?? "#contact"}
               size="md"
               className="pb-6"
               circleClassName="bg-primary text-white"
@@ -89,7 +75,9 @@ function OpeningCard({
   );
 }
 
-export default function CareersOpenings() {
+export default async function CareersOpenings() {
+  const openings = await getJobOpenings();
+
   return (
     <section
       data-theme-section="light"
@@ -103,11 +91,17 @@ export default function CareersOpenings() {
           <ArrowGroup count={4} className="hidden sm:flex" />
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {openings.map((opening) => (
-            <OpeningCard key={opening.title} opening={opening} />
-          ))}
-        </div>
+        {openings.length === 0 ? (
+          <p className="text-secondary/60 mt-12 text-lg">
+            No open roles right now - check back soon.
+          </p>
+        ) : (
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+            {openings.map((opening) => (
+              <OpeningCard key={opening._id} opening={opening} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

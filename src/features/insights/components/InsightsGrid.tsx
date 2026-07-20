@@ -6,13 +6,10 @@ import { urlForImage } from "@/sanity/image";
 import type { InsightListItem } from "@/sanity/queries";
 import PdfViewerModal from "@/features/insights/components/PdfViewerModal";
 import CtaButton from "@/shared/components/CtaButton";
+import NotchImage from "@/shared/components/NotchImage";
 
 const selectClass =
   "text-secondary w-full rounded-xl border border-primary/30 bg-white px-4 py-3 text-base outline-none appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%23231812%22 d=%22M7 10l5 5 5-5z%22/></svg>')] bg-position-[right_1rem_center] bg-no-repeat pr-10";
-
-// The notch path reused across the site (same viewBox: 455×232)
-const NOTCH_PATH =
-  "M357.206 20C357.206 8.95431 348.252 0 337.206 0H20C8.95431 0 0 8.95432 0 20V193.663C0 204.709 8.95432 213.663 20 213.663H242.008C247.072 213.663 251.176 217.768 251.176 222.832C251.176 227.895 255.281 232 260.345 232H435C446.046 232 455 223.046 455 212V61.457C455 50.4114 446.046 41.457 435 41.457H377.206C366.16 41.457 357.206 32.5027 357.206 21.457V20Z";
 
 export default function InsightsGrid({
   insights,
@@ -54,7 +51,7 @@ export default function InsightsGrid({
   }, [insights, search, year, sort]);
 
   return (
-    <div className="bg-primary/10 rounded-3xl p-8 sm:p-10">
+    <div className="bg-primary/10 rounded-3xl p-8 shadow-2xl shadow-secondary/10 transition-all duration-600 ease-out hover:shadow-2xl hover:shadow-primary/10 sm:p-10">
       {/* Filters */}
       <div className="grid gap-6 sm:grid-cols-3">
         <div className="flex flex-col gap-2">
@@ -120,53 +117,19 @@ export default function InsightsGrid({
               aria-label={`View ${item.title}`}
             >
               {/* Notch-shaped cover image — drop-shadow on hover */}
-              <div className="relative w-72 shrink-0 transition-all duration-700 ease-out group-hover:drop-shadow-[0_25px_45px_rgba(240,93,35,0.28)]">
-                <svg
-                  viewBox="0 0 455 232"
-                  preserveAspectRatio="xMidYMid meet"
-                  className="h-auto w-full"
-                  aria-hidden
-                >
-                  <defs>
-                    <clipPath id={`notch-clip-${item._id}`} clipPathUnits="userSpaceOnUse">
-                      <path d={NOTCH_PATH} />
-                    </clipPath>
-                  </defs>
-
-                  <path d={NOTCH_PATH} fill="#fff" />
-
-                  {item.coverImage ? (
-                    <image
-                      href={urlForImage(item.coverImage).width(455).height(232).url()}
-                      x="0"
-                      y="0"
-                      width="455"
-                      height="232"
-                      preserveAspectRatio="xMidYMid slice"
-                      clipPath={`url(#notch-clip-${item._id})`}
-                    />
-                  ) : (
-                    <foreignObject
-                      x="0"
-                      y="0"
-                      width="455"
-                      height="232"
-                      clipPath={`url(#notch-clip-${item._id})`}
-                    >
-                      <div
-                        {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                        className="bg-primary/10 flex h-full w-full items-center justify-center"
-                      >
-                        <Icon
-                          icon="mdi:file-pdf-box"
-                          width={48}
-                          height={48}
-                          className="text-primary/50"
-                        />
-                      </div>
-                    </foreignObject>
-                  )}
-                </svg>
+              <div className="w-72 shrink-0 transition-all duration-700 ease-out group-hover:drop-shadow-[0_25px_45px_rgba(240,93,35,0.28)]">
+                {item.coverImage ? (
+                  <NotchImage
+                    src={urlForImage(item.coverImage).width(455).height(232).url()}
+                    alt={item.title}
+                    sizes="288px"
+                    showBorder={false}
+                  />
+                ) : (
+                  <div className="relative aspect-455/232 w-full rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Icon icon="mdi:file-pdf-box" width={48} height={48} className="text-primary/50" />
+                  </div>
+                )}
               </div>
 
               {/* Text + CTA */}
