@@ -8,7 +8,7 @@ import Clients from "@/features/home/components/Clients";
 import OfficeGallery from "@/features/home/components/OfficeGallery";
 import OurWork from "@/features/home/components/OurWork";
 import Testimonials from "@/features/home/components/Testimonials";
-import TeamStories from "@/features/home/components/TeamStories";
+import TeamStories from "@/shared/components/TeamStories";
 import Partners from "@/shared/components/Partners";
 import Affiliations from "@/features/home/components/Affiliations";
 import ContactForm from "@/shared/components/ContactForm";

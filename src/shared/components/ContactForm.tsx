@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowGroup from "@/shared/components/ArrowGroup";
-import CtaButton from "@/shared/components/CtaButton";
+import ContactFormCard from "@/shared/components/ContactFormCard";
 import LogoShowcase from "@/shared/components/LogoShowcase";
 
 interface ContactFormProps {
@@ -53,61 +53,11 @@ export default function ContactForm({
 
   const resolvedShowLogos = showLogos ?? !isHome;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: wire this up to an actual submission endpoint (API route,
-    // email service, CRM, etc.) once one is decided on.
-  };
-
-  // Input shape differs between variants
-  const inputBase = `placeholder:text-secondary/50 text-secondary w-full bg-white px-6 py-4 text-base outline-none ${
-    isHome ? "rounded-full" : "rounded-2xl"
-  }`;
-
   const form = (
-    <form
-      onSubmit={handleSubmit}
-      className={`bg-secondary flex flex-col gap-4 rounded-2xl p-8 sm:p-10 ${
-        isHome ? "" : "shadow-xl shadow-black/5"
-      }`}
-    >
-      <input
-        type="text"
-        name="name"
-        placeholder="Full name"
-        required
-        className={inputBase}
-      />
-
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          name="company"
-          placeholder="Company"
-          className={inputBase}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          className={inputBase}
-        />
-      </div>
-
-      <textarea
-        name="message"
-        placeholder="Message"
-        rows={5}
-        className="placeholder:text-secondary/50 text-secondary w-full resize-none rounded-2xl bg-white px-6 py-4 text-base outline-none"
-      />
-
-      <div className="mt-2 flex justify-end">
-        <CtaButton type="submit" circleClassName="bg-primary text-white">
-          Submit
-        </CtaButton>
-      </div>
-    </form>
+    <ContactFormCard
+      inputShape={isHome ? "pill" : "rounded"}
+      bordered={!isHome}
+    />
   );
 
   const textBlock = (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Arrow } from "@/shared/components/ArrowGroup";
 
@@ -23,6 +23,9 @@ export default function Modal({
 }) {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
+  // Track where the mousedown started so a drag that ends outside
+  // the modal content doesn't accidentally close it.
+  const mouseDownOnBackdrop = useRef(false);
 
   useEffect(() => {
     if (!open) return;
@@ -66,7 +69,15 @@ export default function Modal({
       className={`fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md transition-opacity duration-500 sm:p-8 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
-      onClick={onClose}
+      onMouseDown={(e) => {
+        mouseDownOnBackdrop.current = e.target === e.currentTarget;
+      }}
+      onMouseUp={(e) => {
+        if (mouseDownOnBackdrop.current && e.target === e.currentTarget) {
+          onClose();
+        }
+        mouseDownOnBackdrop.current = false;
+      }}
     >
       <button
         type="button"
@@ -121,19 +132,19 @@ export default function Modal({
           visible ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
       >
-        <div className="relative overflow-hidden rounded-4xl bg-black">
+        <div className="relative overflow-hidden rounded-4xl bg-secondary">
           {children}
 
           {/* Curtain panels: slide apart from center to reveal the content. */}
           <div
             style={{ transitionTimingFunction: ease, transitionDelay: "80ms" }}
-            className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-1/2 bg-black transition-transform duration-700 ${
+            className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-1/2 bg-secondary transition-transform duration-700 ${
               visible ? "-translate-x-full" : "translate-x-0"
             }`}
           />
           <div
             style={{ transitionTimingFunction: ease, transitionDelay: "80ms" }}
-            className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-1/2 bg-black transition-transform duration-700 ${
+            className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-1/2 bg-secondary transition-transform duration-700 ${
               visible ? "translate-x-full" : "translate-x-0"
             }`}
           />

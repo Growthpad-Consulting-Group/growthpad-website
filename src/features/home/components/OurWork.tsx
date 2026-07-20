@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import ArrowGroup, { Arrow } from "@/shared/components/ArrowGroup";
-import { useStickyStackScroll } from "@/features/home/hooks/useStickyStackScroll";
+import { useStickyStackScroll } from "@/shared/hooks/useStickyStackScroll";
 import { ourWork, type CaseStudy, type MediaItem } from "@/features/home/data/ourWork";
 
 const CARD_TOP_OFFSET_PX = 16;

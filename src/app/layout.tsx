@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
-import Navbar from "@/shared/layouts/Navbar";
-import Footer from "@/shared/layouts/Footer";
-import ScrollToTop from "@/shared/layouts/ScrollToTop";
 import "@/styles/globals.css";
 
 const figtree = Figtree({
@@ -40,12 +37,7 @@ export default function RootLayout({
       lang="en"
       className={`${figtree.variable} ${cloverDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
-        <Footer />
-        <ScrollToTop />
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
-import DnaHero from "@/features/our-dna/components/DnaHero";
+import MediaHero from "@/shared/components/MediaHero";
 import DnaIntro from "@/features/our-dna/components/DnaIntro";
 import OurHeritage from "@/features/our-dna/components/OurHeritage";
-import CoreValues from "@/features/our-dna/components/CoreValues";
+import CoreValues from "@/shared/components/CoreValues";
 import PurposeAndPromise from "@/features/our-dna/components/PurposeAndPromise";
 import WhyUs from "@/features/our-dna/components/WhyUs";
 import ContactForm from "@/shared/components/ContactForm";
@@ -13,7 +13,7 @@ export default function OurDnaPage() {
   return (
     <div className="flex flex-1 flex-col">
       <ScrollColorTransition />
-      <DnaHero />
+      <MediaHero />
       <SectionAnimate variant="fade-up">
         <DnaIntro />
       </SectionAnimate>

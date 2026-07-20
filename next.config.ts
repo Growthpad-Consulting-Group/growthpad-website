@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [{ hostname: "i.ytimg.com" }],
+    remotePatterns: [
+      { hostname: "i.ytimg.com" },
+      { hostname: "cdn.sanity.io" },
+    ],
   },
 };
 

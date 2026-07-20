@@ -14,16 +14,20 @@ const values = [
   },
 ];
 
-export default function CoreValues() {
+export default function CoreValues({
+  theme = "light",
+}: {
+  theme?: "light" | "dark" | "gray" | "cream";
+}) {
   return (
     <section
-      data-theme-section="light"
+      data-theme-section={theme}
       className="theme-bg relative w-full py-20 lg:py-28"
     >
       <div className="container-fluid">
         <ArrowGroup count={5} />
 
-        <h2 className="font-display text-secondary mt-8 text-center text-4xl font-bold sm:text-5xl">
+        <h2 className="font-display theme-fg mt-8 text-center text-4xl font-bold sm:text-5xl">
           Our Core Values
         </h2>
 

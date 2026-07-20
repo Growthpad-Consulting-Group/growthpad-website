@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Accordion from "@/features/services/components/Accordion";
+import Accordion from "@/shared/components/Accordion";
 import { specialties } from "@/features/services/data/specialties";
 
 export default function Specialties({ showHeader = true }: { showHeader?: boolean }) {

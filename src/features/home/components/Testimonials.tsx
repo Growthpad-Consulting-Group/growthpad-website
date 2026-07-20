@@ -1,4 +1,4 @@
-import VideoStoryGrid from "@/features/home/components/VideoStoryGrid";
+import VideoStoryGrid from "@/shared/components/VideoStoryGrid";
 import { testimonials } from "@/features/home/data/testimonials";
 
 export default function Testimonials() {
