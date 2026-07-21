@@ -98,13 +98,13 @@ export default function CaseStudyNextUpCard({ nextStudy }: { nextStudy: NextStud
             </div>
 
             <div className="flex flex-col gap-1 overflow-hidden">
-              <span className="text-primary text-[10px] font-bold uppercase tracking-wider">
+              <span className="text-primary text-xs font-semibold">
                 Next success story
               </span>
-              <span className="font-display text-secondary group-hover:text-primary line-clamp-2 text-sm font-bold leading-snug transition-colors">
+              <span className="font-display text-secondary group-hover:text-primary line-clamp-2 text-md font-bold leading-snug transition-colors">
                 {nextStudy.brand}
               </span>
-              <span className="text-secondary/60 line-clamp-1 text-xs leading-none">
+              <span className="text-secondary/60 line-clamp-1 text-sm leading-none">
                 {nextStudy.description}
               </span>
             </div>

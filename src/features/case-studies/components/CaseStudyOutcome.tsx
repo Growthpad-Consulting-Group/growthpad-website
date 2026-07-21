@@ -7,7 +7,7 @@ export default function CaseStudyOutcome({
 }: {
   heading?: string;
   description: string;
-  images: [{ src: string; alt: string }, { src: string; alt: string }];
+  images: { src: string; alt: string }[];
 }) {
   return (
     <section data-theme-section="gray" className="theme-bg w-full py-20 lg:py-28">
@@ -19,25 +19,25 @@ export default function CaseStudyOutcome({
           {description}
         </p>
 
+        {/* Staggers every second column downward — holds for any image count,
+            not just the original pair. */}
         <div className="mt-14 grid gap-8 sm:grid-cols-2">
-          <div className="relative aspect-square w-full overflow-hidden rounded-2xl">
-            <Image
-              src={images[0].src}
-              alt={images[0].alt}
-              fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="relative aspect-square w-full overflow-hidden rounded-2xl sm:mt-20">
-            <Image
-              src={images[1].src}
-              alt={images[1].alt}
-              fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {images.map((image, index) => (
+            <div
+              key={image.src}
+              className={`relative aspect-square w-full overflow-hidden rounded-2xl ${
+                index % 2 === 1 ? "sm:mt-20" : ""
+              }`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

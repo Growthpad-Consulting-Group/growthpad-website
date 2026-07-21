@@ -63,6 +63,22 @@ export default function CtaButton({
   }`;
 
   if (href) {
+    const isExternal = /^https?:\/\//.test(href);
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClick}
+          className={sharedClassName}
+        >
+          {content}
+        </a>
+      );
+    }
+
     return (
       <Link href={href} onClick={onClick} className={sharedClassName}>
         {content}

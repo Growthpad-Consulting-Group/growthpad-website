@@ -1,9 +1,22 @@
+"use client";
+
+import { useRef } from "react";
 import NotchImage from "@/shared/components/NotchImage";
 import BigArrow from "@/shared/components/BigArrow";
 
 export default function CaseStudiesHero() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const handleScrollDown = () => {
+    sectionRef.current?.nextElementSibling?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <section
+      ref={sectionRef}
       data-theme-section="dark"
       className="theme-bg w-full pt-6 pb-16 sm:pt-10 lg:pb-20"
     >
@@ -26,14 +39,16 @@ export default function CaseStudiesHero() {
               />
             </div>
 
-            <div className="flex h-full flex-1 flex-col justify-between py-12 lg:py-20">
-              <div className="flex flex-1 items-end">
-                <p className="text-primary font-display max-w-md text-2xl leading-tight sm:text-3xl lg:text-4xl">
-                  We are marked by troves of success stories.
-                </p>
-              </div>
+            <div className="relative flex h-full flex-1 items-center py-12 lg:py-20">
+              <p className="text-primary font-display max-w-md text-2xl leading-tight sm:text-3xl lg:text-4xl">
+                We are marked by troves of success stories.
+              </p>
 
-              <BigArrow className="text-primary h-28 w-28 self-end sm:h-40 sm:w-40 lg:h-48 lg:w-48" />
+              <BigArrow
+                loop
+                onClick={handleScrollDown}
+                className="text-primary absolute right-0 bottom-8 h-28 w-28 sm:h-40 sm:w-40 lg:bottom-20 lg:h-48 lg:w-48 rotate-160"
+              />
             </div>
           </div>
         </NotchImage>

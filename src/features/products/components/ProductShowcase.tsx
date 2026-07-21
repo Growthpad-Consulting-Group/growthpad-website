@@ -99,7 +99,7 @@ export default function ProductShowcase() {
                 </p>
 
                 <CtaButton
-                  href="#contact"
+                  href="/contact"
                   circleClassName="bg-secondary text-white"
                   className="mt-2 self-start"
                 >

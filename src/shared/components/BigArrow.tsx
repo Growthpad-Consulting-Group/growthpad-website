@@ -7,7 +7,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const ARROW_PATH =
   "M359.869 331L359.869 97.6809C359.869 43.7638 316.154 -6.10352e-05 262.228 -6.10352e-05L-3.05176e-05 -6.10352e-05L-3.05176e-05 40.8696L262.228 40.8696C264.184 40.8696 266.118 40.9563 268.027 41.1291C270.773 41.3883 273.122 43.2454 274.055 45.8375C274.987 48.4297 274.34 51.3252 272.388 53.2693C223.276 102.434 42.3693 283.284 42.3693 283.284C56.1478 291.967 67.8193 303.675 76.4249 317.5L306.59 87.3991C308.551 85.455 311.461 84.8063 314.069 85.7136C316.677 86.664 318.512 88.9966 318.784 91.7616C318.944 93.7057 319.047 95.6935 319.047 97.6809L319.047 331L359.869 331Z";
 
-export default function BigArrow({ className }: { className?: string }) {
+export default function BigArrow({
+  className,
+  loop = false,
+  onClick,
+}: {
+  className?: string;
+  /** Replays the draw-in animation on a continuous loop instead of drawing
+   * in once per scroll-into-view. */
+  loop?: boolean;
+  /** If provided, renders as a button instead of a plain decorative SVG. */
+  onClick?: () => void;
+}) {
   const gradId = useId();
   const maskId = useId();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -35,11 +46,15 @@ export default function BigArrow({ className }: { className?: string }) {
 
     const ctx = gsap.context(() => {
       const timeline = gsap.timeline({
+        repeat: loop ? -1 : 0,
+        yoyo: loop,
+        repeatDelay: loop ? 0.6 : 0,
         scrollTrigger: {
           trigger: svg,
           start: "top 80%",
-          // restart redraws when scrolling back up into view from below
-          toggleActions: "play none restart reverse",
+          // Looping arrows just play once into view and then repeat on their
+          // own; non-looping ones redraw every time they scroll back into view.
+          toggleActions: loop ? "play none none none" : "play none restart reverse",
         },
       });
 
@@ -58,10 +73,15 @@ export default function BigArrow({ className }: { className?: string }) {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [loop]);
 
-  return (
-    <svg ref={svgRef} viewBox="0 0 360 331" fill="none" className={className}>
+  const svg = (
+    <svg
+      ref={svgRef}
+      viewBox="0 0 360 331"
+      fill="none"
+      className={onClick ? "h-full w-full" : className}
+    >
       <defs>
         <linearGradient
           id={gradId}
@@ -101,4 +121,19 @@ export default function BigArrow({ className }: { className?: string }) {
       />
     </svg>
   );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        aria-label="Scroll to next section"
+        className={`cursor-pointer transition-transform duration-300 ease-out hover:scale-105 ${className ?? ""}`}
+      >
+        {svg}
+      </button>
+    );
+  }
+
+  return svg;
 }

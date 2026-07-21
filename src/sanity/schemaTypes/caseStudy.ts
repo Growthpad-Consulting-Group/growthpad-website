@@ -86,7 +86,7 @@ export const caseStudy = defineType({
     defineField({
       name: "outcomeImages",
       title: "Outcome Images",
-      description: "Optional showcase images for the outcome (typically a pair of proof photos).",
+      description: "Optional showcase images for the outcome (2 or more proof photos).",
       type: "array",
       of: [
         {

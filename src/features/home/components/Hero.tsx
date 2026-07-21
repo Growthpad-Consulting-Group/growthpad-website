@@ -68,7 +68,7 @@ export default function Hero() {
           </p>
 
           <CtaButton
-            href="#contact"
+            href="/services"
             className="hero-reveal opacity-0 mt-2"
             circleClassName="theme-invert-bg theme-invert-fg"
           >

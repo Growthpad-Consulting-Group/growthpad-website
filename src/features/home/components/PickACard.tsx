@@ -135,7 +135,7 @@ export default function PickACard() {
             {active.description}
           </p>
 
-          <CtaButton href="#contact" className="mt-6" circleClassName="bg-secondary text-white">
+          <CtaButton href="/contact" className="mt-6" circleClassName="bg-secondary text-white">
             Get Started
           </CtaButton>
         </div>

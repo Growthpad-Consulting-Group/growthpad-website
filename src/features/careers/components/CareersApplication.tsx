@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ArrowGroup from "@/shared/components/ArrowGroup";
-import CareerFormCard from "@/features/careers/components/CareerFormCard";
+import ContactFormCard from "@/shared/components/ContactFormCard";
 
 export default function CareersApplication() {
   return (
@@ -18,8 +18,8 @@ export default function CareersApplication() {
         </div>
 
         <div className="relative lg:ml-auto lg:w-11/12">
-          <CareerFormCard
-            description="Drop us an email with your credentials and make a case."
+          <ContactFormCard
+            description="Share your credentials and make your case."
             layout="split"
             className="rounded-3xl"
           />

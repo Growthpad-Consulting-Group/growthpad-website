@@ -13,7 +13,7 @@ export default function FaqSection() {
         </h2>
 
         <div className="mt-16 ml-auto max-w-4xl">
-          <Accordion items={faq} />
+          <Accordion items={faq} layout="stacked" />
         </div>
       </div>
     </section>

@@ -19,7 +19,15 @@ export default function Brands() {
       const container = containerRef.current;
       if (!track || !container) return;
 
-      const scrollDistance = () => track.scrollWidth - container.offsetWidth;
+      // Measured against the track's own (padded) container-fluid parent, not
+      // the outer full-bleed section — otherwise the distance is short by
+      // roughly the container-fluid horizontal padding on each side, and the
+      // last card never fully scrolls into view before the section unpins.
+      const scrollDistance = () => {
+        const trackParent = track.parentElement;
+        const availableWidth = trackParent ? trackParent.clientWidth : container.offsetWidth;
+        return track.scrollWidth - availableWidth;
+      };
 
       gsap.to(track, {
         x: () => -scrollDistance(),

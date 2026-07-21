@@ -18,7 +18,7 @@ export const brands: Brand[] = [
     description:
       "Seamless event management and exhibitions designed to create unforgettable experiences.",
     logo: "gcg-events.svg",
-    href: "#",
+    href: "https://gdcevents.co.ke/",
   },
   {
     name: "Pine",
@@ -32,7 +32,7 @@ export const brands: Brand[] = [
     description:
       "Creating high-quality videos to amplify brand stories and connect with audiences.",
     logo: "video-force.svg",
-    href: "#",
+    href: "https://videoforce.co.ke/",
   },
   {
     name: "GCG Dev",

@@ -69,7 +69,7 @@ async function getCaseStudyData(slug: string) {
       problemText: sanityStudy.problemText,
       solutionText: sanityStudy.solutionText,
       outcomeText: sanityStudy.outcomeText,
-      outcomeImages: outcomeImages.length >= 2 ? (outcomeImages as [{ src: string; alt: string }, { src: string; alt: string }]) : null,
+      outcomeImages: outcomeImages.length > 0 ? outcomeImages : null,
       videoFeature,
     };
   }
