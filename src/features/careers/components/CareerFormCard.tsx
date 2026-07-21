@@ -115,12 +115,62 @@ export default function CareerFormCard({
     }
 
     setIsLoading(true);
+    setFileError(null);
 
-    // Simulate submission delay
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
+    const linkedin = (formData.get("linkedin") as string) || undefined;
+    const portfolio = (formData.get("portfolio") as string) || undefined;
+    const message = (formData.get("message") as string) || undefined;
+    const role = jobTitle || undefined;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const base64Data = (reader.result as string).split(",")[1];
+      const payload = {
+        name,
+        phone,
+        email,
+        linkedin,
+        portfolio,
+        message,
+        role,
+        attachment: {
+          content: base64Data,
+          filename: file.name,
+        },
+      };
+
+      try {
+        const response = await fetch("/api/send", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+        if (response.ok && result.success) {
+          setIsSubmitted(true);
+        } else {
+          setFileError(
+            result.error || "Failed to submit your application. Please try again."
+          );
+        }
+      } catch (err) {
+        setFileError("A network error occurred. Please check your connection.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    reader.onerror = () => {
+      setFileError("Failed to read the file. Please try another file.");
       setIsLoading(false);
-      setIsSubmitted(true);
-    }, 1500);
+    };
   };
 
   const triggerFileSelect = () => {
@@ -308,6 +358,7 @@ export default function CareerFormCard({
           circleClassName="bg-primary text-white"
           fullWidth
           className="sm:w-auto"
+          disabled={isLoading}
         >
           {isLoading ? "Submitting Application..." : "Submit Application"}
         </CtaButton>
@@ -319,8 +370,8 @@ export default function CareerFormCard({
     return (
       <form
         onSubmit={handleSubmit}
-        className={`bg-secondary flex flex-col gap-8 rounded-2xl p-8 pt-14 pb-12 sm:p-10 sm:pt-16 sm:pb-14 lg:flex-row lg:gap-12 ${
-          bordered ? "border border-white/10 shadow-xl shadow-black/5" : ""
+        className={`bg-secondary flex flex-col gap-8 rounded-2xl p-8 pt-14 pb-12 sm:p-10 sm:pt-16 sm:pb-14 lg:flex-row lg:gap-12 border border-white/5 hover:border-white/10 transition-all duration-500 ease-out hover:-translate-y-1.5 shadow-xl hover:shadow-2xl hover:shadow-primary/10 ${
+          bordered ? "shadow-black/5" : ""
         } ${className}`}
       >
         {description && (
@@ -338,8 +389,8 @@ export default function CareerFormCard({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`bg-secondary flex flex-col gap-4 rounded-2xl p-8 sm:p-10 ${
-        bordered ? "border border-white/10 shadow-xl shadow-black/5" : ""
+      className={`bg-secondary flex flex-col gap-4 rounded-2xl p-8 sm:p-10 border border-white/5 hover:border-white/10 transition-all duration-500 ease-out hover:-translate-y-1.5 shadow-xl hover:shadow-2xl hover:shadow-primary/10 ${
+        bordered ? "shadow-black/5" : ""
       } ${className}`}
     >
       {description && (

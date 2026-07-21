@@ -9,12 +9,12 @@ export default function PartnerServices() {
     >
       <div className="container-fluid grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-6">
-          <h2 className="text-secondary text-4xl leading-tight font-light sm:text-5xl">
+          <h2 className="theme-fg text-4xl leading-tight font-light sm:text-5xl">
             Let&apos;s team up to support the growth of businesses in{" "}
             Africa through digital.
           </h2>
 
-          <p className="text-secondary/80 max-w-md text-lg leading-8">
+          <p className="theme-fg max-w-md text-lg leading-8 opacity-80">
             What services can you recommend? We have a wide variety of
             professional services and you can recommend any of them.
           </p>

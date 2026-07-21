@@ -97,7 +97,7 @@ export default function PartnerSteps() {
     >
       <div className="container-fluid">
         <div className="relative mb-16 lg:mb-24">
-          <h2 className="font-display text-secondary text-center text-4xl font-bold sm:text-5xl">
+          <h2 className="font-display theme-fg text-center text-4xl font-bold sm:text-5xl">
             How Does it Work?
           </h2>
           <ArrowGroup

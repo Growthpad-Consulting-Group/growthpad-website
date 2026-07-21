@@ -18,6 +18,7 @@ export default function BlogHero() {
             alt="Growthpad Blog — stories, news and perspectives"
             variant="concave"
             showBorder={false}
+            fit="meet"
             className="w-full h-[320px] sm:h-[400px] lg:h-[510px]"
             priority
             sizes="100vw"

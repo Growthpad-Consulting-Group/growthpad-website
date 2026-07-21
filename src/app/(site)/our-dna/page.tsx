@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import MediaHero from "@/shared/components/MediaHero";
 import DnaIntro from "@/features/our-dna/components/DnaIntro";
 import OurHeritage from "@/features/our-dna/components/OurHeritage";
@@ -8,6 +9,27 @@ import ContactForm from "@/shared/components/ContactForm";
 import Partners from "@/shared/components/Partners";
 import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 import SectionAnimate from "@/shared/components/SectionAnimate";
+
+export const metadata: Metadata = {
+  title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+  description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
+  openGraph: {
+    title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+    description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
+    url: "https://growthpad.co.ke/our-dna",
+    images: [
+      {
+        url: "/assets/images/dna-hero.png",
+        alt: "innovative tech solutions",
+      },
+    ],
+  },
+  twitter: {
+    title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+    description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
+    images: ["/assets/images/dna-hero.png"],
+  },
+};
 
 export default function OurDnaPage() {
   return (

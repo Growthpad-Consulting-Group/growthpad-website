@@ -19,7 +19,7 @@ export default function TendersHero() {
             alt="Growthpad Tenders — open procurement opportunities"
             variant="concave"
             showBorder={false}
-            className="w-full h-[320px] sm:h-[400px] lg:h-[510px]"
+            className="w-full h-[320px] sm:h-[400px] lg:h-auto lg:aspect-[1120/499]"
             priority
             sizes="100vw"
           />

@@ -172,3 +172,87 @@ export async function getBlog(slug: string): Promise<BlogDetail | null> {
   return client.fetch(BLOG_QUERY, { slug }, { next: { revalidate: 60 } });
 }
 
+export type CaseStudyListItem = {
+  _id: string;
+  brand: string;
+  slug: string;
+  description: string | null;
+  heroTitle: string | null;
+  coverImage: SanityImageSource | null;
+  coverVideoUrl: string | null;
+  heroImage: SanityImageSource | null;
+  heroVideoUrl: string | null;
+};
+
+const CASE_STUDIES_QUERY = /* groq */ `
+  *[_type == "caseStudy"] | order(_createdAt desc) {
+    _id,
+    "brand": title,
+    "slug": slug.current,
+    description,
+    heroTitle,
+    "coverImage": image,
+    "coverVideoUrl": coverVideo.asset->url,
+    "heroImage": heroImage,
+    "heroVideoUrl": heroVideo.asset->url
+  }
+`;
+
+export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
+  return client.fetch(CASE_STUDIES_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export type CaseStudyDetail = {
+  _id: string;
+  brand: string;
+  slug: string;
+  description: string | null;
+  coverImage: SanityImageSource | null;
+  coverVideoUrl: string | null;
+  heroTitle: string | null;
+  heroImage: SanityImageSource | null;
+  heroVideoUrl: string | null;
+  problemText: string | null;
+  solutionText: string | null;
+  outcomeText: string | null;
+  outcomeImages: Array<{
+    asset: SanityImageSource;
+    alt: string | null;
+  }> | null;
+  videoFeature: {
+    title: string | null;
+    thumbnail: SanityImageSource | null;
+    youtubeUrl: string | null;
+  } | null;
+};
+
+const CASE_STUDY_QUERY = /* groq */ `
+  *[_type == "caseStudy" && slug.current == $slug][0] {
+    _id,
+    "brand": title,
+    "slug": slug.current,
+    description,
+    "coverImage": image,
+    "coverVideoUrl": coverVideo.asset->url,
+    heroTitle,
+    "heroImage": heroImage,
+    "heroVideoUrl": heroVideo.asset->url,
+    problemText,
+    solutionText,
+    outcomeText,
+    "outcomeImages": outcomeImages[] {
+      "asset": asset,
+      alt
+    },
+    "videoFeature": {
+      "title": videoTitle,
+      "thumbnail": videoThumbnail,
+      "youtubeUrl": youtubeUrl
+    }
+  }
+`;
+
+export async function getCaseStudy(slug: string): Promise<CaseStudyDetail | null> {
+  return client.fetch(CASE_STUDY_QUERY, { slug }, { next: { revalidate: 60 } });
+}
+

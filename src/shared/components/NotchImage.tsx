@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 
 // Original stepped-tab notch — 455×232 viewBox.
@@ -16,6 +16,11 @@ type Variant = "tab" | "concave";
 type BaseProps = {
   variant?: Variant;
   showBorder?: boolean;
+  // Defaults to "slice" for concave (cover-fit, correct for photos — no
+  // gaps) and "meet" for tab. Override to "meet" for solid-color content
+  // where cropping the shape's notch geometry would look worse than a
+  // small uncovered margin blending into the fill.
+  fit?: "meet" | "slice";
   className?: string;
 };
 
@@ -53,34 +58,70 @@ export default function NotchImage({
   alt,
   variant = "tab",
   showBorder = true,
+  fit: fitProp,
   className = "w-full",
   sizes = "100vw",
   priority = false,
   children,
 }: Props) {
-  const uid    = useId().replace(/:/g, "");
+  const uid = useId().replace(/:/g, "");
   const clipId = `notch-clip-${uid}`;
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
 
   const isConcave = variant === "concave";
-  const path      = isConcave ? CONCAVE_PATH    : TAB_PATH;
-  const viewBox   = isConcave ? "0 0 1120 499"  : "0 0 455 232";
-  const scaleX    = isConcave ? 1 / 1120        : 1 / 455;
-  const scaleY    = isConcave ? 1 / 499         : 1 / 232;
+  const path = isConcave ? CONCAVE_PATH : TAB_PATH;
+  const [vbW, vbH] = isConcave ? [1120, 499] : [455, 232];
+  const viewBox = `0 0 ${vbW} ${vbH}`;
+  // "tab" containers are always sized h-auto (native aspect, so "meet" and
+  // "slice" agree); "concave" containers are often given a fixed height
+  // that doesn't match the shape's native aspect, so it must crop-to-fill.
+  const fit = fitProp ?? (isConcave ? "slice" : "meet");
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ w: width, h: height });
+    });
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Mirrors the border SVG's own preserveAspectRatio mapping (xMidYMid
+  // meet/slice) as a userSpaceOnUse clip-path transform, so the clipped
+  // content always lines up exactly with the visible border stroke —
+  // regardless of the container's actual aspect ratio.
+  const scale =
+    size.w && size.h
+      ? fit === "slice"
+        ? Math.max(size.w / vbW, size.h / vbH)
+        : Math.min(size.w / vbW, size.h / vbH)
+      : 0;
+  const translateX = (size.w - vbW * scale) / 2;
+  const translateY = (size.h - vbH * scale) / 2;
 
   return (
-    <div className={`relative ${className}`}>
+    <div ref={wrapRef} className={`relative ${className}`}>
       {/* SVG sets aspect ratio and defines the clipPath */}
       <svg
         viewBox={viewBox}
-        preserveAspectRatio={isConcave ? "xMidYMid slice" : "xMidYMid meet"}
-        className={isConcave ? "h-full w-full" : "h-auto w-full"}
+        preserveAspectRatio={`xMidYMid ${fit}`}
+        className={
+          isConcave
+            ? "h-full w-full overflow-visible"
+            : "h-auto w-full overflow-visible"
+        }
         aria-hidden
       >
         <defs>
           <clipPath
             id={clipId}
-            clipPathUnits="objectBoundingBox"
-            transform={`scale(${scaleX} ${scaleY})`}
+            clipPathUnits="userSpaceOnUse"
+            transform={`translate(${translateX} ${translateY}) scale(${scale})`}
           >
             <path d={path} />
           </clipPath>

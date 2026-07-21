@@ -105,6 +105,13 @@ export default function Footer() {
               flag="/assets/images/ghana-flag.gif"
               alt="Ghana flag"
             />
+            {" | "}
+            <Link
+              href="/privacy-policy"
+              className="underline hover:text-primary transition-colors"
+            >
+              Privacy Policy
+            </Link>
           </p>
 
           <Image

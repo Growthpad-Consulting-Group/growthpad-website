@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
@@ -101,6 +102,46 @@ function buildRelevantSections(blocks: PortableTextBlock[]) {
     { title: "Key Responsibilities", blocks: responsibilities },
     { title: "Job Requirements", blocks: requirements },
   ].filter((section) => section.blocks.length > 0);
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const opening = await getJobOpening(slug);
+
+  if (!opening) {
+    return {
+      title: "Job Opening Not Found | Growthpad",
+    };
+  }
+
+  const title = `${opening.title} | Careers | Growthpad Consulting Group`;
+  const description = `Join Growthpad as a ${opening.title} in ${opening.city}. Department: ${opening.department}. Employment Type: ${opening.employmentType} (${opening.workMode}).`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      images: [
+        {
+          url: "/assets/images/specialties-bg.png",
+          alt: opening.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/assets/images/specialties-bg.png"],
+    },
+  };
 }
 
 export default async function JobOpeningPage({

@@ -83,14 +83,14 @@ export default async function CareersOpenings() {
     >
       <div className="container-fluid">
         <div className="flex items-center justify-between gap-6">
-          <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
+          <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
             Current Openings
           </h2>
           <ArrowGroup count={4} className="hidden sm:flex" />
         </div>
 
         {openings.length === 0 ? (
-          <p className="text-secondary/60 mt-12 text-lg">
+          <p className="theme-fg mt-12 text-lg opacity-60">
             No open roles right now - check back soon.
           </p>
         ) : (

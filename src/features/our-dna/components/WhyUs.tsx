@@ -77,11 +77,11 @@ export default function WhyUs() {
     >
       <div className="container-fluid">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
+          <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
             Why us?
           </h2>
 
-          <p className="text-secondary/70 mt-4 text-lg leading-8">
+          <p className="theme-fg mt-4 text-lg leading-8 opacity-70">
             The most important part of what we do is listen, be empathetic and
             find solutions attuned to the needs of our clients.
           </p>

@@ -26,11 +26,11 @@ export default function ProjectInquiry() {
               hiring team.
             </h3>
             <a
-              href="mailto:strategic@growthpad.co.ke"
+              href="mailto:careers@growthpad.co.ke"
               className="text-primary flex items-center gap-3 text-lg font-medium"
             >
               <Icon icon="mdi:email-outline" width={20} height={20} />
-              strategic@growthpad.co.ke
+              careers@growthpad.co.ke
             </a>
             <a
               href="tel:+254701850850"
@@ -46,11 +46,11 @@ export default function ProjectInquiry() {
               For Business Specific RFP/RFQs, Proposals &amp; Quotations
             </h3>
             <a
-              href="mailto:careers@growthpad.co.ke"
+              href="mailto:strategic@growthpad.co.ke"
               className="text-primary flex items-center gap-3 text-lg font-medium"
             >
               <Icon icon="mdi:email-outline" width={20} height={20} />
-              careers@growthpad.co.ke
+              strategic@growthpad.co.ke
             </a>
           </div>
         </div>

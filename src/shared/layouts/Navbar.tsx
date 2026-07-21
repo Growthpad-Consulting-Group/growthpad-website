@@ -117,7 +117,7 @@ function MobileMenu({
               A Cross-Africa Communication &amp; Technology Firm
             </p>
             <CtaButton
-              href="#contact"
+              href="/contact"
               size="sm"
               fullWidth
               onClick={onNavigate}

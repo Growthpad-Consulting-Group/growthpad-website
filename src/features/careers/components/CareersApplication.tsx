@@ -10,7 +10,7 @@ export default function CareersApplication() {
     >
       <div className="container-fluid flex flex-col gap-10">
         <div className="flex items-center justify-between gap-6">
-          <h2 className="font-display text-secondary max-w-2xl text-3xl leading-tight font-bold sm:text-4xl">
+          <h2 className="font-display theme-fg max-w-2xl text-3xl leading-tight font-bold sm:text-4xl">
             Think you are a GREAT FIT for Growthpad for a role that&apos;s
             currently not open?
           </h2>

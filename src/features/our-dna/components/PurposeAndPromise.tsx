@@ -20,10 +20,10 @@ export default function PurposeAndPromise() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <h2 className="font-display text-secondary text-3xl font-bold sm:text-4xl">
+            <h2 className="font-display theme-fg text-3xl font-bold sm:text-4xl">
               Our Purpose
             </h2>
-            <p className="text-secondary/80 max-w-md text-lg leading-8">
+            <p className="theme-fg max-w-md text-lg leading-8 opacity-80">
               To drive progress in society by enabling people &amp;
               businesses to realize their full potential through innovation
               &amp; technology.
@@ -35,10 +35,10 @@ export default function PurposeAndPromise() {
 
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="flex flex-col gap-6">
-            <h2 className="font-display text-secondary text-3xl font-bold sm:text-4xl">
+            <h2 className="font-display theme-fg text-3xl font-bold sm:text-4xl">
               Brand Promise
             </h2>
-            <p className="text-secondary/80 max-w-md text-lg leading-8">
+            <p className="theme-fg max-w-md text-lg leading-8 opacity-80">
               To build innovative solutions that drive individual &amp;
               business growth.
             </p>

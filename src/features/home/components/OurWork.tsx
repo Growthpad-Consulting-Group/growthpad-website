@@ -81,7 +81,11 @@ function WorkCardBody({ project }: { project: CaseStudy }) {
   );
 }
 
-export default function OurWork() {
+export default function OurWork({
+  showHeading = true,
+}: {
+  showHeading?: boolean;
+}) {
   const {
     sectionRef,
     gridRef,
@@ -99,11 +103,13 @@ export default function OurWork() {
       data-theme-section="dark"
       className="theme-bg relative w-full overflow-visible"
     >
-      <div className="container-fluid">
-        <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
-          Some of our work
-        </h2>
-      </div>
+      {showHeading && (
+        <div className="container-fluid">
+          <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
+            Some of our work
+          </h2>
+        </div>
+      )}
 
       {/* Mobile/tablet: a swipeable horizontal row, one case study per
           view — the desktop sticky-stack cards are a very tall list once

@@ -81,11 +81,11 @@ export default function LogoGrid({
       className="theme-bg relative w-full py-20 lg:py-28"
     >
       <div className="container-fluid flex flex-col items-center text-center">
-        <h2 className="font-display text-secondary text-4xl font-bold sm:text-5xl">
+        <h2 className="font-display theme-fg text-4xl font-bold sm:text-5xl">
           {heading}
         </h2>
         {subheading && (
-          <p className="text-secondary/70 mt-4 text-lg leading-8">
+          <p className="theme-fg mt-4 text-lg leading-8 opacity-70">
             {subheading}
           </p>
         )}

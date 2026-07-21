@@ -19,7 +19,8 @@ export default function InsightsHero() {
             alt="Growthpad Insights — research and thought leadership"
             variant="concave"
             showBorder={false}
-            className="w-full h-[320px] sm:h-[400px] lg:h-[510px]"
+            fit="slice"
+            className="w-full h-[320px] sm:h-[400px] lg:h-auto lg:aspect-[1120/499]"
             priority
             sizes="100vw"
           />
