@@ -10,7 +10,6 @@ import type { BlogListItem } from "@/sanity/queries";
 import { Arrow } from "@/shared/components/ArrowGroup";
 import Pagination from "@/shared/components/Pagination";
 
-const CATEGORIES = ["Strategy", "Communications", "Digital", "Technology", "Company News"] as const;
 const PAGE_SIZE = 6;
 
 function formatDate(value: string) {
@@ -57,6 +56,13 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
     searchParams.get("sort") === "oldest" ? "oldest" : "recent",
   );
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+
+  // Only show categories that have at least one post
+  const activeCategories = useMemo(() => {
+    const seen = new Set<string>();
+    blogs.forEach((b) => { if (b.category) seen.add(b.category); });
+    return Array.from(seen).sort();
+  }, [blogs]);
 
   // Debounce the search box so filtering doesn't refire — and the URL
   // doesn't rewrite — on every keystroke.
@@ -139,7 +145,7 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
           >
             All Articles
           </button>
-          {CATEGORIES.map((cat) => (
+          {activeCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => updateFilter(() => setCategory(cat))}

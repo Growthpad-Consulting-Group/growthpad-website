@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
+import CookieConsent from "@/shared/components/CookieConsent";
 import "@/styles/globals.css";
 
 const figtree = Figtree({
@@ -77,6 +78,19 @@ export default function RootLayout({
       className={`${figtree.variable} ${cloverDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Consent Mode v2: default deny until user accepts */}
+        <Script id="gtag-consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              wait_for_update: 500,
+            });
+          `}
+        </Script>
+
         {/* Google Analytics Tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-JC9NBLNQFS"
@@ -84,13 +98,13 @@ export default function RootLayout({
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-JC9NBLNQFS');
           `}
         </Script>
+
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

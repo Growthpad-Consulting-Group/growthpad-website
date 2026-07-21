@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { Icon } from "@iconify/react";
 import ParallaxHeroImage from "@/features/blog/components/ParallaxHeroImage";
 import ShareButtons from "@/features/blog/components/ShareButtons";
+import Breadcrumb from "@/shared/components/Breadcrumb";
 import type { BlogDetail } from "@/sanity/queries";
 
 function AuthorAvatar({ name }: { name: string }) {
@@ -38,15 +37,17 @@ export default function ArticleHero({
 
       {/* Dark gradient so white overlay text stays readable regardless of
           the underlying image's own contrast. */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
 
-      <Link
-        href="/blog"
-        aria-label="Back to blog"
-        className="absolute top-6 left-6 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:top-10 sm:left-10"
-      >
-        <Icon icon="solar:arrow-left-linear" width={20} height={20} />
-      </Link>
+      <div className="absolute top-6 left-6 z-10 sm:top-10 sm:left-10">
+        <Breadcrumb
+          variant="light"
+          items={[
+            { label: "Blog", href: "/blog" },
+            { label: post.title },
+          ]}
+        />
+      </div>
 
       <div className="absolute inset-x-0 bottom-0 z-10">
         <div className="container-fluid flex flex-col gap-4 pb-8 sm:pb-10">
