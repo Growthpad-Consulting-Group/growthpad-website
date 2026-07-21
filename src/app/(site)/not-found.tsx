@@ -3,6 +3,8 @@ import CtaButton from "@/shared/components/CtaButton";
 
 export const metadata = {
   title: "Page Not Found | Growthpad",
+  description: "The page you're looking for may have been moved or no longer exists. Return to Growthpad Consulting Group's homepage.",
+  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {

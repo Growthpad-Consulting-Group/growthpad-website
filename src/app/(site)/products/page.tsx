@@ -8,21 +8,33 @@ import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export const metadata: Metadata = {
   title: "Products | Growthpad Consulting Group",
-  description: "The modern fast-paced world, demands a workforce with up-to-date skills & knowledge, and committing to continuous learning is the only way to stay ahead.",
+  description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
+  keywords: [
+    "digital products Kenya",
+    "Growthpad products",
+    "business software Nairobi",
+    "digital tools Africa",
+    "data intelligence platform",
+    "audience engagement tools",
+    "content management Kenya",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/products",
+  },
   openGraph: {
     title: "Products | Growthpad Consulting Group",
-    description: "The modern fast-paced world, demands a workforce with up-to-date skills & knowledge, and committing to continuous learning is the only way to stay ahead.",
+    description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
     url: "https://growthpad.co.ke/products",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",
-        alt: "Products",
+        alt: "Growthpad Products",
       },
     ],
   },
   twitter: {
     title: "Products | Growthpad Consulting Group",
-    description: "The modern fast-paced world, demands a workforce with up-to-date skills & knowledge, and committing to continuous learning is the only way to stay ahead.",
+    description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
     images: ["/assets/images/seo/opengraph.png"],
   },
 };
@@ -34,7 +46,7 @@ export default function ProductsPage() {
       <ProductsHero />
       <ProductShowcase />
       <SectionAnimate variant="fade-up">
-        <ContactForm theme="cream" />
+        <ContactForm theme="cream" variant="wide-form" />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
         <Partners showHeading={false} theme="light" />

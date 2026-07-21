@@ -7,6 +7,19 @@ import { getCaseStudies } from "@/sanity/queries";
 export const metadata: Metadata = {
   title: "Trusted By Industry Leaders: Growthpad's Client Roster",
   description: "Join the ranks of industry leaders like IFAW, Uber, UK Aid, Asus, and more who trust Growthpad. Explore our diverse client portfolio",
+  keywords: [
+    "Growthpad case studies",
+    "digital consulting portfolio Kenya",
+    "client success stories Africa",
+    "IFAW digital campaign",
+    "Uber Kenya marketing",
+    "NGO communication consulting",
+    "brand campaign results",
+    "Growthpad clients",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/case-studies",
+  },
   openGraph: {
     title: "Trusted By Industry Leaders: Growthpad's Client Roster",
     description: "Join the ranks of industry leaders like IFAW, Uber, UK Aid, Asus, and more who trust Growthpad. Explore our diverse client portfolio",

@@ -1,3 +1,41 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+  description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
+  keywords: [
+    "digital consulting Kenya",
+    "digital marketing Nairobi",
+    "technology consulting Africa",
+    "digital media firm Kenya",
+    "business growth consultancy",
+    "Growthpad Consulting Group",
+    "communication firm Nairobi",
+    "IT consulting Kenya",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/",
+  },
+  openGraph: {
+    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
+    url: "https://growthpad.co.ke/",
+    images: [
+      {
+        url: "/assets/images/seo/opengraph.png",
+        width: 1920,
+        height: 630,
+        alt: "Growthpad Consulting Group",
+      },
+    ],
+  },
+  twitter: {
+    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
+    images: ["/assets/images/seo/opengraph.png"],
+  },
+};
+
 import Hero from "@/features/home/components/Hero";
 import About from "@/features/home/components/About";
 import Brands from "@/features/home/components/Brands";

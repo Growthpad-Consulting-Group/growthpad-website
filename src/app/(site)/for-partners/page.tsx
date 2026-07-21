@@ -11,6 +11,18 @@ import SectionAnimate from "@/shared/components/SectionAnimate";
 export const metadata: Metadata = {
   title: "Growthpad Partner Program: Boost African Business Growth - Partner With Us",
   description: "Join Growthpad's Partner Program to drive African business growth. Connect clients with our professional services. Partner with us for success.",
+  keywords: [
+    "Growthpad partner program",
+    "business partnership Kenya",
+    "referral program Africa",
+    "digital consulting partners",
+    "agency partnership Nairobi",
+    "reseller program Kenya",
+    "collaborate with Growthpad",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/for-partners",
+  },
   openGraph: {
     title: "Growthpad Partner Program: Boost African Business Growth - Partner With Us",
     description: "Join Growthpad's Partner Program to drive African business growth. Connect clients with our professional services. Partner with us for success.",
@@ -43,7 +55,7 @@ export default function ForPartnersPage() {
       </SectionAnimate>
       <ReferralBanner />
       <SectionAnimate variant="fade-up">
-        <ContactForm theme="cream" showLogos={false} />
+        <ContactForm theme="cream" showLogos={false} variant="wide-form" />
       </SectionAnimate>
     </div>
   );

@@ -5,21 +5,32 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 
 export const metadata: Metadata = {
   title: "Tenders | Growthpad Consulting Group",
-  description: "Active Registration of Suppliers 2024-2025",
+  description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
+  keywords: [
+    "Growthpad tenders",
+    "procurement Kenya",
+    "supplier registration Kenya",
+    "open tenders Nairobi",
+    "consulting tenders Africa",
+    "technology procurement Kenya",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/tenders",
+  },
   openGraph: {
     title: "Tenders | Growthpad Consulting Group",
-    description: "Active Registration of Suppliers 2024-2025",
+    description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
     url: "https://growthpad.co.ke/tenders",
     images: [
       {
         url: "/assets/images/tender-bg.jpg",
-        alt: "Tenders",
+        alt: "Growthpad Tenders",
       },
     ],
   },
   twitter: {
     title: "Tenders | Growthpad Consulting Group",
-    description: "Active Registration of Suppliers 2024-2025",
+    description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
     images: ["/assets/images/tender-bg.jpg"],
   },
 };

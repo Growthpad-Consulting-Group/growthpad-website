@@ -9,6 +9,19 @@ import SectionAnimate from "@/shared/components/SectionAnimate";
 export const metadata: Metadata = {
   title: "Expert Digital Services For Your Organization | Growthpad Consulting",
   description: "Explore our wide range of innovative digital services at Growthpad Consulting. From Communication for Development to IT Project Management, we deliver solutions for your organization's success",
+  keywords: [
+    "digital services Kenya",
+    "communication for development",
+    "IT project management Africa",
+    "digital strategy consulting",
+    "content production Kenya",
+    "media consulting Nairobi",
+    "Growthpad services",
+    "digital transformation services",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/services",
+  },
   openGraph: {
     title: "Expert Digital Services For Your Organization | Growthpad Consulting",
     description: "Explore our wide range of innovative digital services at Growthpad Consulting. From Communication for Development to IT Project Management, we deliver solutions for your organization's success",
@@ -36,7 +49,7 @@ export default function ServicesPage() {
         <OurSpecialties showHeader={false} />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
-        <ContactForm theme="cream" />
+        <ContactForm theme="cream" variant="wide-form" />
       </SectionAnimate>
       <SectionAnimate variant="fade-up">
         <Partners showHeading={false} theme="light" />

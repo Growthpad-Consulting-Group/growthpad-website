@@ -10,11 +10,26 @@ export const metadata: Metadata = {
   title: "Privacy Policy | Growthpad Consulting Group",
   description:
     "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
+  alternates: {
+    canonical: "https://growthpad.co.ke/privacy-policy",
+  },
   openGraph: {
     title: "Privacy Policy | Growthpad Consulting Group",
     description:
       "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
     url: "https://growthpad.co.ke/privacy-policy",
+    images: [
+      {
+        url: "/assets/images/seo/opengraph.png",
+        alt: "Privacy Policy | Growthpad Consulting Group",
+      },
+    ],
+  },
+  twitter: {
+    title: "Privacy Policy | Growthpad Consulting Group",
+    description:
+      "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
+    images: ["/assets/images/seo/opengraph.png"],
   },
 };
 

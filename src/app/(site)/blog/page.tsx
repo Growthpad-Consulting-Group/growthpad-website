@@ -6,7 +6,18 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 export const metadata: Metadata = {
   title: "Growthpad Business Insights",
   description: "Discover a selection of well curated insights on digital marketing in Kenya from our experts. Our blog provides latest digital marketing trends. | Insights",
+  keywords: [
+    "digital marketing blog Kenya",
+    "business insights Africa",
+    "digital marketing trends Nairobi",
+    "content marketing tips",
+    "SEO blog Kenya",
+    "Growthpad blog",
+    "marketing strategy Africa",
+    "tech insights East Africa",
+  ],
   alternates: {
+    canonical: "https://growthpad.co.ke/blog",
     types: {
       "application/rss+xml": "/blog/rss.xml",
     },

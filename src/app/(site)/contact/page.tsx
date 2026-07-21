@@ -9,6 +9,18 @@ import PartnersHero from "@/features/for-partners/components/PartnersHero";
 export const metadata: Metadata = {
   title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
   description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",
+  keywords: [
+    "contact Growthpad",
+    "digital consulting inquiry Kenya",
+    "hire digital agency Nairobi",
+    "Growthpad contact",
+    "digital marketing consultation",
+    "business growth consultation",
+    "get in touch Growthpad",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/contact",
+  },
   openGraph: {
     title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
     description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",

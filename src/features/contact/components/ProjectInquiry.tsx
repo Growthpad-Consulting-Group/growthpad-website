@@ -7,7 +7,7 @@ export default function ProjectInquiry() {
       data-theme-section="cream"
       className="theme-bg relative w-full py-20 lg:py-28"
     >
-      <div className="container-fluid grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="container-fluid grid items-start gap-12 lg:grid-cols-[4fr_7fr] lg:gap-16">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
             <h1 className="font-display text-secondary text-4xl leading-tight font-bold sm:text-5xl">

@@ -10,8 +10,9 @@ interface ContactFormProps {
    * "standard" — equal two-column grid, text left / form right (default).
    * "home"     — 7/3 grid, form left / text right, pill inputs, extra
    *              bottom padding (matches the original Contact.tsx layout).
+   * "wide-form" — 3/7 grid, text left / form right (form takes more space).
    */
-  variant?: "standard" | "home";
+  variant?: "standard" | "home" | "wide-form";
   heading?: React.ReactNode;
   description?: React.ReactNode;
   /** Show the logo showcase below the form. Default: true for standard, false for home. */
@@ -26,6 +27,7 @@ export default function ContactForm({
   showLogos,
 }: ContactFormProps) {
   const isHome = variant === "home";
+  const isWideForm = variant === "wide-form";
 
   // Resolve defaults per variant so each page gets sensible copy without
   // having to repeat it at every call site.
@@ -99,10 +101,10 @@ export default function ContactForm({
 
       <div
         className={`container-fluid grid items-center gap-12 lg:gap-16 ${
-          isHome ? "lg:grid-cols-[7fr_3fr]" : "lg:grid-cols-2"
+          isHome ? "lg:grid-cols-[7fr_3fr]" : isWideForm ? "lg:grid-cols-[3fr_7fr]" : "lg:grid-cols-2"
         }`}
       >
-        {/* Home variant: form left, text right. Standard: text left, form right. */}
+        {/* Home variant: form left, text right. Standard/wide-form: text left, form right. */}
         <div className={isHome ? "order-1 lg:order-1" : "order-2 lg:order-1"}>
           {isHome ? form : textBlock}
         </div>

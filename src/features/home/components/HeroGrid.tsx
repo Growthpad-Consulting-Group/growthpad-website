@@ -10,8 +10,8 @@ function ArrowTile({ variant }: { variant: "muted" | "primary" | "dark" }) {
     variant === "primary"
       ? "text-primary"
       : variant === "dark"
-        ? "text-secondary"
-        : "text-secondary/15";
+        ? "theme-fg"
+        : "theme-fg opacity-15";
 
   return (
     <div className="flex h-16 w-16 shrink-0 items-center justify-center sm:h-20 sm:w-20">
@@ -59,7 +59,7 @@ function PhotoTile({
   return (
     <div className="relative h-16 flex-1 overflow-hidden rounded-full sm:h-20">
       <div ref={imgWrapRef} className="absolute inset-0">
-        <Image src={src} alt={alt} fill sizes="80px" className="object-cover" />
+        <Image src={src} alt={alt} fill sizes="(min-width: 640px) 200px, 150px" className="object-cover" />
       </div>
     </div>
   );

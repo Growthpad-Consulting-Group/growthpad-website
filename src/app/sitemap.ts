@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { MetadataRoute } from "next";
-import { getBlogs, getJobOpenings } from "@/sanity/queries";
+import { getBlogs, getJobOpenings, getCaseStudies } from "@/sanity/queries";
 import { SITE_URL } from "@/shared/lib/site";
 
 // Routes excluded even if a page.tsx exists there (admin tools, not meant
@@ -66,7 +66,11 @@ function discoverStaticRoutes(): DiscoveredRoute[] {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [blogs, jobs] = await Promise.all([getBlogs(), getJobOpenings()]);
+  const [blogs, jobs, caseStudies] = await Promise.all([
+    getBlogs(),
+    getJobOpenings(),
+    getCaseStudies(),
+  ]);
 
   const staticEntries: MetadataRoute.Sitemap = discoverStaticRoutes().map(
     ({ route, lastModified }) => {
@@ -94,5 +98,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...blogEntries, ...jobEntries];
+  const caseStudyEntries: MetadataRoute.Sitemap = (caseStudies ?? []).map((study) => ({
+    url: `${SITE_URL}/case-studies/${study.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...blogEntries, ...jobEntries, ...caseStudyEntries];
 }

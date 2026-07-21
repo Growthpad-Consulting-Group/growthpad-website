@@ -16,7 +16,7 @@ export const navLinks: NavLink[] = [
 
 export const footerLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Trainings", href: "#" },
+  { label: "Trainings", href: "/training" },
   { label: "Careers", href: "/careers" },
   { label: "Blog", href: "/blog" },
   { label: "Tenders", href: "/tenders" },

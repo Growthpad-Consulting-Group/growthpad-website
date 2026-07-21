@@ -12,6 +12,19 @@ import SectionAnimate from "@/shared/components/SectionAnimate";
 export const metadata: Metadata = {
   title: "Join Growthpad: Explore Exciting Career Opportunities In Digital Consulting",
   description: "Discover a fulfilling career at Growthpad Digital Consulting. We're constantly seeking talented individuals to join our innovative team. Explore exciting opportunities in digital consulting and be part of our success story | career opportunities",
+  keywords: [
+    "careers Kenya",
+    "digital consulting jobs Nairobi",
+    "job opportunities Africa",
+    "tech jobs Kenya",
+    "Growthpad careers",
+    "digital marketing jobs",
+    "media jobs Nairobi",
+    "consulting jobs Kenya",
+  ],
+  alternates: {
+    canonical: "https://growthpad.co.ke/careers",
+  },
   openGraph: {
     title: "Join Growthpad: Explore Exciting Career Opportunities In Digital Consulting",
     description: "Discover a fulfilling career at Growthpad Digital Consulting. We're constantly seeking talented individuals to join our innovative team. Explore exciting opportunities in digital consulting and be part of our success story | career opportunities",
