@@ -10,6 +10,7 @@ import { SITE_URL } from "@/shared/lib/site";
 import ArticleHero from "@/features/blog/components/ArticleHero";
 import LazyYouTube from "@/features/blog/components/LazyYouTube";
 import NextUpCard from "@/features/blog/components/NextUpCard";
+import ShareButtons from "@/features/blog/components/ShareButtons";
 import TableOfContents from "@/features/blog/components/TableOfContents";
 import { extractHeadings } from "@/features/blog/lib/toc";
 
@@ -208,6 +209,11 @@ export default async function BlogPostPage({ params }: Props) {
                 <PortableText value={post.content} components={portableTextComponents} />
               )}
             </article>
+
+            <div className="mt-10 flex items-center justify-between gap-4 border-t border-secondary/10 pt-8">
+              <span className="text-secondary/70 text-md">Found this article useful?</span>
+              <ShareButtons url={postUrl} title={post.title} />
+            </div>
 
             {upNext && <NextUpCard post={upNext} />}
 

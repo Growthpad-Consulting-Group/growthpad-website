@@ -9,7 +9,7 @@ export default async function BlogSection() {
   return (
     <section
       data-theme-section="gray"
-      className="theme-bg relative w-full py-20 lg:py-28"
+      className="theme-bg relative w-full pt-0 pb-20 lg:py-28"
     >
       <div className="container-fluid flex flex-col gap-12">
         <Suspense fallback={<BlogGridSkeleton />}>

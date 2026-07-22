@@ -10,7 +10,7 @@ export default function BlogHero() {
   useRevealAnimation(introRef, ".blog-hero-reveal");
 
   return (
-    <section ref={introRef} className="w-full pt-6 sm:pt-10">
+    <section ref={introRef} className="w-full sm:pt-10">
       <div className="container-fluid">
         <div className="blog-hero-reveal opacity-0">
           <NotchImage

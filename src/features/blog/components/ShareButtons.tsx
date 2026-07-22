@@ -48,7 +48,7 @@ export default function ShareButtons({
 
   return (
     <div className="flex items-center gap-2">
-      <span className={`text-xs font-bold tracking-wider uppercase ${labelClass}`}>
+      <span className={`text-sm font-bold ${labelClass}`}>
         Share
       </span>
       {links.map((link) => (
