@@ -41,8 +41,8 @@ export const blog = defineType({
     defineField({
       name: "author",
       title: "Author",
-      type: "string",
-      initialValue: "Growthpad Team",
+      type: "reference",
+      to: [{ type: "author" }],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -110,9 +110,11 @@ export const blog = defineType({
     defineField({
       name: "seoKeywords",
       title: "SEO Keywords",
-      description: "Comma-separated keywords for this post (e.g. 'digital marketing Kenya, social media strategy'). Used by Bing and other search engines.",
-      type: "string",
-      validation: (rule) => rule.required(),
+      description: "Type a keyword and press comma or enter to add it as a tag (e.g. 'digital marketing Kenya'). Used by Bing and other search engines.",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: "publishedAt",

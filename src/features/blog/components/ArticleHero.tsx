@@ -1,10 +1,24 @@
+import Image from "next/image";
 import ParallaxHeroImage from "@/features/blog/components/ParallaxHeroImage";
 import ShareButtons from "@/features/blog/components/ShareButtons";
 import Breadcrumb from "@/shared/components/Breadcrumb";
+import { urlForImage } from "@/sanity/image";
 import type { BlogDetail } from "@/sanity/queries";
 
-function AuthorAvatar({ name }: { name: string }) {
-  const initials = name
+function AuthorAvatar({ author }: { author: BlogDetail["author"] }) {
+  if (author.image) {
+    return (
+      <Image
+        src={urlForImage(author.image).width(88).height(88).url()}
+        alt={author.name}
+        width={44}
+        height={44}
+        className="ring-1 ring-white/30 h-11 w-11 shrink-0 rounded-full object-cover backdrop-blur-sm"
+      />
+    );
+  }
+
+  const initials = author.name
     .split(" ")
     .map((part) => part[0])
     .slice(0, 2)
@@ -65,11 +79,11 @@ export default function ArticleHero({
 
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <AuthorAvatar name={post.author} />
+              <AuthorAvatar author={post.author} />
               <div className="flex flex-col">
                 <span className="text-xs text-white/50">Author</span>
                 <span className="text-sm font-semibold text-white">
-                  {post.author}
+                  {post.author.name}
                 </span>
               </div>
               <div className="ml-4 flex flex-col">

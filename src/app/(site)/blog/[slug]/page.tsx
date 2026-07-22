@@ -115,10 +115,7 @@ export async function generateMetadata({ params }: Props) {
     ? urlForImage(post.coverImage).width(1200).height(630).url() 
     : undefined;
 
-  // Parse comma-separated keywords string into an array if present
-  const keywords = post.seoKeywords
-    ? post.seoKeywords.split(",").map((k) => k.trim()).filter(Boolean)
-    : undefined;
+  const keywords = post.seoKeywords?.length ? post.seoKeywords : undefined;
 
   return {
     title,
@@ -182,7 +179,7 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.excerpt,
     image: post.coverImage ? urlForImage(post.coverImage).width(1200).height(630).url() : undefined,
     datePublished: post.publishedAt,
-    author: { "@type": "Person", name: post.author },
+    author: { "@type": "Person", name: post.author.name },
     publisher: { "@type": "Organization", name: "Growthpad Consulting Group" },
     mainEntityOfPage: postUrl,
   };

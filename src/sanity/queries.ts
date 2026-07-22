@@ -115,13 +115,20 @@ export async function getJobOpening(slug: string): Promise<JobOpeningDetail | nu
   return client.fetch(JOB_OPENING_QUERY, { slug }, { next: { revalidate: 60 } });
 }
 
+export type BlogAuthor = {
+  name: string;
+  slug: string | null;
+  image: SanityImageSource | null;
+  role: string | null;
+};
+
 export type BlogListItem = {
   _id: string;
   title: string;
   slug: string;
   coverImage: SanityImageSource | null;
   category: string;
-  author: string;
+  author: BlogAuthor;
   excerpt: string;
   publishedAt: string;
   readingMinutes: number;
@@ -134,7 +141,7 @@ const BLOGS_QUERY = /* groq */ `
     "slug": slug.current,
     coverImage,
     category,
-    author,
+    author->{ name, "slug": slug.current, image, role },
     excerpt,
     publishedAt,
     "readingMinutes": round(length(pt::text(content)) / 5 / 200) + 1
@@ -149,7 +156,7 @@ export type BlogDetail = BlogListItem & {
   content: PortableTextBlock[] | null;
   seoTitle: string | null;
   seoDescription: string | null;
-  seoKeywords: string | null;
+  seoKeywords: string[] | null;
 };
 
 const BLOG_QUERY = /* groq */ `
@@ -159,7 +166,7 @@ const BLOG_QUERY = /* groq */ `
     "slug": slug.current,
     coverImage,
     category,
-    author,
+    author->{ name, "slug": slug.current, image, role },
     excerpt,
     content,
     seoTitle,

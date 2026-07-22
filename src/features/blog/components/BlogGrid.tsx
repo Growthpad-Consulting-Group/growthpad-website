@@ -27,7 +27,7 @@ function PostMeta({ item }: { item: BlogListItem }) {
         {item.category}
       </span>
       <span className="text-secondary/40">• {formatDate(item.publishedAt)}</span>
-      <span className="text-secondary/40">• {item.author}</span>
+      <span className="text-secondary/40">• {item.author.name}</span>
       <span className="text-secondary/40">
         • {item.readingMinutes} min read
       </span>
