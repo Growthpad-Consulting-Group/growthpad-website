@@ -104,13 +104,12 @@ export default function ContactForm({
           isHome ? "lg:grid-cols-[7fr_3fr]" : isWideForm ? "lg:grid-cols-[3fr_7fr]" : "lg:grid-cols-2"
         }`}
       >
-        {/* Home variant: form left, text right. Standard/wide-form: text left, form right. */}
-        <div className={isHome ? "order-1 lg:order-1" : "order-2 lg:order-1"}>
-          {isHome ? form : textBlock}
-        </div>
-        <div className={isHome ? "order-2 lg:order-2" : "order-1 lg:order-2"}>
-          {isHome ? textBlock : form}
-        </div>
+        {/* Home variant: form left, text right. Standard/wide-form: text left, form right.
+            Natural DOM order already matches this at every breakpoint, so no
+            `order-*` utilities are needed — they previously flipped the
+            standard/wide-form layout on mobile only. */}
+        <div>{isHome ? form : textBlock}</div>
+        <div>{isHome ? textBlock : form}</div>
       </div>
 
       {resolvedShowLogos && (

@@ -115,9 +115,15 @@ export async function generateMetadata({ params }: Props) {
     ? urlForImage(post.coverImage).width(1200).height(630).url() 
     : undefined;
 
+  // Parse comma-separated keywords string into an array if present
+  const keywords = post.seoKeywords
+    ? post.seoKeywords.split(",").map((k) => k.trim()).filter(Boolean)
+    : undefined;
+
   return {
     title,
     description,
+    ...(keywords && { keywords }),
     openGraph: {
       title: post.seoTitle || post.title,
       description,

@@ -89,15 +89,30 @@ export const blog = defineType({
     defineField({
       name: "seoTitle",
       title: "SEO Title",
-      description: "Optional — custom Title tag for search engines. Falls back to post title if left empty.",
+      description: "Optional — custom Title tag for search engines. Falls back to post title if left empty. Keep under 60 characters.",
       type: "string",
+      validation: (rule) => rule.max(60).warning("SEO titles over 60 characters may be truncated in search results."),
     }),
     defineField({
       name: "seoDescription",
       title: "SEO Description",
-      description: "Optional — custom Meta Description for search engines. Falls back to excerpt if left empty.",
+      description: "Custom Meta Description for search engines. Keep between 120–160 characters.",
       type: "text",
       rows: 2,
+      validation: (rule) =>
+        rule
+          .required()
+          .min(120)
+          .warning("Meta descriptions under 120 characters may appear too thin in search results.")
+          .max(160)
+          .warning("Meta descriptions over 160 characters will be truncated by Google."),
+    }),
+    defineField({
+      name: "seoKeywords",
+      title: "SEO Keywords",
+      description: "Comma-separated keywords for this post (e.g. 'digital marketing Kenya, social media strategy'). Used by Bing and other search engines.",
+      type: "string",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "publishedAt",
