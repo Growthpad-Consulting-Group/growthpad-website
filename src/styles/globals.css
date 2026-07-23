@@ -85,3 +85,8 @@ body {
 .animate-fade-in-page {
   animation: fade-in-page 0.4s ease-out;
 }
+
+/* Hide reCAPTCHA v3 badge — disclosure text is shown inline on forms instead */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}

@@ -79,7 +79,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {/* Consent Mode v2: default deny until user accepts */}
-        <Script id="gtag-consent-default" strategy="beforeInteractive">
+        <Script id="gtag-consent-default" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

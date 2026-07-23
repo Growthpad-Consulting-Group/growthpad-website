@@ -188,6 +188,13 @@ export default function ContactFormCard({
         </p>
       )}
 
+      <p className="text-xs text-white/30 text-center">
+        Protected by reCAPTCHA —{" "}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/50">Privacy</a>
+        {" "}&amp;{" "}
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/50">Terms</a>
+      </p>
+
       <div className="mt-2 flex justify-end">
         <CtaButton
           type="submit"

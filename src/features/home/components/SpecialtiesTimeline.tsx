@@ -131,13 +131,13 @@ export default function SpecialtiesTimeline() {
           </div>
 
           <div className="hidden flex-col items-center gap-8 sm:flex">
-            <Image
-              src="/assets/images/who-resized.gif"
-              alt=""
-              width={121}
-              height={234}
-              unoptimized
-              className="h-60 w-auto object-contain"
+            <video
+              src="/assets/images/who-resized.webm"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="pointer-events-none mix-blend-screen h-60 w-auto object-contain opacity-40 select-none"
             />
             <ArrowGroup count={5} />
           </div>
