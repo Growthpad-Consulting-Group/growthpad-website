@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import CtaButton from "@/shared/components/CtaButton";
 
 export default function ContactFormCard({
@@ -36,10 +37,19 @@ export default function ContactFormCard({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage(null);
+
+    if (!executeRecaptcha) {
+      setErrorMessage("reCAPTCHA not ready. Please try again.");
+      setIsLoading(false);
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha("contact_form");
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -57,7 +67,7 @@ export default function ContactFormCard({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, recaptchaToken }),
       });
 
       const result = await response.json();

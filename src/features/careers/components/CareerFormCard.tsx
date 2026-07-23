@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { Icon } from "@iconify/react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import CtaButton from "@/shared/components/CtaButton";
 
 interface CareerFormCardProps {
@@ -46,6 +47,8 @@ export default function CareerFormCard({
   ];
 
   const inputBase = `placeholder:text-white/40 text-white w-full bg-white/[0.05] border border-white/10 px-6 py-4 text-base outline-none rounded-2xl transition-all duration-300 hover:border-white/20 focus:bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/20`;
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   // Validation helper
   const validateAndSetFile = (selectedFile: File) => {
@@ -129,19 +132,17 @@ export default function CareerFormCard({
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
+      if (!executeRecaptcha) {
+        setFileError("reCAPTCHA not ready. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+      const recaptchaToken = await executeRecaptcha("career_form");
       const base64Data = (reader.result as string).split(",")[1];
       const payload = {
-        name,
-        phone,
-        email,
-        linkedin,
-        portfolio,
-        message,
-        role,
-        attachment: {
-          content: base64Data,
-          filename: file.name,
-        },
+        name, phone, email, linkedin, portfolio, message, role,
+        recaptchaToken,
+        attachment: { content: base64Data, filename: file.name },
       };
 
       try {

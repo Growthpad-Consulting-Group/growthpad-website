@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import CookieConsent from "@/shared/components/CookieConsent";
 import "@/styles/globals.css";
 
@@ -112,7 +113,9 @@ export default function RootLayout({
           />
         </noscript>
 
-        {children}
+        <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}>
+          {children}
+        </GoogleReCaptchaProvider>
         <CookieConsent />
       </body>
     </html>
