@@ -50,7 +50,12 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
   const searchParams = useSearchParams();
   const topRef = useRef<HTMLDivElement>(null);
 
-  const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const [search, setSearch] = useState(() => {
+    const q = searchParams.get("q") ?? "";
+    // /tag/call-center redirects produce hyphenated params — convert to spaces
+    // but only if the whole param looks like a slug (no spaces already)
+    return q.includes(" ") ? q : q.replace(/-/g, " ").trim();
+  });
   const [category, setCategory] = useState(searchParams.get("category") ?? "all");
   const [sort, setSort] = useState<"recent" | "oldest">(
     searchParams.get("sort") === "oldest" ? "oldest" : "recent",
