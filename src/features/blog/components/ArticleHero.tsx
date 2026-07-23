@@ -60,7 +60,7 @@ export default function ArticleHero({
           <Breadcrumb
             variant="light"
             items={[
-              { label: "Blog", href: "/blog" },
+              { label: "Blog", href: "/blog#articles" },
               { label: post.title },
             ]}
           />
@@ -110,7 +110,7 @@ export default function ArticleHero({
       {/* Mobile-only bar: breadcrumb and reading time move here, after the
           hero, so the image isn't crowded with overlay text on small screens. */}
       <div className="container-fluid flex items-center justify-between gap-3 border-b border-secondary/10 py-4 sm:hidden">
-        <Breadcrumb variant="dark" items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
+        <Breadcrumb variant="dark" items={[{ label: "Blog", href: "/blog#articles" }, { label: post.title }]} />
         <span className="text-secondary/60 shrink-0 text-sm">{post.readingMinutes} min read</span>
       </div>
     </div>

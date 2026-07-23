@@ -210,15 +210,17 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
               href={`/blog/${featured.slug}`}
               className="group flex flex-col lg:flex-row items-center gap-8 bg-white/40 p-6 rounded-3xl border border-primary/10 transition-all duration-700 ease-out hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/5 hover:bg-white/60"
             >
-              <div className="relative w-full lg:w-3/5 shrink-0 aspect-video overflow-hidden rounded-2xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_20px_35px_rgba(240,93,35,0.18)]">
+              <div className="w-full lg:w-3/5 shrink-0 overflow-hidden rounded-2xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_20px_35px_rgba(240,93,35,0.18)]">
                 {featured.coverImage ? (
                   <Image
-                    src={urlForImage(featured.coverImage).width(900).height(450).url()}
+                    src={urlForImage(featured.coverImage).width(900).url()}
                     alt={featured.title}
-                    fill
+                    width={900}
+                    height={0}
+                    style={{ height: "auto", width: "100%" }}
                     sizes="(max-width: 1024px) 100vw, 600px"
                     priority
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="block transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-primary/10">

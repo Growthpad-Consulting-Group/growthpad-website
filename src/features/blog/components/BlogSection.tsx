@@ -8,6 +8,7 @@ export default async function BlogSection() {
 
   return (
     <section
+      id="articles"
       data-theme-section="gray"
       className="theme-bg relative w-full pt-0 pb-20 lg:py-28"
     >

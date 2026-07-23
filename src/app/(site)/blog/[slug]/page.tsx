@@ -59,13 +59,15 @@ const portableTextComponents: PortableTextComponents = {
     image: ({ value }) => {
       if (!value?.asset?._ref) return null;
       return (
-        <div className="relative my-8 aspect-video w-full max-w-full overflow-hidden rounded-2xl shadow-2xl shadow-secondary/10 transition-all duration-600 ease-out hover:shadow-2xl hover:shadow-primary/10">
+        <div className="my-8 w-full overflow-hidden rounded-2xl shadow-2xl shadow-secondary/10 transition-all duration-600 ease-out hover:shadow-2xl hover:shadow-primary/10">
           <Image
-            src={urlForImage(value).width(800).url()}
+            src={urlForImage(value).width(1200).url()}
             alt={value.alt || "Article image"}
-            fill
-            sizes="(max-width: 768px) 100vw, 800px"
-            className="object-cover"
+            width={1200}
+            height={0}
+            style={{ height: "auto", width: "100%" }}
+            sizes="(max-width: 768px) 100vw, 1200px"
+            className="block"
           />
         </div>
       );
@@ -161,11 +163,22 @@ export default async function BlogPostPage({ params }: Props) {
   const index = allPosts.findIndex((item) => item.slug === post.slug);
   const nextPost = index > 0 ? allPosts[index - 1] : null;
   const prevPost = index >= 0 && index < allPosts.length - 1 ? allPosts[index + 1] : null;
-  const relatedPosts = allPosts
-    .filter((item) => item.slug !== post.slug && item.category === post.category)
-    .slice(0, 3);
 
-  const upNext = nextPost ?? relatedPosts[0] ?? prevPost ?? null;
+  const keywords = post.seoKeywords ?? [];
+  const upNext = allPosts
+    .filter((item) => item.slug !== post.slug && item.slug !== nextPost?.slug && item.slug !== prevPost?.slug)
+    .map((item) => {
+      let score = 0;
+      if (item.category === post.category) score += 3;
+      if (item.author.slug === post.author.slug) score += 1;
+      const haystack = `${item.title} ${item.excerpt}`.toLowerCase();
+      for (const kw of keywords) {
+        if (haystack.includes(kw.toLowerCase())) score += 2;
+      }
+      return { item, score };
+    })
+    .sort((a, b) => b.score - a.score || allPosts.indexOf(a.item) - allPosts.indexOf(b.item))
+    .at(0)?.item ?? nextPost ?? prevPost ?? null;
 
   const headings = extractHeadings(post.content);
   const postUrl = `${SITE_URL}/blog/${post.slug}`;
