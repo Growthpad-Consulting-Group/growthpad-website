@@ -2,15 +2,12 @@ import Link from "next/link";
 import CtaButton from "@/shared/components/CtaButton";
 import Navbar from "@/shared/layouts/Navbar";
 import ConditionalFooter from "@/shared/layouts/ConditionalFooter";
+import NotFoundSuggestion from "@/shared/components/NotFoundSuggestion";
 
 export const metadata = {
   title: "Page Not Found | Growthpad",
 };
 
-// Next only reaches this root-level file for URLs that don't match any
-// route at all (nothing under (site) to descend into) — routes inside the
-// (site) group that call notFound() themselves use its own not-found.tsx
-// instead, which is why the content here is duplicated rather than shared.
 export default function NotFound() {
   return (
     <>
@@ -26,6 +23,9 @@ export default function NotFound() {
           The page you&apos;re looking for may have been moved or no longer
           exists.
         </p>
+
+        <NotFoundSuggestion />
+
         <div className="mt-8 flex items-center gap-4">
           <CtaButton href="/" circleClassName="bg-primary text-white">
             Back to home

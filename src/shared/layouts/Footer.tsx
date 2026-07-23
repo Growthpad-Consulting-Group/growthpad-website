@@ -84,6 +84,7 @@ export default function Footer() {
               alt=""
               width={602}
               height={340}
+              loading="eager"
               sizes="(min-width: 1024px) 35vw, 100vw"
               className="h-auto w-full"
             />

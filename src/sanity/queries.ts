@@ -181,6 +181,16 @@ export async function getBlog(slug: string): Promise<BlogDetail | null> {
   return client.fetch(BLOG_QUERY, { slug }, { next: { revalidate: 60 } });
 }
 
+export type BlogSlugItem = { title: string; slug: string };
+
+export async function getBlogSlugs(): Promise<BlogSlugItem[]> {
+  return client.fetch(
+    `*[_type == "blog"]{ title, "slug": slug.current }`,
+    {},
+    { next: { revalidate: 3600 } },
+  );
+}
+
 export type CaseStudyListItem = {
   _id: string;
   brand: string;

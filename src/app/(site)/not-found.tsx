@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CtaButton from "@/shared/components/CtaButton";
+import NotFoundSuggestion from "@/shared/components/NotFoundSuggestion";
 
 export const metadata = {
   title: "Page Not Found | Growthpad",
@@ -20,6 +21,9 @@ export default function NotFound() {
         The page you&apos;re looking for may have been moved or no longer
         exists.
       </p>
+
+      <NotFoundSuggestion />
+
       <div className="mt-8 flex items-center gap-4">
         <CtaButton href="/" circleClassName="bg-primary text-white">
           Back to home
