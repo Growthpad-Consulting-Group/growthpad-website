@@ -212,7 +212,7 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
           {/* Featured Post (first item, page 1 only) */}
           {featured && (
             <Link
-              href={`/blog/${featured.slug}`}
+              href={`/blog/${featured.categorySlug}/${featured.slug}`}
               className="group flex flex-col lg:flex-row items-center gap-8 bg-white/40 p-6 rounded-3xl border border-primary/10 transition-all duration-700 ease-out hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/5 hover:bg-white/60"
             >
               <div className="w-full lg:w-3/5 shrink-0 overflow-hidden rounded-2xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_20px_35px_rgba(240,93,35,0.18)]">
@@ -261,7 +261,7 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
               {pageItems.map((item) => (
                 <Link
                   key={item._id}
-                  href={`/blog/${item.slug}`}
+                  href={`/blog/${item.categorySlug}/${item.slug}`}
                   className="group flex flex-col gap-5 bg-white/20 hover:bg-white/50 border border-primary/5 p-5 rounded-2xl transition-all duration-700 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5"
                 >
                   <div className="relative w-full aspect-455/232 overflow-hidden rounded-xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_15px_30px_rgba(240,93,35,0.15)]">

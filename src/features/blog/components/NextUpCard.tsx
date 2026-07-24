@@ -49,7 +49,7 @@ export default function NextUpCard({ post }: { post: BlogListItem }) {
               <Icon icon="solar:close-circle-bold" width={20} height={20} />
             </button>
 
-            <Link href={`/blog/${post.slug}`} className="group flex flex-1 items-center gap-4">
+            <Link href={`/blog/${post.categorySlug}/${post.slug}`} className="group flex flex-1 items-center gap-4">
               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
                 {post.coverImage ? (
                   <Image

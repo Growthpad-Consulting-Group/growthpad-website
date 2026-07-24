@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { AutoSlugInput } from "@/sanity/components/AutoSlugInput";
+import { SeoAnalysis } from "@/sanity/components/SeoAnalysis";
 
 export const blog = defineType({
   name: "blog",
@@ -126,9 +127,15 @@ export const blog = defineType({
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: "seoAnalysis",
+      title: "SEO Analysis",
+      type: "string",
+      components: { input: SeoAnalysis },
+    }),
   ],
   preview: {
-    select: { title: "title", category: "category", media: "coverImage" },
+    select: { title: "title", category: "category.title", media: "coverImage" },
     prepare({ title, category, media }) {
       return { title, subtitle: category, media };
     },

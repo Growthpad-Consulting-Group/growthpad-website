@@ -30,7 +30,7 @@ function findBest(pathname: string, blogs: BlogSlugItem[]) {
   if (pathTokens.length === 0) return null;
 
   const blogMatch = blogs
-    .map((b) => ({ title: b.title, href: `/blog/${b.slug}`, score: fuzzyScore(pathTokens, `${b.slug} ${b.title}`) }))
+    .map((b) => ({ title: b.title, href: `/blog/${b.categorySlug}/${b.slug}`, score: fuzzyScore(pathTokens, `${b.slug} ${b.title}`) }))
     .filter((b) => b.score >= 2)
     .sort((a, b) => b.score - a.score)[0];
 
