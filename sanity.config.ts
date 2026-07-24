@@ -14,7 +14,6 @@ export default defineConfig({
   dataset,
   schema,
   plugins: [
-    structureTool(),
     dashboardTool({
       widgets: [
         { name: "quick-actions", component: QuickActionsWidget, layout: { width: "small" } },
@@ -23,5 +22,6 @@ export default defineConfig({
         { name: "recent-posts", component: RecentPostsWidget, layout: { width: "large" } },
       ],
     }),
+    structureTool(),
   ],
 });

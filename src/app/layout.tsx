@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
-import CookieConsent from "@/shared/components/CookieConsent";
 import "@/styles/globals.css";
 
 const figtree = Figtree({
@@ -113,7 +112,6 @@ export default function RootLayout({
         </noscript>
 
         {children}
-        <CookieConsent />
       </body>
     </html>
   );
