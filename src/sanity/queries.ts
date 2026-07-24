@@ -130,6 +130,7 @@ export type BlogListItem = {
   slug: string;
   coverImage: SanityImageSource | null;
   category: string;
+  categorySlug: string;
   author: BlogAuthor;
   excerpt: string;
   publishedAt: string;
@@ -142,7 +143,8 @@ const BLOGS_QUERY = /* groq */ `
     title,
     "slug": slug.current,
     coverImage,
-    category,
+    "category": category->title,
+    "categorySlug": category->slug.current,
     author->{ name, "slug": slug.current, image, role },
     excerpt,
     publishedAt,
@@ -167,7 +169,8 @@ const BLOG_QUERY = /* groq */ `
     title,
     "slug": slug.current,
     coverImage,
-    category,
+    "category": category->title,
+    "categorySlug": category->slug.current,
     author->{ name, "slug": slug.current, image, role },
     excerpt,
     content,

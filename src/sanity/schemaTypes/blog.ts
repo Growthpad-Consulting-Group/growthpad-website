@@ -31,11 +31,8 @@ export const blog = defineType({
     defineField({
       name: "category",
       title: "Category",
-      type: "string",
-      options: {
-        list: ["Digital Marketing", "BPO & Call Centre", "Branding & Design", "Web & Software", "Video & Animation", "Events", "Training & LMS", "HR & Operations", "Strategy"],
-      },
-      initialValue: "Strategy",
+      type: "reference",
+      to: [{ type: "category" }],
       validation: (rule) => rule.required(),
     }),
     defineField({
