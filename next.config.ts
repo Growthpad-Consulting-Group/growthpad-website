@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
       { hostname: "cdn.sanity.io" },
     ],
   },
+  async rewrites() {
+    return [
+      // Flat /blog/:slug (old structure) → API handler that looks up category and redirects
+      { source: "/blog/:slug", destination: "/api/blog-redirect/:slug" },
+    ];
+  },
   async redirects() {
     return [
       // Static page remaps
