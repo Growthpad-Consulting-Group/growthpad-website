@@ -91,12 +91,14 @@ export async function getJobOpenings(): Promise<JobOpeningItem[]> {
 }
 
 export type JobOpeningDetail = JobOpeningItem & {
+  _createdAt: string;
   description: PortableTextBlock[] | null;
 };
 
 const JOB_OPENING_QUERY = /* groq */ `
   *[_type == "jobOpening" && slug.current == $slug][0] {
     _id,
+    _createdAt,
     title,
     "slug": slug.current,
     department,

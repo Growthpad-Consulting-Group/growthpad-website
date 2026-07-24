@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
@@ -162,8 +163,48 @@ export default async function JobOpeningPage({
 
   const sections = opening.description ? buildRelevantSections(opening.description) : [];
 
+  // Map Sanity employmentType to Google's accepted values
+  const employmentTypeMap: Record<string, string> = {
+    "Full-time": "FULL_TIME",
+    "Part-time": "PART_TIME",
+    "Contract": "CONTRACTOR",
+    "Internship": "INTERN",
+  };
+
+  const jobPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: opening.title,
+    description: `${opening.title} at Growthpad Consulting Group. Department: ${opening.department}. ${opening.experience ?? ""}`,
+    datePosted: opening._createdAt,
+    validThrough: opening.deadline,
+    employmentType: employmentTypeMap[opening.employmentType] ?? "FULL_TIME",
+    hiringOrganization: {
+      "@type": "Organization",
+      name: "Growthpad Consulting Group",
+      sameAs: "https://growthpad.co.ke",
+      logo: "https://growthpad.co.ke/assets/images/gcg_logo_primary.png",
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: opening.city,
+        addressCountry: "KE",
+      },
+    },
+    ...(opening.workMode === "Remote" && { jobLocationType: "TELECOMMUTE" }),
+    directApply: true,
+  };
+
   return (
-    <div data-theme-section="dark" className="flex flex-1 flex-col lg:flex-row">
+    <>
+      <Script
+        id="job-posting-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+      />
+      <div data-theme-section="dark" className="flex flex-1 flex-col lg:flex-row">
       <aside className="bg-primary flex flex-col lg:sticky lg:top-0 lg:h-screen lg:w-2/5">
         <div className="relative flex flex-1 flex-col items-start justify-center gap-4 px-6 py-10 lg:px-14 lg:py-14">
           <div className="absolute top-10 lg:top-14">
@@ -237,6 +278,6 @@ export default async function JobOpeningPage({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
