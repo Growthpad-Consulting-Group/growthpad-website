@@ -84,15 +84,11 @@ export const blog = defineType({
       ],
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "seoKeywords",
-      title: "SEO Keywords",
-      description: "Type a keyword and press comma or enter to add it as a tag (e.g. 'digital marketing Kenya'). Used by Bing and other search engines.",
-      type: "array",
-      of: [{ type: "string" }],
-      options: { layout: "tags" },
-      validation: (rule) => rule.required().min(1),
-    }),
+    // Hidden fields — managed exclusively by the SEO Analysis panel below
+    defineField({ name: "focusKeyword", title: "Focus Keyword", type: "string", hidden: true }),
+    defineField({ name: "seoTitle", title: "SEO Title", type: "string", hidden: true }),
+    defineField({ name: "seoDescription", title: "SEO Description", type: "text", hidden: true }),
+    defineField({ name: "seoKeywords", title: "SEO Keywords", type: "array", of: [{ type: "string" }], hidden: true }),
     defineField({
       name: "publishedAt",
       title: "Published at",

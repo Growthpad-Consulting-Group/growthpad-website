@@ -161,7 +161,6 @@ export type BlogDetail = BlogListItem & {
   focusKeyword: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
-  seoKeywords: string[] | null;
 };
 
 const BLOG_QUERY = /* groq */ `
@@ -178,7 +177,6 @@ const BLOG_QUERY = /* groq */ `
     focusKeyword,
     seoTitle,
     seoDescription,
-    seoKeywords,
     publishedAt,
     "readingMinutes": round(length(pt::text(content)) / 5 / 200) + 1
   }

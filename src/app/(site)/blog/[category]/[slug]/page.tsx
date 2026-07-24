@@ -119,16 +119,13 @@ export async function generateMetadata({ params }: Props) {
 
   const title = post.seoTitle ? `${post.seoTitle} | Blog | Growthpad` : `${post.title} | Blog | Growthpad`;
   const description = post.seoDescription || post.excerpt;
-  const imageUrl = post.coverImage 
-    ? urlForImage(post.coverImage).width(1200).height(630).url() 
+  const imageUrl = post.coverImage
+    ? urlForImage(post.coverImage).width(1200).height(630).url()
     : undefined;
-
-  const keywords = post.seoKeywords?.length ? post.seoKeywords : undefined;
 
   return {
     title,
     description,
-    ...(keywords && { keywords }),
     openGraph: {
       title: post.seoTitle || post.title,
       description,
@@ -169,7 +166,7 @@ export default async function BlogPostPage({ params }: Props) {
   const nextPost = index > 0 ? allPosts[index - 1] : null;
   const prevPost = index >= 0 && index < allPosts.length - 1 ? allPosts[index + 1] : null;
 
-  const keywords = post.seoKeywords ?? [];
+  const keywords = post.focusKeyword ? [post.focusKeyword] : [];
   const upNext = allPosts
     .filter((item) => item.slug !== post.slug && item.slug !== nextPost?.slug && item.slug !== prevPost?.slug)
     .map((item) => {
