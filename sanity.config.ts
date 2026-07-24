@@ -4,10 +4,9 @@ import { dashboardTool } from "@sanity/dashboard";
 import { dataset, projectId } from "@/sanity/env";
 import { schema } from "@/sanity/schemaTypes";
 import { ContentStatsWidget } from "@/sanity/dashboard/ContentStatsWidget";
-import { RecentPostsWidget } from "@/sanity/dashboard/RecentPostsWidget";
 import { QuickActionsWidget } from "@/sanity/dashboard/QuickActionsWidget";
 import { SeoHealthWidget } from "@/sanity/dashboard/SeoHealthWidget";
-import { PublishingActivityWidget } from "@/sanity/dashboard/PublishingActivityWidget";
+import { ActivityRowWidget } from "@/sanity/dashboard/ActivityRowWidget";
 
 export default defineConfig({
   basePath: "/studio",
@@ -20,8 +19,7 @@ export default defineConfig({
         { name: "quick-actions", component: QuickActionsWidget, layout: { width: "small" } },
         { name: "content-stats", component: ContentStatsWidget, layout: { width: "medium" } },
         { name: "seo-health", component: SeoHealthWidget, layout: { width: "medium" } },
-        { name: "publishing-activity", component: PublishingActivityWidget, layout: { width: "medium" } },
-        { name: "recent-posts", component: RecentPostsWidget, layout: { width: "medium" } },
+        { name: "activity-row", component: ActivityRowWidget, layout: { width: "full" } },
       ],
     }),
     structureTool(),
