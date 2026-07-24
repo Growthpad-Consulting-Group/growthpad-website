@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormValue, PatchEvent, set, unset } from "sanity";
 import type { PortableTextBlock } from "@portabletext/types";
 
@@ -101,12 +101,12 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   const [tab, setTab] = useState<"general" | "social">("general");
 
   // Read live values from the form
-  const docId = useFormValue(["_id"]) as string | undefined;
   const title = useFormValue(["title"]) as string | undefined;
   const slugValue = useFormValue(["slug"]) as { current?: string } | undefined;
   const seoTitleStored = useFormValue(["seoTitle"]) as string | undefined;
   const seoDescStored = useFormValue(["seoDescription"]) as string | undefined;
   const focusKeywordStored = useFormValue(["focusKeyword"]) as string | undefined;
+  const seoKeywordsStored = useFormValue(["seoKeywords"]) as string[] | undefined;
   const content = useFormValue(["content"]) as PortableTextBlock[] | undefined;
   const excerpt = useFormValue(["excerpt"]) as string | undefined;
   const coverImage = useFormValue(["coverImage"]) as { asset?: { _ref?: string } } | undefined;
@@ -116,12 +116,15 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   const [localTitle, setLocalTitle] = useState(seoTitleStored ?? "");
   const [localSlug, setLocalSlug] = useState(slugValue?.current ?? "");
   const [localDesc, setLocalDesc] = useState(seoDescStored ?? "");
+  const [localKeywords, setLocalKeywords] = useState<string[]>(seoKeywordsStored ?? []);
+  const [kwInput, setKwInput] = useState("");
 
-  // Sync local state when stored values change externally (e.g. first load)
-  const storedKw = focusKeywordStored ?? "";
-  const storedTitle = seoTitleStored ?? "";
-  const storedSlug = slugValue?.current ?? "";
-  const storedDesc = seoDescStored ?? "";
+  // Sync all local state when Sanity loads the stored values (first render may be empty)
+  useEffect(() => { if (focusKeywordStored) setLocalKw(focusKeywordStored); }, [focusKeywordStored]);
+  useEffect(() => { if (seoTitleStored) setLocalTitle(seoTitleStored); }, [seoTitleStored]);
+  useEffect(() => { if (slugValue?.current) setLocalSlug(slugValue.current); }, [slugValue?.current]);
+  useEffect(() => { if (seoDescStored) setLocalDesc(seoDescStored); }, [seoDescStored]);
+  useEffect(() => { if (seoKeywordsStored?.length) setLocalKeywords(seoKeywordsStored); }, [seoKeywordsStored]);
 
   // Patch helpers — write back to Sanity document fields
   function patchField(fieldName: string, value: string) {
@@ -130,6 +133,20 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 
   function patchSlug(value: string) {
     onChange(PatchEvent.from(value ? set({ current: value }, ["slug"]) : unset(["slug"])));
+  }
+
+  function addKeyword(kw: string) {
+    const trimmed = kw.trim().toLowerCase();
+    if (!trimmed || localKeywords.includes(trimmed)) return;
+    const next = [...localKeywords, trimmed];
+    setLocalKeywords(next);
+    onChange(PatchEvent.from(set(next, ["seoKeywords"])));
+  }
+
+  function removeKeyword(kw: string) {
+    const next = localKeywords.filter((k) => k !== kw);
+    setLocalKeywords(next);
+    onChange(PatchEvent.from(next.length ? set(next, ["seoKeywords"]) : unset(["seoKeywords"])));
   }
 
   // Derived display values
@@ -259,6 +276,40 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
             />
             <CharBar value={seoDesc.length} min={120} max={160} />
             <p style={hintStyle}>Shown below the title in search results. Falls back to excerpt if empty.</p>
+          </Section>
+
+          {/* SEO Keywords */}
+          <Section title="SEO Keywords">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+              {localKeywords.map((kw) => (
+                <span key={kw} style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 12, fontWeight: 500 }}>
+                  {kw}
+                  <button
+                    onClick={() => removeKeyword(kw)}
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "#166534", padding: 0, lineHeight: 1, fontSize: 14 }}
+                    aria-label={`Remove ${kw}`}
+                  >×</button>
+                </span>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <input
+                type="text"
+                value={kwInput}
+                placeholder="Add keyword and press Enter or comma"
+                onChange={(e) => setKwInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    addKeyword(kwInput);
+                    setKwInput("");
+                  }
+                }}
+                onBlur={() => { if (kwInput.trim()) { addKeyword(kwInput); setKwInput(""); } }}
+                style={{ ...inputStyle, flex: 1 }}
+              />
+            </div>
+            <p style={hintStyle}>Used by Bing and other search engines. Press Enter or comma to add each keyword.</p>
           </Section>
         </>
       )}

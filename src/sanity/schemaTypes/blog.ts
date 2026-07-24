@@ -85,33 +85,6 @@ export const blog = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "focusKeyword",
-      title: "Focus Keyword",
-      description: "The primary keyword this post targets (e.g. 'digital marketing Kenya'). Used for SEO scoring.",
-      type: "string",
-    }),
-    defineField({
-      name: "seoTitle",
-      title: "SEO Title",
-      description: "Optional — custom Title tag for search engines. Falls back to post title if left empty. Keep under 60 characters.",
-      type: "string",
-      validation: (rule) => rule.max(60).warning("SEO titles over 60 characters may be truncated in search results."),
-    }),
-    defineField({
-      name: "seoDescription",
-      title: "SEO Description",
-      description: "Custom Meta Description for search engines. Keep between 120–160 characters.",
-      type: "text",
-      rows: 2,
-      validation: (rule) =>
-        rule
-          .required()
-          .min(120)
-          .warning("Meta descriptions under 120 characters may appear too thin in search results.")
-          .max(160)
-          .warning("Meta descriptions over 160 characters will be truncated by Google."),
-    }),
-    defineField({
       name: "seoKeywords",
       title: "SEO Keywords",
       description: "Type a keyword and press comma or enter to add it as a tag (e.g. 'digital marketing Kenya'). Used by Bing and other search engines.",
