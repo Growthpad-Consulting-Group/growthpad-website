@@ -1,5 +1,25 @@
 import type { NextConfig } from "next";
 
+type SlugItem = { slug: string; categorySlug: string };
+
+async function getBlogSlugsForRedirects(): Promise<SlugItem[]> {
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "ebeq7cmu";
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+  const query = encodeURIComponent(
+    `*[_type == "blog"]{ "slug": slug.current, "categorySlug": category->slug.current }`,
+  );
+  try {
+    const res = await fetch(
+      `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${query}`,
+      { cache: "no-store" },
+    );
+    const json = await res.json();
+    return (json.result as SlugItem[]).filter((p) => p.slug && p.categorySlug);
+  } catch {
+    return [];
+  }
+}
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -7,13 +27,14 @@ const nextConfig: NextConfig = {
       { hostname: "cdn.sanity.io" },
     ],
   },
-  async rewrites() {
-    return [
-      // Flat /blog/:slug (old structure) → API handler that looks up category and redirects
-      { source: "/blog/:slug", destination: "/api/blog-redirect/:slug" },
-    ];
-  },
   async redirects() {
+    const posts = await getBlogSlugsForRedirects();
+    const blogRedirects = posts.map(({ slug, categorySlug }) => ({
+      source: `/blog/${slug}`,
+      destination: `/blog/${categorySlug}/${slug}`,
+      permanent: true,
+    }));
+
     return [
       // Static page remaps
       { source: "/contact-us", destination: "/contact", permanent: true },
@@ -34,6 +55,8 @@ const nextConfig: NextConfig = {
       { source: "/hr-operations/:slug", destination: "/blog/hr-operations/:slug", permanent: true },
       // WP PDF upload → insights page
       { source: "/wp-content/uploads/2025/04/Amplifying-Impact-in-Africa-Report-GCG-.pdf", destination: "/insights", permanent: true },
+      // Build-time generated: flat /blog/:slug → /blog/:category/:slug
+      ...blogRedirects,
     ];
   },
 };
