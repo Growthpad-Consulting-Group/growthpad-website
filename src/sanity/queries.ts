@@ -134,6 +134,7 @@ export type BlogListItem = {
   author: BlogAuthor;
   excerpt: string;
   publishedAt: string;
+  updatedAt: string;
   readingMinutes: number;
 };
 
@@ -148,6 +149,7 @@ const BLOGS_QUERY = /* groq */ `
     author->{ name, "slug": slug.current, image, role },
     excerpt,
     publishedAt,
+    "updatedAt": _updatedAt,
     "readingMinutes": round(length(pt::text(content)) / 5 / 200) + 1
   }
 `;

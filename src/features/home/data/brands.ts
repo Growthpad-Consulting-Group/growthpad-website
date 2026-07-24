@@ -46,7 +46,7 @@ export const brands: Brand[] = [
     description:
       "Simplifying compliance with tailored regulatory solutions for seamless market entry.",
     logo: "wecomply-logo.svg",
-    href: "#",
+    href: "https://wecomplylabs.co.ke/",
   },
   {
     name: "GCG Digital",

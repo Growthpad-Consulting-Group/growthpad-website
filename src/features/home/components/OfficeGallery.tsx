@@ -8,7 +8,7 @@ type GalleryItem = {
 
 const items: GalleryItem[] = [
   {
-    src: "/assets/images/a-team.png",
+    src: "/assets/images/the-a-team.jpg",
     alt: "The Growthpad team celebrating together",
     caption: "Meet the A team.",
   },
