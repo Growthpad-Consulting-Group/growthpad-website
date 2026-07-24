@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
       { source: "/our-specialties-digital-services", destination: "/services", permanent: true },
       // /tag/:slug → /blog?q=slug (spaces restored from hyphens on the client)
       { source: "/tag/:tag", destination: "/blog?q=:tag", permanent: true },
+      // WP PDF upload → insights page
+      { source: "/wp-content/uploads/2025/04/Amplifying-Impact-in-Africa-Report-GCG-.pdf", destination: "/insights", permanent: true },
     ];
   },
 };
