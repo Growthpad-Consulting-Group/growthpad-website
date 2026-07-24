@@ -278,6 +278,7 @@ export default async function JobOpeningPage({
           </div>
         </div>
       </div>
+      </div>
     </>
   );
 }
