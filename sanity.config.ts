@@ -7,6 +7,7 @@ import { ContentStatsWidget } from "@/sanity/dashboard/ContentStatsWidget";
 import { RecentPostsWidget } from "@/sanity/dashboard/RecentPostsWidget";
 import { QuickActionsWidget } from "@/sanity/dashboard/QuickActionsWidget";
 import { SeoHealthWidget } from "@/sanity/dashboard/SeoHealthWidget";
+import { PublishingActivityWidget } from "@/sanity/dashboard/PublishingActivityWidget";
 
 export default defineConfig({
   basePath: "/studio",
@@ -19,6 +20,7 @@ export default defineConfig({
         { name: "quick-actions", component: QuickActionsWidget, layout: { width: "small" } },
         { name: "content-stats", component: ContentStatsWidget, layout: { width: "medium" } },
         { name: "seo-health", component: SeoHealthWidget, layout: { width: "medium" } },
+        { name: "publishing-activity", component: PublishingActivityWidget, layout: { width: "large" } },
         { name: "recent-posts", component: RecentPostsWidget, layout: { width: "large" } },
       ],
     }),
