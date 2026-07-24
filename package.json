@@ -13,6 +13,7 @@
     "@portabletext/react": "^6.2.0",
     "@portabletext/types": "^4.0.2",
     "@sanity/client": "^7.23.0",
+    "@sanity/dashboard": "^6.0.14",
     "@sanity/image-url": "^2.1.1",
     "@sanity/ui": "^3.3.5",
     "@supabase/supabase-js": "^2.110.7",
