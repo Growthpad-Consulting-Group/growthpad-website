@@ -33,7 +33,7 @@ export const blog = defineType({
       title: "Category",
       type: "string",
       options: {
-        list: ["Strategy", "Communications", "Digital", "Technology", "Company News"],
+        list: ["Digital Marketing", "BPO & Call Centre", "Branding & Design", "Web & Software", "Video & Animation", "Events", "Training & LMS", "HR & Operations", "Strategy"],
       },
       initialValue: "Strategy",
       validation: (rule) => rule.required(),
