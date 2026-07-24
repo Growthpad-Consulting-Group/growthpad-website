@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useFormValue, PatchEvent, set, unset } from "sanity";
+import { useFormValue, useClient, PatchEvent, set } from "sanity";
 import type { PortableTextBlock } from "@portabletext/types";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
@@ -97,8 +97,19 @@ type InputProps = {
   onChange: (event: PatchEvent) => void;
 };
 
+type AiField = "focusKeyword" | "seoTitle" | "metaDescription" | "internalLinks" | "externalLinks";
+type AiState = { loading: boolean; suggestions: string[]; error: string };
+const emptyAi = (): AiState => ({ loading: false, suggestions: [], error: "" });
+
 export function SeoAnalysis({ id, onChange }: InputProps) {
-  const [tab, setTab] = useState<"general" | "social">("general");
+  const [tab, setTab] = useState<"general" | "social" | "links">("general");
+  const [ai, setAi] = useState<Record<AiField, AiState>>({
+    focusKeyword: emptyAi(),
+    seoTitle: emptyAi(),
+    metaDescription: emptyAi(),
+    internalLinks: emptyAi(),
+    externalLinks: emptyAi(),
+  });
 
   // Read live values from the form
   const title = useFormValue(["title"]) as string | undefined;
@@ -123,13 +134,75 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   useEffect(() => { if (slugValue?.current) setLocalSlug(slugValue.current); }, [slugValue?.current]);
   useEffect(() => { if (seoDescStored) setLocalDesc(seoDescStored); }, [seoDescStored]);
 
-  // Patch helpers — write back to Sanity document fields
+  const docId = useFormValue(["_id"]) as string | undefined;
+  const client = useClient({ apiVersion: "2024-01-01" });
+
+  async function patchDoc(fields: Record<string, unknown>) {
+    if (!docId) return;
+    // Write directly to the draft document — this marks it dirty and enables Publish
+    const id = docId.startsWith("drafts.") ? docId : `drafts.${docId}`;
+    await client.patch(id).set(fields).commit({ autoGenerateArrayKeys: true });
+  }
+
+  async function generate(field: AiField) {
+    setAi((prev) => ({ ...prev, [field]: { loading: true, suggestions: [], error: "" } }));
+    try {
+      const res = await fetch("/api/seo-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          field,
+          title: title ?? "",
+          keyword: kw,
+          excerpt: excerpt ?? "",
+          content: blocksToText(content ?? []),
+        }),
+      });
+      if (!res.ok || !res.body) throw new Error(await res.text());
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let full = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6).trim();
+          if (data === "[DONE]") continue;
+          try {
+            const delta = JSON.parse(data).choices?.[0]?.delta?.content ?? "";
+            full += delta;
+            // stream into first suggestion slot
+            setAi((prev) => ({ ...prev, [field]: { loading: true, suggestions: [full], error: "" } }));
+          } catch { /* skip malformed chunks */ }
+        }
+      }
+      // split multi-line responses (seoTitle returns 3 lines)
+      const suggestions = full.trim().split("\n").map((s) => s.trim()).filter(Boolean);
+      setAi((prev) => ({ ...prev, [field]: { loading: false, suggestions, error: "" } }));
+    } catch (e) {
+      setAi((prev) => ({ ...prev, [field]: { loading: false, suggestions: [], error: String(e) } }));
+    }
+  }
+
+  function dismissAi(field: AiField) {
+    setAi((prev) => ({ ...prev, [field]: emptyAi() }));
+  }
+
+  // Write SEO fields directly to the draft — marks document dirty so Publish activates
   function patchField(fieldName: string, value: string) {
-    onChange(PatchEvent.from(value ? set(value, [fieldName]) : unset([fieldName])));
+    // Also touch the seoAnalysis field itself so the form layer sees a change
+    onChange(PatchEvent.from(set(new Date().toISOString())));
+    patchDoc({ [fieldName]: value || null });
   }
 
   function patchSlug(value: string) {
-    onChange(PatchEvent.from(value ? set({ current: value }, ["slug"]) : unset(["slug"])));
+    onChange(PatchEvent.from(set(new Date().toISOString())));
+    patchDoc({ slug: { _type: "slug", current: value } });
   }
 
   // Derived display values
@@ -171,20 +244,29 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 
       {/* Focus keyword */}
       <Section title="Focus Keyword">
-        <input
-          type="text"
-          value={localKw}
-          placeholder="e.g. digital marketing Kenya"
-          onChange={(e) => setLocalKw(e.target.value)}
-          onBlur={() => patchField("focusKeyword", localKw.trim())}
-          style={inputStyle}
+        <div style={{ display: "flex", gap: 8 }}>
+          <input
+            type="text"
+            value={localKw}
+            placeholder="e.g. digital marketing Kenya"
+            onChange={(e) => setLocalKw(e.target.value)}
+            onBlur={() => patchField("focusKeyword", localKw.trim())}
+            style={{ ...inputStyle, flex: 1 }}
+          />
+          <AiButton loading={ai.focusKeyword.loading} onClick={() => generate("focusKeyword")} />
+        </div>
+        <AiSuggestions
+          state={ai.focusKeyword}
+          onAccept={(s) => { setLocalKw(s); patchField("focusKeyword", s); dismissAi("focusKeyword"); }}
+          onDismiss={() => dismissAi("focusKeyword")}
+          onRegenerate={() => generate("focusKeyword")}
         />
         <p style={hintStyle}>The primary keyword this post targets. Drives all SEO checks below.</p>
       </Section>
 
       {/* Tabs */}
       <div style={{ display: "flex", gap: 0, borderBottom: "2px solid #e5e7eb", marginBottom: 16 }}>
-        {(["general", "social"] as const).map((t) => (
+        {(["general", "links", "social"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -196,7 +278,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
               marginBottom: -2,
             }}
           >
-            {t === "general" ? "General" : "Social"}
+            {t === "general" ? "General" : t === "links" ? "Links" : "Social"}
           </button>
         ))}
       </div>
@@ -218,13 +300,22 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 
           {/* Editable Title */}
           <Section title="SEO Title">
-            <input
-              type="text"
-              value={localTitle}
-              placeholder={title ?? "Post title"}
-              onChange={(e) => setLocalTitle(e.target.value)}
-              onBlur={() => patchField("seoTitle", localTitle.trim())}
-              style={inputStyle}
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                type="text"
+                value={localTitle}
+                placeholder={title ?? "Post title"}
+                onChange={(e) => setLocalTitle(e.target.value)}
+                onBlur={() => patchField("seoTitle", localTitle.trim())}
+                style={{ ...inputStyle, flex: 1 }}
+              />
+              <AiButton loading={ai.seoTitle.loading} onClick={() => generate("seoTitle")} />
+            </div>
+            <AiSuggestions
+              state={ai.seoTitle}
+              onAccept={(s) => { setLocalTitle(s); patchField("seoTitle", s); dismissAi("seoTitle"); }}
+              onDismiss={() => dismissAi("seoTitle")}
+              onRegenerate={() => generate("seoTitle")}
             />
             <CharBar value={seoTitle.length} min={30} max={60} />
             <p style={hintStyle}>Shown as the clickable headline in Google. Falls back to post title if empty.</p>
@@ -249,16 +340,54 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 
           {/* Editable Description */}
           <Section title="Meta Description">
-            <textarea
-              value={localDesc}
-              placeholder={excerpt ?? "Write a compelling meta description…"}
-              onChange={(e) => setLocalDesc(e.target.value)}
-              onBlur={() => patchField("seoDescription", localDesc.trim())}
-              rows={3}
-              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5 }}
+            <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <textarea
+                value={localDesc}
+                placeholder={excerpt ?? "Write a compelling meta description…"}
+                onChange={(e) => setLocalDesc(e.target.value)}
+                onBlur={() => patchField("seoDescription", localDesc.trim())}
+                rows={3}
+                style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5, flex: 1 }}
+              />
+              <AiButton loading={ai.metaDescription.loading} onClick={() => generate("metaDescription")} />
+            </div>
+            <AiSuggestions
+              state={ai.metaDescription}
+              onAccept={(s) => { setLocalDesc(s); patchField("seoDescription", s); dismissAi("metaDescription"); }}
+              onDismiss={() => dismissAi("metaDescription")}
+              onRegenerate={() => generate("metaDescription")}
             />
             <CharBar value={seoDesc.length} min={120} max={160} />
             <p style={hintStyle}>Shown below the title in search results. Falls back to excerpt if empty.</p>
+          </Section>
+        </>
+      )}
+
+      {tab === "links" && (
+        <>
+          <Section title="Internal Links">
+            <p style={{ ...hintStyle, marginBottom: 10 }}>Suggest relevant Growthpad blog posts to link to from this post.</p>
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+              <AiButton loading={ai.internalLinks.loading} onClick={() => generate("internalLinks")} label="Suggest Internal Links" />
+            </div>
+            <AiSuggestions
+              state={ai.internalLinks}
+              onAccept={null}
+              onDismiss={() => dismissAi("internalLinks")}
+              onRegenerate={() => generate("internalLinks")}
+            />
+          </Section>
+          <Section title="External Links">
+            <p style={{ ...hintStyle, marginBottom: 10 }}>Suggest authoritative external sources to cite in this post.</p>
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+              <AiButton loading={ai.externalLinks.loading} onClick={() => generate("externalLinks")} label="Suggest External Links" />
+            </div>
+            <AiSuggestions
+              state={ai.externalLinks}
+              onAccept={null}
+              onDismiss={() => dismissAi("externalLinks")}
+              onRegenerate={() => generate("externalLinks")}
+            />
           </Section>
         </>
       )}
@@ -304,6 +433,83 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 }
 
 // ─── sub-components ─────────────────────────────────────────────────────────
+
+function AiButton({ loading, onClick, label }: { loading: boolean; onClick: () => void; label?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={loading}
+      title="Generate with AI"
+      style={{
+        flexShrink: 0, padding: "0 10px", height: 36, borderRadius: 6, border: "1px solid #f05d23",
+        background: loading ? "#fff7f4" : "#fff", color: "#f05d23", cursor: loading ? "default" : "pointer",
+        fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap",
+      }}
+    >
+      {loading ? "⏳" : "✨"} {label ?? ""}
+    </button>
+  );
+}
+
+// Parses markdown links: [text](url) → { text, url }
+function parseMarkdownLinks(s: string): { text: string; url: string } | null {
+  const m = s.match(/^\[(.+?)\]\((.+?)\)$/);
+  return m ? { text: m[1], url: m[2] } : null;
+}
+
+function AiSuggestions({
+  state, onAccept, onDismiss, onRegenerate,
+}: {
+  state: AiState;
+  onAccept: ((s: string) => void) | null;
+  onDismiss: () => void;
+  onRegenerate: () => void;
+}) {
+  if (!state.loading && state.suggestions.length === 0 && !state.error) return null;
+  return (
+    <div style={{ marginTop: 8, border: "1px solid #fed7aa", borderRadius: 8, background: "#fff7ed", padding: "10px 12px" }}>
+      {state.error ? (
+        <p style={{ color: "#b91c1c", fontSize: 12, margin: 0 }}>{state.error}</p>
+      ) : (
+        <>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#f05d23", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>AI Suggestions</div>
+          {state.suggestions.map((s, i) => {
+            const link = parseMarkdownLinks(s.trim());
+            return (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: i < state.suggestions.length - 1 ? 6 : 0 }}>
+                {link ? (
+                  <span style={{ fontSize: 12, color: "#374151", flex: 1, lineHeight: 1.5 }}>
+                    {link.text}{" "}
+                    <a href={link.url} target="_blank" rel="noreferrer" style={{ color: "#1a0dab", wordBreak: "break-all" }}>{link.url}</a>
+                  </span>
+                ) : (
+                  <span style={{ fontSize: 12, color: "#374151", flex: 1, lineHeight: 1.5 }}>{s}</span>
+                )}
+                {!state.loading && onAccept && (
+                  <button type="button" onClick={() => onAccept(s)} style={aiActionBtn("#0a7c42")}>Accept</button>
+                )}
+              </div>
+            );
+          })}
+          {!state.loading && (
+            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+              <button type="button" onClick={onRegenerate} style={aiActionBtn("#f05d23")}>Regenerate</button>
+              <button type="button" onClick={onDismiss} style={aiActionBtn("#6b7280")}>Dismiss</button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function aiActionBtn(color: string): React.CSSProperties {
+  return {
+    padding: "3px 10px", fontSize: 11, fontWeight: 600, borderRadius: 4,
+    border: `1px solid ${color}`, background: "#fff", color, cursor: "pointer",
+  };
+}
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
