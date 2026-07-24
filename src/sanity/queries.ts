@@ -158,6 +158,7 @@ export async function getBlogs(): Promise<BlogListItem[]> {
 
 export type BlogDetail = BlogListItem & {
   content: PortableTextBlock[] | null;
+  focusKeyword: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string[] | null;
@@ -174,6 +175,7 @@ const BLOG_QUERY = /* groq */ `
     author->{ name, "slug": slug.current, image, role },
     excerpt,
     content,
+    focusKeyword,
     seoTitle,
     seoDescription,
     seoKeywords,

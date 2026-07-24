@@ -84,6 +84,12 @@ export const blog = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "focusKeyword",
+      title: "Focus Keyword",
+      description: "The primary keyword this post targets (e.g. 'digital marketing Kenya'). Used for SEO scoring.",
+      type: "string",
+    }),
+    defineField({
       name: "seoTitle",
       title: "SEO Title",
       description: "Optional — custom Title tag for search engines. Falls back to post title if left empty. Keep under 60 characters.",
