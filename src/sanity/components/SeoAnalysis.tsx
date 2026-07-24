@@ -116,7 +116,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   const [localTitle, setLocalTitle] = useState(seoTitleStored ?? "");
   const [localSlug, setLocalSlug] = useState(slugValue?.current ?? "");
   const [localDesc, setLocalDesc] = useState(seoDescStored ?? "");
-  const [localKeywords, setLocalKeywords] = useState<string[]>(seoKeywordsStored ?? []);
+  const [localKeywords, setLocalKeywords] = useState<string[]>([]);
   const [kwInput, setKwInput] = useState("");
 
   // Sync all local state when Sanity loads the stored values (first render may be empty)
@@ -124,7 +124,6 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   useEffect(() => { if (seoTitleStored) setLocalTitle(seoTitleStored); }, [seoTitleStored]);
   useEffect(() => { if (slugValue?.current) setLocalSlug(slugValue.current); }, [slugValue?.current]);
   useEffect(() => { if (seoDescStored) setLocalDesc(seoDescStored); }, [seoDescStored]);
-  useEffect(() => { if (seoKeywordsStored?.length) setLocalKeywords(seoKeywordsStored); }, [seoKeywordsStored]);
 
   // Patch helpers — write back to Sanity document fields
   function patchField(fieldName: string, value: string) {
@@ -137,15 +136,14 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
 
   function addKeyword(kw: string) {
     const trimmed = kw.trim().toLowerCase();
-    if (!trimmed || localKeywords.includes(trimmed)) return;
-    const next = [...localKeywords, trimmed];
-    setLocalKeywords(next);
+    const current = seoKeywordsStored ?? [];
+    if (!trimmed || current.includes(trimmed)) return;
+    const next = [...current, trimmed];
     onChange(PatchEvent.from(set(next, ["seoKeywords"])));
   }
 
   function removeKeyword(kw: string) {
-    const next = localKeywords.filter((k) => k !== kw);
-    setLocalKeywords(next);
+    const next = (seoKeywordsStored ?? []).filter((k) => k !== kw);
     onChange(PatchEvent.from(next.length ? set(next, ["seoKeywords"]) : unset(["seoKeywords"])));
   }
 
@@ -281,7 +279,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
           {/* SEO Keywords */}
           <Section title="SEO Keywords">
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
-              {localKeywords.map((kw) => (
+              {(seoKeywordsStored ?? []).map((kw) => (
                 <span key={kw} style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 12, fontWeight: 500 }}>
                   {kw}
                   <button
