@@ -90,7 +90,7 @@ if (fs.existsSync(envLocalPath)) {
 }
 
 // Config
-const WP_API_URL = "https://growthpad.co.ke/wp-json/wp/v2";
+const WP_API_URL = "https://www.growthpad.co.ke/wp-json/wp/v2";
 const SANITY_PROJECT_ID = "ebeq7cmu";
 const SANITY_DATASET = "production";
 const SANITY_TOKEN = process.env.SANITY_WRITE_TOKEN;

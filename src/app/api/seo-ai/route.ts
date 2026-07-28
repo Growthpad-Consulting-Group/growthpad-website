@@ -63,7 +63,7 @@ ${blogSlugs}
 Rules:
 - Only suggest posts from the list above
 - Pick posts that are topically related and would add value for the reader
-- Format each suggestion EXACTLY as: [Post Title](https://growthpad.co.ke/blog/CATEGORY_SLUG/POST_SLUG)
+- Format each suggestion EXACTLY as: [Post Title](https://www.growthpad.co.ke/blog/CATEGORY_SLUG/POST_SLUG)
 - You must infer the category from the slug list provided (format is category/slug)
 - One suggestion per line, no extra commentary`,
 

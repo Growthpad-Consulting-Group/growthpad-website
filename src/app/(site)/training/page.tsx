@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     "online learning Kenya",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/training",
+    canonical: "https://www.growthpad.co.ke/training",
   },
   openGraph: {
     title: "Training | Growthpad Consulting Group",
     description:
       "Many businesses face a skills shortfall due to today's rapid digital transformation. Through GDC Training, we enrich you and your teams with up-to-date essential digital skills.",
-    url: "https://growthpad.co.ke/training",
+    url: "https://www.growthpad.co.ke/training",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

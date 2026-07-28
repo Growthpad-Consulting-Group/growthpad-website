@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description:
     "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
   alternates: {
-    canonical: "https://growthpad.co.ke/privacy-policy",
+    canonical: "https://www.growthpad.co.ke/privacy-policy",
   },
   openGraph: {
     title: "Privacy Policy | Growthpad Consulting Group",
     description:
       "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
-    url: "https://growthpad.co.ke/privacy-policy",
+    url: "https://www.growthpad.co.ke/privacy-policy",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

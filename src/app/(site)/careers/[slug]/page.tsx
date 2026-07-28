@@ -182,8 +182,8 @@ export default async function JobOpeningPage({
     hiringOrganization: {
       "@type": "Organization",
       name: "Growthpad Consulting Group",
-      sameAs: "https://growthpad.co.ke",
-      logo: "https://growthpad.co.ke/assets/images/gcg_logo_primary.png",
+      sameAs: "https://www.growthpad.co.ke",
+      logo: "https://www.growthpad.co.ke/assets/images/gcg_logo_primary.png",
     },
     jobLocation: {
       "@type": "Place",

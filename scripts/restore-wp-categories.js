@@ -33,7 +33,7 @@ const client = createClient({
   useCdn: false,
 });
 
-const WP_API = "https://growthpad.co.ke/wp-json/wp/v2";
+const WP_API = "https://www.growthpad.co.ke/wp-json/wp/v2";
 
 // Map WP category slugs → clean Sanity category name
 // When a post has multiple categories, first match wins (order = priority)

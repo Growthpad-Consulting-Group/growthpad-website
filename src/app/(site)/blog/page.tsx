@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "tech insights East Africa",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/blog",
+    canonical: "https://www.growthpad.co.ke/blog",
     types: {
       "application/rss+xml": "/blog/rss.xml",
     },
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Growthpad Business Insights",
     description: "Discover a selection of well curated insights on digital marketing in Kenya from our experts. Our blog provides latest digital marketing trends. | Insights",
-    url: "https://growthpad.co.ke/blog",
+    url: "https://www.growthpad.co.ke/blog",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

@@ -44,7 +44,7 @@ const client = createClient({
   useCdn: false,
 });
 
-const SITE_ORIGIN = "https://growthpad.co.ke";
+const SITE_ORIGIN = "https://www.growthpad.co.ke";
 const CONCURRENCY = 5;
 const TIMEOUT_MS = 8000;
 

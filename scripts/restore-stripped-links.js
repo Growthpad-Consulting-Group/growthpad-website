@@ -38,7 +38,7 @@ const client = createClient({
   useCdn: false,
 });
 
-const SITE_ORIGIN = "https://growthpad.co.ke";
+const SITE_ORIGIN = "https://www.growthpad.co.ke";
 const TIMEOUT_MS = 10000;
 
 // Known static page remaps

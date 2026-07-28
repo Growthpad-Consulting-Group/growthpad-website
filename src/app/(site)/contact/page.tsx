@@ -19,12 +19,12 @@ export const metadata: Metadata = {
     "get in touch Growthpad",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/contact",
+    canonical: "https://www.growthpad.co.ke/contact",
   },
   openGraph: {
     title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
     description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",
-    url: "https://growthpad.co.ke/contact",
+    url: "https://www.growthpad.co.ke/contact",
     images: [
       {
         url: "/assets/images/about.png",

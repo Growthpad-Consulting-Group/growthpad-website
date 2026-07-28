@@ -18,7 +18,7 @@ export function buildInternalHtml({
   let html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; border: 1px solid #e5e7eb; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
       <div style="text-align: left; border-bottom: 1px solid #f3f4f6; padding-bottom: 20px; margin-bottom: 24px;">
-        <img src="https://growthpad.co.ke/assets/images/gcg_logo_primary.png" alt="Growthpad Logo" style="height: 38px; display: block;" />
+        <img src="https://www.growthpad.co.ke/assets/images/gcg_logo_primary.png" alt="Growthpad Logo" style="height: 38px; display: block;" />
       </div>
       <h2 style="color: #231812; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 6px;">
         ${isApplication ? "New Career Submission" : "New Website Inquiry"}
@@ -108,7 +108,7 @@ export function buildResponderHtml({ name, role, service, isApplication }: Respo
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; border: 1px solid #e5e7eb; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
       <div style="text-align: left; border-bottom: 1px solid #f3f4f6; padding-bottom: 20px; margin-bottom: 24px;">
-        <img src="https://growthpad.co.ke/assets/images/gcg_logo_primary.png" alt="Growthpad Logo" style="height: 38px; display: block;" />
+        <img src="https://www.growthpad.co.ke/assets/images/gcg_logo_primary.png" alt="Growthpad Logo" style="height: 38px; display: block;" />
       </div>
       <h2 style="color: #231812; font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 12px;">
         Hi ${name.split(" ")[0]},
@@ -124,7 +124,7 @@ export function buildResponderHtml({ name, role, service, isApplication }: Respo
           : "Our consulting team is already reviewing your details. A Growthpad consultant will be in touch with you shortly (usually within 1 business day) to discuss how we can work together."}
       </p>
       <div style="margin: 32px 0; text-align: left;">
-        <a href="https://growthpad.co.ke" style="background-color: #f05d23; color: #ffffff; text-decoration: none; padding: 12px 24px; font-weight: 600; border-radius: 8px; font-size: 14px; display: inline-block;">
+        <a href="https://www.growthpad.co.ke" style="background-color: #f05d23; color: #ffffff; text-decoration: none; padding: 12px 24px; font-weight: 600; border-radius: 8px; font-size: 14px; display: inline-block;">
           Visit Our Website
         </a>
       </div>

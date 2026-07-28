@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "technology procurement Kenya",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/tenders",
+    canonical: "https://www.growthpad.co.ke/tenders",
   },
   openGraph: {
     title: "Tenders | Growthpad Consulting Group",
     description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
-    url: "https://growthpad.co.ke/tenders",
+    url: "https://www.growthpad.co.ke/tenders",
     images: [
       {
         url: "/assets/images/tender-bg.jpg",

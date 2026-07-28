@@ -12,7 +12,7 @@ const sections = [
           Growthpad Consulting Group (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to
           protecting your privacy. This Privacy Policy explains how we collect,
           use, disclose, and safeguard your information when you visit our
-          website (<Link href="https://growthpad.co.ke" className="text-primary underline hover:text-primary/80 transition-colors">growthpad.co.ke</Link>)
+          website (<Link href="https://www.growthpad.co.ke" className="text-primary underline hover:text-primary/80 transition-colors">growthpad.co.ke</Link>)
           and engage with our consulting, technology, and communications
           services.
         </p>

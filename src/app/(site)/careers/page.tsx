@@ -23,12 +23,12 @@ export const metadata: Metadata = {
     "consulting jobs Kenya",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/careers",
+    canonical: "https://www.growthpad.co.ke/careers",
   },
   openGraph: {
     title: "Join Growthpad: Explore Exciting Career Opportunities In Digital Consulting",
     description: "Discover a fulfilling career at Growthpad Digital Consulting. We're constantly seeking talented individuals to join our innovative team. Explore exciting opportunities in digital consulting and be part of our success story | career opportunities",
-    url: "https://growthpad.co.ke/careers",
+    url: "https://www.growthpad.co.ke/careers",
     images: [
       {
         url: "/assets/images/specialties-bg.png",
