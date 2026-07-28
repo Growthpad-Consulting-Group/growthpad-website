@@ -150,7 +150,7 @@ export default function DiagonalSteps({
                 height: pct(b.height, "y"),
               }}
             >
-              <Image src={b.src} alt="" fill />
+              <Image src={b.src} alt="" fill unoptimized />
             </div>
           ))}
           {cardPositions.map((pos, i) => (

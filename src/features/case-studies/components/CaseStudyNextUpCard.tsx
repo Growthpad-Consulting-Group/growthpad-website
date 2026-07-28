@@ -79,6 +79,7 @@ export default function CaseStudyNextUpCard({ nextStudy }: { nextStudy: NextStud
                   src={urlForImage(nextStudy.image).width(128).height(128).url()}
                   alt={nextStudy.brand}
                   fill
+                  unoptimized
                   sizes="64px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -87,6 +88,7 @@ export default function CaseStudyNextUpCard({ nextStudy }: { nextStudy: NextStud
                   src={urlForImage(nextStudy.heroImage).width(128).height(128).url()}
                   alt={nextStudy.brand}
                   fill
+                  unoptimized
                   sizes="64px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />

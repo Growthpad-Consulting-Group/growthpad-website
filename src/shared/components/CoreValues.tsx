@@ -36,6 +36,7 @@ export default function CoreValues({
             src="/assets/images/core-value-card.svg"
             alt=""
             fill
+            unoptimized
             className="hidden object-contain lg:block"
           />
 

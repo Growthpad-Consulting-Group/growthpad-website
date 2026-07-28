@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/shared/components/Modal";
+import { isSanityUrl } from "@/sanity/image";
 import { Icon } from "@iconify/react";
 
 function PlayButton() {
@@ -46,6 +47,7 @@ export default function CaseStudyVideoFeature({
               src={thumbnail}
               alt={title}
               fill
+              unoptimized={isSanityUrl(thumbnail)}
               sizes="100vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />

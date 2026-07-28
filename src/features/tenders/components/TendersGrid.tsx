@@ -144,6 +144,7 @@ export default function TendersGrid({
                         src={urlForImage(item.coverImage).width(455).height(232).url()}
                         alt={item.title}
                         fill
+                        unoptimized
                         sizes="(max-width: 768px) 100vw, 320px"
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       />

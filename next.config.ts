@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
       { hostname: "i.ytimg.com" },
       { hostname: "cdn.sanity.io" },
     ],
+    deviceSizes: [640, 828, 1200, 1920],
+    imageSizes: [64, 96, 128, 256, 384],
+    minimumCacheTTL: 2678400,
   },
   async redirects() {
     const posts = await getBlogSlugsForRedirects();

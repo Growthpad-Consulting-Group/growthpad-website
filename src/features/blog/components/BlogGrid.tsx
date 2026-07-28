@@ -222,6 +222,7 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
                     alt={featured.title}
                     width={900}
                     height={0}
+                    unoptimized
                     style={{ height: "auto", width: "100%" }}
                     sizes="(max-width: 1024px) 100vw, 600px"
                     priority
@@ -270,6 +271,7 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
                         src={urlForImage(item.coverImage).width(455).height(232).url()}
                         alt={item.title}
                         fill
+                        unoptimized
                         sizes="(max-width: 768px) 100vw, 320px"
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />

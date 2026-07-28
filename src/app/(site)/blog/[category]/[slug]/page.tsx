@@ -65,6 +65,7 @@ const portableTextComponents: PortableTextComponents = {
             alt={value.alt || "Article image"}
             width={1200}
             height={0}
+            unoptimized
             style={{ height: "auto", width: "100%" }}
             sizes="(max-width: 768px) 100vw, 1200px"
             className="block"

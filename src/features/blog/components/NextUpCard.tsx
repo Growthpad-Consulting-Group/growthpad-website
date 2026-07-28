@@ -56,6 +56,7 @@ export default function NextUpCard({ post }: { post: BlogListItem }) {
                     src={urlForImage(post.coverImage).width(128).height(128).url()}
                     alt={post.title}
                     fill
+                    unoptimized
                     sizes="64px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />

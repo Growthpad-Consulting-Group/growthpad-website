@@ -37,6 +37,7 @@ export default function CaseStudyPuzzle({
                 src="/assets/images/border-2.svg"
                 alt=""
                 fill
+                unoptimized
                 className="object-contain"
               />
             </div>
@@ -50,6 +51,7 @@ export default function CaseStudyPuzzle({
               alt=""
               fill
               priority
+              unoptimized
               className="pointer-events-none  w-full max-w-md object-contain opacity-90 select-none mt-40"
             />
             {/* <video

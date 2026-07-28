@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Breadcrumb from "@/shared/components/Breadcrumb";
+import { isSanityUrl } from "@/sanity/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -66,6 +67,7 @@ export default function CaseStudyDetailHero({
             alt={imageAlt}
             fill
             priority
+            unoptimized={isSanityUrl(image)}
             sizes="100vw"
             className="object-cover"
           />

@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 import { caseStudiesPreview } from "@/features/case-studies/data/caseStudiesPreview";
 import Pagination from "@/shared/components/Pagination";
 import type { CaseStudyListItem } from "@/sanity/queries";
-import { urlForImage } from "@/sanity/image";
+import { urlForImage, isSanityUrl } from "@/sanity/image";
 
 const PAGE_SIZE = 6;
 
@@ -152,6 +152,7 @@ export default function CaseStudiesGrid({
                         src={item.image}
                         alt={item.brand}
                         fill
+                        unoptimized={isSanityUrl(item.image)}
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />

@@ -277,12 +277,14 @@ export default function Navbar() {
             alt="Growthpad"
             fill
             priority
+            unoptimized
           />
           <Image
             data-nav-logo-light
             src="/assets/images/gcg_logo_white.svg"
             alt=""
             fill
+            unoptimized
             className="opacity-0"
           />
         </Link>

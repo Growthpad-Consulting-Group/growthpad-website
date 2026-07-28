@@ -13,6 +13,7 @@ function AuthorAvatar({ author }: { author: BlogDetail["author"] }) {
         alt={author.name}
         width={44}
         height={44}
+        unoptimized
         className="ring-1 ring-white/30 h-11 w-11 shrink-0 rounded-full object-cover backdrop-blur-sm"
       />
     );
