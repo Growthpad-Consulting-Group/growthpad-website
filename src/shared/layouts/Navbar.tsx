@@ -6,10 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
-import { AnimatePresence, motion } from "framer-motion";
 import { navLinks, type NavLink } from "@/shared/layouts/nav";
 import { Arrow } from "@/shared/components/ArrowGroup";
 import CtaButton from "@/shared/components/CtaButton";
+
+const MENU_TRANSITION_MS = 400;
 
 function MobileMenu({
   isOpen,
@@ -22,9 +23,36 @@ function MobileMenu({
   pathname: string;
   topOffset: number;
 }) {
+  const [rendered, setRendered] = useState(isOpen);
+  const [entered, setEntered] = useState(false);
+  const unmountTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Opening needs to render immediately (so the enter transition below has
+  // something to animate from); closing keeps rendering for one more tick
+  // so the exit transition can play before unmounting.
+  if (isOpen && !rendered) setRendered(true);
+  if (!isOpen && entered) setEntered(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (unmountTimeout.current) clearTimeout(unmountTimeout.current);
+      return;
+    }
+    unmountTimeout.current = setTimeout(() => setRendered(false), MENU_TRANSITION_MS);
+    return () => {
+      if (unmountTimeout.current) clearTimeout(unmountTimeout.current);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!rendered) return;
+    const raf = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(raf);
+  }, [rendered]);
+
   // SSR has no document to portal into; the client render (post-hydration)
   // picks this up immediately after.
-  if (typeof document === "undefined") return null;
+  if (typeof document === "undefined" || !rendered) return null;
 
   // Portalled to document.body: the header this menu toggles from has its
   // own transform (translate-y) for the hide-on-scroll behavior, and a
@@ -32,103 +60,101 @@ function MobileMenu({
   // behaving like position:absolute relative to *that* ancestor instead
   // of the viewport — which silently collapsed this panel to nothing.
   return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -16 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          style={{ top: topOffset + 8 }}
-          className="fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl xl:hidden"
-        >
-          {/* Same "liquid glass" recipe as the header (distorted+blurred
-              backdrop, tint, specular ring), so the dropdown reads as an
-              extension of the pill rather than a different material —
-              just tinted dark instead of white, since this panel's nav
-              text is hardcoded white and needs a dark backdrop for
-              contrast regardless of what's scrolled behind it. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-[inherit] backdrop-blur-[3px]"
-            style={{ filter: "url(#glass-distortion)" }}
-          />
-          <div
-            aria-hidden
-            className="bg-secondary/70 pointer-events-none absolute inset-0 rounded-[inherit]"
-          />
-          <div
-            aria-hidden
-            className="ring-1 ring-white/10 shadow-lg shadow-black/20 pointer-events-none absolute inset-0 rounded-[inherit]"
-          />
+    <div
+      style={{
+        top: topOffset + 8,
+        transitionDuration: `${MENU_TRANSITION_MS}ms`,
+        transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+      }}
+      className={`fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl transition-[transform,opacity] xl:hidden ${
+        entered ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+      }`}
+    >
+      {/* Same "liquid glass" recipe as the header (distorted+blurred
+          backdrop, tint, specular ring), so the dropdown reads as an
+          extension of the pill rather than a different material —
+          just tinted dark instead of white, since this panel's nav
+          text is hardcoded white and needs a dark backdrop for
+          contrast regardless of what's scrolled behind it. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[inherit] backdrop-blur-[3px]"
+        style={{ filter: "url(#glass-distortion)" }}
+      />
+      <div
+        aria-hidden
+        className="bg-secondary/70 pointer-events-none absolute inset-0 rounded-[inherit]"
+      />
+      <div
+        aria-hidden
+        className="ring-1 ring-white/10 shadow-lg shadow-black/20 pointer-events-none absolute inset-0 rounded-[inherit]"
+      />
 
-          <nav className="container-fluid relative flex flex-1 flex-col justify-center gap-1 py-8">
-            {navLinks.map((link: NavLink, index: number) => {
-              const isActive = link.href === pathname;
+      <nav className="container-fluid relative flex flex-1 flex-col justify-center gap-1 py-8">
+        {navLinks.map((link: NavLink, index: number) => {
+          const isActive = link.href === pathname;
 
-              return (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.1 + index * 0.06,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="border-b border-white/10 py-4 first:pt-0"
-                >
-                  <Link
-                    href={link.href}
-                    onClick={onNavigate}
-                    className="group flex items-center justify-between gap-4"
-                  >
-                    <span
-                      className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
-                        isActive
-                          ? "text-primary"
-                          : "text-white group-hover:text-primary"
-                      }`}
-                    >
-                      {link.label}
-                    </span>
-                    <Arrow
-                      className={`h-5 w-5 shrink-0 -rotate-45 text-white/40 transition-all group-hover:rotate-0 group-hover:text-primary ${
-                        isActive ? "rotate-0 text-primary" : ""
-                      }`}
-                    />
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </nav>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.1 + navLinks.length * 0.06,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="container-fluid relative flex flex-col items-start gap-4 border-t border-white/10 py-6"
-          >
-            <p className="text-sm text-white/50">
-              A Cross-Africa Communication &amp; Technology Firm
-            </p>
-            <CtaButton
-              href="/contact"
-              size="sm"
-              fullWidth
-              onClick={onNavigate}
-              circleClassName="bg-primary text-white"
+          return (
+            <div
+              key={link.href}
+              style={{
+                transitionDuration: "500ms",
+                transitionDelay: `${100 + index * 60}ms`,
+                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+              className={`border-b border-white/10 py-4 first:pt-0 transition-[transform,opacity] ${
+                entered ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
             >
-              Get in touch
-            </CtaButton>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>,
+              <Link
+                href={link.href}
+                onClick={onNavigate}
+                className="group flex items-center justify-between gap-4"
+              >
+                <span
+                  className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
+                    isActive
+                      ? "text-primary"
+                      : "text-white group-hover:text-primary"
+                  }`}
+                >
+                  {link.label}
+                </span>
+                <Arrow
+                  className={`h-5 w-5 shrink-0 -rotate-45 text-white/40 transition-all group-hover:rotate-0 group-hover:text-primary ${
+                    isActive ? "rotate-0 text-primary" : ""
+                  }`}
+                />
+              </Link>
+            </div>
+          );
+        })}
+      </nav>
+
+      <div
+        style={{
+          transitionDuration: "500ms",
+          transitionDelay: `${100 + navLinks.length * 60}ms`,
+          transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+        className={`container-fluid relative flex flex-col items-start gap-4 border-t border-white/10 py-6 transition-[transform,opacity] ${
+          entered ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        }`}
+      >
+        <p className="text-sm text-white/50">
+          A Cross-Africa Communication &amp; Technology Firm
+        </p>
+        <CtaButton
+          href="/contact"
+          size="sm"
+          fullWidth
+          onClick={onNavigate}
+          circleClassName="bg-primary text-white"
+        >
+          Get in touch
+        </CtaButton>
+      </div>
+    </div>,
     document.body,
   );
 }
@@ -302,14 +328,13 @@ export default function Navbar() {
               common), which kills the FLIP interpolation and makes it
               fade in at the new spot instead of sliding. This element
               never unmounts, so its position always animates smoothly. */}
-          <motion.span
-            animate={{
+          <span
+            style={{
               opacity: hoverRect ? 1 : 0,
               left: (hoverRect ?? lastHoverRect)?.left,
               width: (hoverRect ?? lastHoverRect)?.width,
             }}
-            transition={{ type: "spring", stiffness: 300, damping: 36, mass: 0.6 }}
-            className="bg-primary/80 ring-1 ring-primary/40 ring-inset shadow-lg shadow-black/10 pointer-events-none absolute top-0 left-0 z-0 h-10 w-10 rounded-full backdrop-blur-md"
+            className="bg-primary/80 ring-1 ring-primary/40 ring-inset shadow-lg shadow-black/10 pointer-events-none absolute top-0 left-0 z-0 h-10 w-10 rounded-full backdrop-blur-md transition-[left,width,opacity] duration-300 ease-out"
           />
 
           {navLinks.map((link) => {
@@ -354,22 +379,16 @@ export default function Navbar() {
           onClick={() => setIsOpen((open) => !open)}
           className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full xl:hidden"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={isOpen ? "close" : "open"}
-              initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <Icon
-                icon={isOpen ? "ci:close-big" : "ci:menu-alt-02"}
-                width={32}
-                height={32}
-              />
-            </motion.span>
-          </AnimatePresence>
+          <span
+            key={isOpen ? "close" : "open"}
+            className="animate-menu-icon-swap absolute inset-0 flex items-center justify-center"
+          >
+            <Icon
+              icon={isOpen ? "ci:close-big" : "ci:menu-alt-02"}
+              width={32}
+              height={32}
+            />
+          </span>
         </button>
       </nav>
     </header>
