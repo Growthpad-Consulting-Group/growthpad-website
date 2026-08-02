@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -217,17 +217,22 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
             >
               <div className="w-full lg:w-3/5 shrink-0 overflow-hidden rounded-2xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_20px_35px_rgba(240,93,35,0.18)]">
                 {featured.coverImage ? (
-                  <Image
-                    src={urlForImage(featured.coverImage).width(900).url()}
-                    alt={featured.title}
-                    width={900}
-                    height={0}
-                    unoptimized
-                    style={{ height: "auto", width: "100%" }}
-                    sizes="(max-width: 1024px) 100vw, 600px"
-                    priority
-                    className="block transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                  <ViewTransition
+                    name={`blog-image-${featured.categorySlug}-${featured.slug}`}
+                    share="morph"
+                  >
+                    <Image
+                      src={urlForImage(featured.coverImage).width(900).url()}
+                      alt={featured.title}
+                      width={900}
+                      height={0}
+                      unoptimized
+                      style={{ height: "auto", width: "100%" }}
+                      sizes="(max-width: 1024px) 100vw, 600px"
+                      priority
+                      className="block transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </ViewTransition>
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-primary/10">
                     <Icon icon="solar:document-text-broken" width={64} height={64} className="text-primary/50" />
@@ -267,14 +272,19 @@ export default function BlogGrid({ blogs }: { blogs: BlogListItem[] }) {
                 >
                   <div className="relative w-full aspect-455/232 overflow-hidden rounded-xl transition-all duration-700 ease-out group-hover:drop-shadow-[0_15px_30px_rgba(240,93,35,0.15)]">
                     {item.coverImage ? (
-                      <Image
-                        src={urlForImage(item.coverImage).width(455).height(232).url()}
-                        alt={item.title}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 768px) 100vw, 320px"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
+                      <ViewTransition
+                        name={`blog-image-${item.categorySlug}-${item.slug}`}
+                        share="morph"
+                      >
+                        <Image
+                          src={urlForImage(item.coverImage).width(455).height(232).url()}
+                          alt={item.title}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 768px) 100vw, 320px"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                      </ViewTransition>
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-primary/10">
                         <Icon icon="solar:document-text-broken" width={40} height={40} className="text-primary/50" />

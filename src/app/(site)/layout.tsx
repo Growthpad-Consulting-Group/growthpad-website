@@ -1,5 +1,6 @@
 "use client";
 
+import { ViewTransition } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import Navbar from "@/shared/layouts/Navbar";
 import ConditionalFooter from "@/shared/layouts/ConditionalFooter";
@@ -14,7 +15,9 @@ export default function SiteLayout({
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}>
       <Navbar />
-      {children}
+      <ViewTransition name="page" share="auto" enter="auto" exit="auto">
+        {children}
+      </ViewTransition>
       <ConditionalFooter />
       <ScrollToTop />
       <CookieConsent />

@@ -191,6 +191,7 @@ export default async function CaseStudyDetailPage({
       <CaseStudyDetailHero
         title={caseStudy.heroTitle}
         brand={caseStudy.brand}
+        slug={slug}
         image={caseStudy.heroImage}
         imageAlt={caseStudy.brand}
         videoUrl={caseStudy.heroVideoUrl}

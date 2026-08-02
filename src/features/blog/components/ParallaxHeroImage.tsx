@@ -1,11 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, ViewTransition } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export default function ParallaxHeroImage({ src, alt }: { src: string; alt: string }) {
+export default function ParallaxHeroImage({
+  src,
+  alt,
+  viewTransitionName,
+}: {
+  src: string;
+  alt: string;
+  viewTransitionName: string;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -38,14 +46,16 @@ export default function ParallaxHeroImage({ src, alt }: { src: string; alt: stri
     <div ref={containerRef} className="absolute inset-0 overflow-hidden">
       {/* Scaled up so the vertical drift never exposes empty edges. */}
       <div ref={imageRef} className="absolute inset-0 scale-125">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        <ViewTransition name={viewTransitionName} share="morph">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </ViewTransition>
       </div>
     </div>
   );

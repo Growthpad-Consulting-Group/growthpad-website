@@ -102,3 +102,22 @@ body {
 .grecaptcha-badge {
   visibility: hidden !important;
 }
+
+/* Route-to-route view transitions: browser default crossfade is used;
+   only opt out for motion-sensitive users since the UA stylesheet doesn't. */
+
+/* Case study card → hero morph: slower than the browser's default (~250ms)
+   so the shared image reads as one object moving, not a quick swap. */
+::view-transition-group(.morph) {
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

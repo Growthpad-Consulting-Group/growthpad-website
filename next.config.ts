@@ -21,6 +21,9 @@ async function getBlogSlugsForRedirects(): Promise<SlugItem[]> {
 }
 
 const nextConfig: NextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     remotePatterns: [
       { hostname: "i.ytimg.com" },

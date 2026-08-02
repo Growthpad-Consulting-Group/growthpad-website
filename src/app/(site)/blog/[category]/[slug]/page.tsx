@@ -211,7 +211,12 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       <main data-theme-section="light" className="theme-bg min-h-screen">
-        <ArticleHero post={post} imageUrl={coverImageUrl} postUrl={postUrl} />
+        <ArticleHero
+          post={post}
+          imageUrl={coverImageUrl}
+          postUrl={postUrl}
+          viewTransitionId={`${category}-${post.slug}`}
+        />
 
         <div className="container mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start lg:gap-16">
           <div className="max-w-4xl">

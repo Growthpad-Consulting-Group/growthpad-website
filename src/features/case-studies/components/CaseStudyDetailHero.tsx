@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, ViewTransition } from "react";
 import Image from "next/image";
 import Breadcrumb from "@/shared/components/Breadcrumb";
 import { isSanityUrl } from "@/sanity/image";
@@ -10,12 +10,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function CaseStudyDetailHero({
   title,
   brand,
+  slug,
   image,
   imageAlt,
   videoUrl,
 }: {
   title: string;
   brand: string;
+  slug: string;
   image?: string;
   imageAlt: string;
   videoUrl?: string | null;
@@ -53,24 +55,28 @@ export default function CaseStudyDetailHero({
       {/* Background Media with Parallax Effect */}
       <div ref={mediaRef} className="absolute inset-0 scale-125">
         {videoUrl ? (
-          <video
-            src={videoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+          <ViewTransition name={`case-study-image-${slug}`} share="morph">
+            <video
+              src={videoUrl}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </ViewTransition>
         ) : image ? (
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            unoptimized={isSanityUrl(image)}
-            sizes="100vw"
-            className="object-cover"
-          />
+          <ViewTransition name={`case-study-image-${slug}`} share="morph">
+            <Image
+              src={image}
+              alt={imageAlt}
+              fill
+              priority
+              unoptimized={isSanityUrl(image)}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </ViewTransition>
         ) : null}
       </div>
 
@@ -82,7 +88,7 @@ export default function CaseStudyDetailHero({
         <div className="flex flex-col items-start gap-4">
           <Breadcrumb
             items={[
-              { label: "Case Studies", href: "/case-studies" },
+              { label: "Case Studies", href: "/case-studies#case-studies-grid" },
               { label: brand },
             ]}
             variant="light"

@@ -37,16 +37,22 @@ export default function ArticleHero({
   post,
   imageUrl,
   postUrl,
+  viewTransitionId,
 }: {
   post: BlogDetail;
   imageUrl: string | null;
   postUrl: string;
+  viewTransitionId: string;
 }) {
   return (
     <div>
       <div className="relative h-85 w-full overflow-hidden sm:h-100 lg:h-115">
         {imageUrl ? (
-          <ParallaxHeroImage src={imageUrl} alt={post.title} />
+          <ParallaxHeroImage
+            src={imageUrl}
+            alt={post.title}
+            viewTransitionName={`blog-image-${viewTransitionId}`}
+          />
         ) : (
           <div className="bg-secondary h-full w-full" />
         )}

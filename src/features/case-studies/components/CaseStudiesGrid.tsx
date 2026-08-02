@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
@@ -86,7 +86,7 @@ export default function CaseStudiesGrid({
 
   return (
     <section data-theme-section="gray" className="theme-bg w-full py-20 lg:py-28">
-      <div ref={topRef} className="container-fluid scroll-mt-28">
+      <div ref={topRef} id="case-studies-grid" className="container-fluid scroll-mt-28">
         <div className="flex flex-col gap-6 border-b border-primary/10 pb-6 md:flex-row md:items-end md:justify-between">
           <p className="theme-fg max-w-xl text-2xl leading-tight sm:text-3xl">
             We couldn&apos;t fit them all here, but here&apos;s a peek at
@@ -139,23 +139,27 @@ export default function CaseStudiesGrid({
                 >
                   <div className="relative aspect-455/232 w-full overflow-hidden rounded-xl bg-black/5 transition-all duration-700 ease-out group-hover:drop-shadow-[0_15px_30px_rgba(240,93,35,0.15)]">
                     {item.videoUrl ? (
-                      <video
-                        src={item.videoUrl}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
+                      <ViewTransition name={`case-study-image-${item.slug}`} share="morph">
+                        <video
+                          src={item.videoUrl}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                      </ViewTransition>
                     ) : item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.brand}
-                        fill
-                        unoptimized={isSanityUrl(item.image)}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
+                      <ViewTransition name={`case-study-image-${item.slug}`} share="morph">
+                        <Image
+                          src={item.image}
+                          alt={item.brand}
+                          fill
+                          unoptimized={isSanityUrl(item.image)}
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                      </ViewTransition>
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-secondary/5 text-secondary/30">
                         <Icon icon="solar:gallery-broken" className="h-12 w-12" />
