@@ -2,6 +2,10 @@ import type { SanityImageSource } from "@sanity/image-url";
 import type { PortableTextBlock } from "@portabletext/types";
 import { client } from "@/sanity/client";
 
+// Content is invalidated on-demand via the Sanity webhook (/api/revalidate).
+// This is a safety-net fallback in case a webhook delivery is ever missed.
+const FALLBACK_REVALIDATE = 60 * 60 * 24;
+
 export type InsightListItem = {
   _id: string;
   title: string;
@@ -25,7 +29,7 @@ const INSIGHTS_QUERY = /* groq */ `
 `;
 
 export async function getInsights(): Promise<InsightListItem[]> {
-  return client.fetch(INSIGHTS_QUERY, {}, { next: { revalidate: 60 } });
+  return client.fetch(INSIGHTS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["insight"] } });
 }
 
 export type TenderListItem = {
@@ -53,7 +57,7 @@ const TENDERS_QUERY = /* groq */ `
 `;
 
 export async function getTenders(): Promise<TenderListItem[]> {
-  return client.fetch(TENDERS_QUERY, {}, { next: { revalidate: 60 } });
+  return client.fetch(TENDERS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["tender"] } });
 }
 
 export type JobOpeningItem = {
@@ -87,7 +91,7 @@ const JOB_OPENINGS_QUERY = /* groq */ `
 `;
 
 export async function getJobOpenings(): Promise<JobOpeningItem[]> {
-  return client.fetch(JOB_OPENINGS_QUERY, {}, { next: { revalidate: 60 } });
+  return client.fetch(JOB_OPENINGS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["jobOpening"] } });
 }
 
 export type JobOpeningDetail = JobOpeningItem & {
@@ -114,7 +118,9 @@ const JOB_OPENING_QUERY = /* groq */ `
 `;
 
 export async function getJobOpening(slug: string): Promise<JobOpeningDetail | null> {
-  return client.fetch(JOB_OPENING_QUERY, { slug }, { next: { revalidate: 60 } });
+  return client.fetch(JOB_OPENING_QUERY, { slug }, {
+    next: { revalidate: FALLBACK_REVALIDATE, tags: ["jobOpening", `jobOpening:${slug}`] },
+  });
 }
 
 export type BlogAuthor = {
@@ -155,7 +161,7 @@ const BLOGS_QUERY = /* groq */ `
 `;
 
 export async function getBlogs(): Promise<BlogListItem[]> {
-  return client.fetch(BLOGS_QUERY, {}, { next: { revalidate: 60 } });
+  return client.fetch(BLOGS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["blog"] } });
 }
 
 export type BlogDetail = BlogListItem & {
@@ -185,7 +191,9 @@ const BLOG_QUERY = /* groq */ `
 `;
 
 export async function getBlog(slug: string): Promise<BlogDetail | null> {
-  return client.fetch(BLOG_QUERY, { slug }, { next: { revalidate: 60 } });
+  return client.fetch(BLOG_QUERY, { slug }, {
+    next: { revalidate: FALLBACK_REVALIDATE, tags: ["blog", `blog:${slug}`] },
+  });
 }
 
 export type BlogSlugItem = { title: string; slug: string; categorySlug: string };
@@ -194,7 +202,7 @@ export async function getBlogSlugs(): Promise<BlogSlugItem[]> {
   return client.fetch(
     `*[_type == "blog"]{ title, "slug": slug.current, "categorySlug": category->slug.current }`,
     {},
-    { next: { revalidate: 3600 } },
+    { next: { revalidate: FALLBACK_REVALIDATE, tags: ["blog"] } },
   );
 }
 
@@ -225,7 +233,7 @@ const CASE_STUDIES_QUERY = /* groq */ `
 `;
 
 export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
-  return client.fetch(CASE_STUDIES_QUERY, {}, { next: { revalidate: 60 } });
+  return client.fetch(CASE_STUDIES_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["caseStudy"] } });
 }
 
 export type CaseStudyDetail = {
@@ -279,6 +287,8 @@ const CASE_STUDY_QUERY = /* groq */ `
 `;
 
 export async function getCaseStudy(slug: string): Promise<CaseStudyDetail | null> {
-  return client.fetch(CASE_STUDY_QUERY, { slug }, { next: { revalidate: 60 } });
+  return client.fetch(CASE_STUDY_QUERY, { slug }, {
+    next: { revalidate: FALLBACK_REVALIDATE, tags: ["caseStudy", `caseStudy:${slug}`] },
+  });
 }
 
