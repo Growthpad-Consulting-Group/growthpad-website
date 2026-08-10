@@ -158,7 +158,7 @@ const sections = [
         </p>
         <blockquote className="my-6 border-l-4 border-primary pl-4 italic text-secondary bg-primary/5 p-4 rounded-r-xl">
           <p className="font-semibold not-italic text-secondary">Growthpad Consulting Group</p>
-          <p className="text-secondary/80">The Westwood Office, 6th Floor 6A, Comply Guide Advisory, Westlands, Nairobi Kenya</p>
+          <p className="text-secondary/80">7th Floor, Mitsumi Business Park, Westlands – Nairobi, Kenya</p>
           <p className="text-secondary/80 mt-2">
             Business enquiries:{" "}
             <Link href="mailto:strategic@growthpad.co.ke" className="text-primary underline hover:text-primary/80 transition-colors">

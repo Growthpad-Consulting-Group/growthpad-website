@@ -131,7 +131,7 @@ export function buildResponderHtml({ name, role, service, isApplication }: Respo
       <p style="color: #6b7280; font-size: 14px; margin-bottom: 0; border-top: 1px solid #f3f4f6; padding-top: 20px; line-height: 1.5;">
         Best regards,<br />
         <strong>Growthpad Consulting Group</strong><br />
-        <span style="font-size: 13px; color: #9ca3af;">The Westwood Office, 6th Floor 6A, Comply Guide Advisory, Westlands, Nairobi Kenya</span>
+        <span style="font-size: 13px; color: #9ca3af;">Nairobi, Kenya</span>
       </p>
     </div>
   `;
