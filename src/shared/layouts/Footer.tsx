@@ -60,11 +60,11 @@ export default function Footer() {
             </div>
 
             <address className="mt-8 text-lg leading-8 text-white/70 not-italic">
-              7th Floor, Mitsumi Business Park,
+              The Westwood Office, 6th Floor 6A,
               <br />
-              Westlands – Nairobi, Kenya
+              Comply Guide Advisory, Westlands,
               <br />
-              P.O. Box 1093-00606
+              Nairobi Kenya
             </address>
 
             <a
