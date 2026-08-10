@@ -11,7 +11,9 @@ async function getBlogSlugsForRedirects(): Promise<SlugItem[]> {
   try {
     const res = await fetch(
       `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${query}`,
-      { cache: "no-store" },
+      // Cache for 5 minutes at build time — fresh enough for new posts,
+      // avoids a cold uncached fetch on every deployment.
+      { next: { revalidate: 300 } },
     );
     const json = await res.json();
     return (json.result as SlugItem[]).filter((p) => p.slug && p.categorySlug);
