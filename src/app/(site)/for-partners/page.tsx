@@ -21,12 +21,12 @@ export const metadata: Metadata = {
     "collaborate with Growthpad",
   ],
   alternates: {
-    canonical: "https://www.growthpad.co.ke/for-partners",
+    canonical: "https://growthpad.co.ke/for-partners",
   },
   openGraph: {
     title: "Growthpad Partner Program: Boost African Business Growth - Partner With Us",
     description: "Join Growthpad's Partner Program to drive African business growth. Connect clients with our professional services. Partner with us for success.",
-    url: "https://www.growthpad.co.ke/for-partners",
+    url: "https://growthpad.co.ke/for-partners",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

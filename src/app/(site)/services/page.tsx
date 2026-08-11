@@ -20,12 +20,12 @@ export const metadata: Metadata = {
     "digital transformation services",
   ],
   alternates: {
-    canonical: "https://www.growthpad.co.ke/services",
+    canonical: "https://growthpad.co.ke/services",
   },
   openGraph: {
     title: "Expert Digital Services For Your Organization | Growthpad Consulting",
     description: "Explore our wide range of innovative digital services at Growthpad Consulting. From Communication for Development to IT Project Management, we deliver solutions for your organization's success",
-    url: "https://www.growthpad.co.ke/services",
+    url: "https://growthpad.co.ke/services",
     images: [
       {
         url: "/assets/images/specialties-bg.png",

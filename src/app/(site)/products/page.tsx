@@ -19,12 +19,12 @@ export const metadata: Metadata = {
     "content management Kenya",
   ],
   alternates: {
-    canonical: "https://www.growthpad.co.ke/products",
+    canonical: "https://growthpad.co.ke/products",
   },
   openGraph: {
     title: "Products | Growthpad Consulting Group",
     description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
-    url: "https://www.growthpad.co.ke/products",
+    url: "https://growthpad.co.ke/products",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

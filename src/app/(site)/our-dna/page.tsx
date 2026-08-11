@@ -24,12 +24,12 @@ export const metadata: Metadata = {
     "business growth Kenya",
   ],
   alternates: {
-    canonical: "https://www.growthpad.co.ke/our-dna",
+    canonical: "https://growthpad.co.ke/our-dna",
   },
   openGraph: {
     title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
     description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
-    url: "https://www.growthpad.co.ke/our-dna",
+    url: "https://growthpad.co.ke/our-dna",
     images: [
       {
         url: "/assets/images/dna-hero.png",
