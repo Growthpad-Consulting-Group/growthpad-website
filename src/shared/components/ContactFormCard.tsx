@@ -44,6 +44,11 @@ export default function ContactFormCard({
     setIsLoading(true);
     setErrorMessage(null);
 
+    // Capture the form before any `await` — React nulls out the synthetic
+    // event's currentTarget once the handler yields, so reading it after
+    // the reCAPTCHA await throws "parameter 1 is not of type HTMLFormElement".
+    const formEl = e.currentTarget;
+
     if (!executeRecaptcha) {
       setErrorMessage("reCAPTCHA not ready. Please try again.");
       setIsLoading(false);
@@ -51,7 +56,7 @@ export default function ContactFormCard({
     }
     const recaptchaToken = await executeRecaptcha("contact_form");
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(formEl);
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
