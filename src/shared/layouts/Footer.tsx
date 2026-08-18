@@ -19,7 +19,7 @@ function FlagTooltip({
       </span>
       <span
         style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
-        className="pointer-events-none absolute bottom-full left-1/2 mb-2 flex -translate-x-1/2 translate-y-2 scale-90 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
+        className="pointer-events-none absolute bottom-full left-1/2 mb-1 flex -translate-x-1/2 translate-y-2 scale-90 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
       >
         <Image
           src={flag}
@@ -36,9 +36,9 @@ function FlagTooltip({
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary relative w-full py-16 lg:pt-20 lg:pb-10">
+    <footer className="bg-secondary relative w-full py-4 lg:pt-20">
       <div
-        className="absolute top-0 bottom-0 left-0 hidden w-24 bg-repeat-y sm:block"
+        className="absolute top-0 bottom-0 left-0 hidden w-[4%] bg-repeat-y sm:block"
         style={{ backgroundImage: "url(/assets/images/footer-bg.png)" }}
       />
 
@@ -91,7 +91,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center lg:mt-16">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <p className="text-sm text-white/80">
             © {new Date().getFullYear()} Growthpad Consulting Group. Made
             with ♡ in{" "}

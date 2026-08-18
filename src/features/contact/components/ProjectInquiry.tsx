@@ -22,6 +22,19 @@ export default function ProjectInquiry() {
 
           <div className="flex flex-col gap-4">
             <h3 className="font-display text-secondary text-2xl font-bold">
+              For Business Specific RFP/RFQs, Proposals &amp; Quotations
+            </h3>
+            <a
+              href="mailto:strategic@growthpad.co.ke"
+              className="text-primary flex items-center gap-3 text-lg font-medium"
+            >
+              <Icon icon="mdi:email-outline" width={20} height={20} />
+              strategic@growthpad.co.ke
+            </a>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h3 className="font-display text-secondary text-2xl font-bold">
               For Careers, email our
               hiring team.
             </h3>
@@ -38,19 +51,6 @@ export default function ProjectInquiry() {
             >
               <Icon icon="mdi:phone-outline" width={20} height={20} />
               +254 701 850 850
-            </a>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <h3 className="font-display text-secondary text-2xl font-bold">
-              For Business Specific RFP/RFQs, Proposals &amp; Quotations
-            </h3>
-            <a
-              href="mailto:strategic@growthpad.co.ke"
-              className="text-primary flex items-center gap-3 text-lg font-medium"
-            >
-              <Icon icon="mdi:email-outline" width={20} height={20} />
-              strategic@growthpad.co.ke
             </a>
           </div>
         </div>
