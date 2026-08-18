@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/generate-static-routes.mjs && next dev",
+    "prebuild": "node scripts/generate-static-routes.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "cf:build": "opennextjs-cloudflare build",
-    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
+    "cf:build": "node scripts/generate-static-routes.mjs && opennextjs-cloudflare build",
+    "cf:deploy": "node scripts/generate-static-routes.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:preview": "node scripts/generate-static-routes.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
