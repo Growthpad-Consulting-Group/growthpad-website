@@ -12,11 +12,6 @@ export const teamStories: VideoStory[] = [
     youtubeId: "oVAhUwUHaW0",
   },
   {
-    name: "Norah Thuo",
-    title: "Product Manager",
-    youtubeId: "nU7svgNaKtI",
-  },
-  {
     name: "Allen Mwema",
     title: "Marketing Specialist",
     youtubeId: "OIVidREF7jc",
