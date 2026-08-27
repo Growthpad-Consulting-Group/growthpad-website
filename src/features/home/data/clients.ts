@@ -32,4 +32,5 @@ export const clients: Client[] = [
   { name: "USAID", logo: "usaid.png" },
   { name: "Zenka", logo: "zenka.png" },
   { name: "Zoho", logo: "zoho.png" },
+  { name: "UNHCR", logo: "unhcr.png" },
 ];

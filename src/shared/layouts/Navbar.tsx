@@ -66,7 +66,7 @@ function MobileMenu({
         transitionDuration: `${MENU_TRANSITION_MS}ms`,
         transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
       }}
-      className={`fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl transition-[transform,opacity] xl:hidden ${
+      className={`fixed inset-x-6 bottom-0 z-50 isolate flex flex-col overflow-y-auto rounded-t-4xl transition-[transform,opacity] lg:hidden ${
         entered ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
       }`}
     >
@@ -291,10 +291,12 @@ export default function Navbar() {
       <nav
         style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
         className={`relative mx-auto flex w-full items-center justify-between transition-[height,padding] duration-500 ${
-          // container-fluid's padding is sized for full-width sections;
-          // the pill is already inset by its own margin, so it only needs
-          // a small fixed padding to keep the logo close to its edge.
-          isScrolled ? "h-20 px-6 lg:px-8" : "h-24 px-4 sm:px-[5vw] lg:px-32"
+          // Not scrolled: align the nav content to the same max-width +
+          // gutter as the page's container-fluid sections so the logo
+          // lines up with everything below it. Scrolled: the pill is
+          // already inset by its own margin, so it only needs a small
+          // fixed padding to keep the logo close to its edge.
+          isScrolled ? "h-20 px-2" : "container-fluid h-24"
         }`}
       >
         <Link href="/" className="relative block h-15.25 w-40 shrink-0">
@@ -377,7 +379,7 @@ export default function Navbar() {
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
-          className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full xl:hidden"
+          className="theme-fg relative flex h-10 w-10 items-center justify-center rounded-full lg:hidden"
         >
           <span
             key={isOpen ? "close" : "open"}

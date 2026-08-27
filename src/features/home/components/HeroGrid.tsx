@@ -14,8 +14,8 @@ function ArrowTile({ variant }: { variant: "muted" | "primary" | "dark" }) {
         : "theme-fg opacity-15";
 
   return (
-    <div className="flex h-16 w-16 shrink-0 items-center justify-center sm:h-20 sm:w-20">
-      <Arrow className={`h-16 w-16 sm:h-20 sm:w-20 ${color}`} />
+    <div className="flex h-14 w-14 shrink-0 items-center justify-center lg:h-16 lg:w-16 xl:h-20 xl:w-20">
+      <Arrow className={`h-14 w-14 lg:h-16 lg:w-16 xl:h-20 xl:w-20 ${color}`} />
     </div>
   );
 }
@@ -57,7 +57,7 @@ function PhotoTile({
   }, [speed]);
 
   return (
-    <div className="relative h-16 flex-1 overflow-hidden rounded-full sm:h-20">
+    <div className="relative h-14 flex-1 overflow-hidden rounded-full lg:h-16 xl:h-20">
       <div ref={imgWrapRef} className="absolute inset-0">
         <Image src={src} alt={alt} fill sizes="(min-width: 640px) 200px, 150px" className="object-cover" />
       </div>
@@ -93,8 +93,8 @@ export default function HeroGrid() {
   }, []);
 
   return (
-    <div ref={gridRef} className="flex flex-col gap-6">
-      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
+    <div ref={gridRef} className="flex flex-col gap-4 xl:gap-6">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-3 xl:gap-x-4">
         <PhotoTile
           src="/assets/images/hero_image_inner_1.png"
           alt=""
@@ -104,7 +104,7 @@ export default function HeroGrid() {
         <ArrowTile variant="primary" />
       </div>
 
-      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-3 xl:gap-x-4">
         <ArrowTile variant="dark" />
         <PhotoTile
           src="/assets/images/hero_image_inner_2.png"
@@ -114,7 +114,7 @@ export default function HeroGrid() {
         <ArrowTile variant="muted" />
       </div>
 
-      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-3 xl:gap-x-4">
         <PhotoTile
           src="/assets/images/hero_image_inner_3.png"
           alt=""
@@ -125,7 +125,7 @@ export default function HeroGrid() {
         <ArrowTile variant="muted" />
       </div>
 
-      <div className="hero-grid-row opacity-0 flex items-center gap-x-4">
+      <div className="hero-grid-row opacity-0 flex items-center gap-x-3 xl:gap-x-4">
         <ArrowTile variant="muted" />
         <ArrowTile variant="primary" />
         <ArrowTile variant="muted" />

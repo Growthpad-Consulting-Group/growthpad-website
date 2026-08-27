@@ -76,8 +76,12 @@ export default function Hero() {
           </CtaButton>
         </div>
 
-        <div className="pointer-events-none absolute top-1/2 right-0 hidden w-[45%] max-w-2xl -translate-y-1/2 lg:block">
-          <HeroGrid />
+        <div className="pointer-events-none absolute inset-0 hidden lg:block">
+          <div className="container-fluid relative h-full">
+            <div className="absolute top-1/2 right-[clamp(1rem,5vw,8rem)] w-[38%] max-w-md -translate-y-1/2 xl:w-[45%] xl:max-w-2xl">
+              <HeroGrid />
+            </div>
+          </div>
         </div>
       </div>
 

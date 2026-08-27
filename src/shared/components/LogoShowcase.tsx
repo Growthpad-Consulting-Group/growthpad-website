@@ -39,6 +39,7 @@ const POOL = [
   "sga.png",
   "elaraby.png",
   "taiwan.png",
+  "unhcr.png",
 ];
 
 const DESKTOP_COUNT = 6;
