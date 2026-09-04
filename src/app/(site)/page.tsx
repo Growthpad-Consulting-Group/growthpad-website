@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 import Hero from "@/features/home/components/Hero";
 import About from "@/features/home/components/About";
-import Brands from "@/features/home/components/Brands";
+import PriorityMarkets from "@/features/home/components/PriorityMarkets";
 import Ambition from "@/features/home/components/Ambition";
 import SpecialtiesTimeline from "@/features/home/components/SpecialtiesTimeline";
 import PickACard from "@/features/home/components/PickACard";
@@ -61,7 +61,7 @@ export default function Home() {
       <SectionAnimate variant="fade-up">
         <About />
       </SectionAnimate>
-      <Brands />
+      <PriorityMarkets />
       <SectionAnimate variant="fade-up" delay={0.1}>
         <Ambition />
       </SectionAnimate>
