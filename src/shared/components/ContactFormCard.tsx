@@ -169,6 +169,7 @@ export default function ContactFormCard({
         <select
           name="service"
           value={selectedService || ""}
+          onChange={() => {}}
           className={`${inputBase} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%23231812%22 d=%22M7 10l5 5 5-5z%22/></svg>')] bg-position-[right_1.5rem_center] bg-no-repeat pr-12`}
         >
           <option value="" disabled>

@@ -75,7 +75,7 @@ export type JobOpeningItem = {
 };
 
 const JOB_OPENINGS_QUERY = /* groq */ `
-  *[_type == "jobOpening" && isOpen != false] | order(deadline asc) {
+  *[_type == "jobOpening" && isOpen != false && deadline >= now] | order(deadline asc) {
     _id,
     title,
     "slug": slug.current,

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import ArrowGroup from "@/shared/components/ArrowGroup";
-import ContactFormCard from "@/shared/components/ContactFormCard";
+import GeneralCareersForm from "@/features/careers/components/GeneralCareersForm";
 
 export default function CareersApplication() {
   return (
     <section
+      id="careers-form"
       data-theme-section="light"
       className="theme-bg relative w-full py-20 lg:py-28"
     >
@@ -18,11 +19,7 @@ export default function CareersApplication() {
         </div>
 
         <div className="relative lg:ml-auto lg:w-11/12">
-          <ContactFormCard
-            description="Share your credentials and make your case."
-            layout="split"
-            className="rounded-3xl"
-          />
+          <GeneralCareersForm />
 
           {/* Anchored from the top (not bottom) with a fixed clearance
               below the description text — a bottom anchor would climb

@@ -90,9 +90,21 @@ export default async function CareersOpenings() {
         </div>
 
         {openings.length === 0 ? (
-          <p className="theme-fg mt-12 text-lg opacity-60">
-            No open roles right now - check back soon.
-          </p>
+          <div className="theme-fg mt-12 space-y-4">
+            <p className="text-lg opacity-90">
+              No open positions currently, but we&apos;re always looking for exceptional talent.
+            </p>
+            <p className="text-lg opacity-75">
+              Interested in joining Growthpad?{" "}
+              <a
+                href="#careers-form"
+                className="font-semibold text-primary hover:underline"
+              >
+                Get in touch
+              </a>
+              {" "}and we&apos;ll keep you posted on upcoming opportunities.
+            </p>
+          </div>
         ) : (
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
             {openings.map((opening) => (
