@@ -17,6 +17,10 @@ interface ContactFormProps {
   description?: React.ReactNode;
   /** Show the logo showcase below the form. Default: true for standard, false for home. */
   showLogos?: boolean;
+  /** Service options for the dropdown. */
+  serviceOptions?: string[];
+  /** Pre-select a service option. */
+  selectedService?: string;
 }
 
 export default function ContactForm({
@@ -25,6 +29,8 @@ export default function ContactForm({
   heading,
   description,
   showLogos,
+  serviceOptions,
+  selectedService,
 }: ContactFormProps) {
   const isHome = variant === "home";
   const isWideForm = variant === "wide-form";
@@ -59,6 +65,8 @@ export default function ContactForm({
     <ContactFormCard
       inputShape={isHome ? "pill" : "rounded"}
       bordered={!isHome}
+      serviceOptions={serviceOptions}
+      selectedService={selectedService}
     />
   );
 

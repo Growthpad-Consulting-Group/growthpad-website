@@ -11,6 +11,7 @@ export default function ContactFormCard({
   bordered = false,
   layout = "stacked",
   serviceOptions,
+  selectedService,
   jobRole,
   className = "",
 }: {
@@ -28,6 +29,8 @@ export default function ContactFormCard({
   layout?: "stacked" | "split";
   /** If provided, adds a "Service" <select> (before the message field) with these options. */
   serviceOptions?: string[];
+  /** Pre-select a service option (must be one of serviceOptions). */
+  selectedService?: string;
   /** If provided, pins the form to a specific job opening (e.g. a job's detail page) —
    * shows a read-only "Applying for" field and includes the role in the submission. */
   jobRole?: string;
@@ -165,7 +168,7 @@ export default function ContactFormCard({
       {serviceOptions && (
         <select
           name="service"
-          defaultValue=""
+          value={selectedService || ""}
           className={`${inputBase} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%23231812%22 d=%22M7 10l5 5 5-5z%22/></svg>')] bg-position-[right_1.5rem_center] bg-no-repeat pr-12`}
         >
           <option value="" disabled>
