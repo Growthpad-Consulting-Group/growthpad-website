@@ -2,13 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CtaButton from "@/shared/components/CtaButton";
 import { priorityMarkets } from "@/features/home/data/priorityMarkets";
 
 export default function PriorityMarkets() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  const handleContactScroll = () => {
+    const contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+      contactForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -48,23 +57,32 @@ export default function PriorityMarkets() {
         className="relative min-h-[70vh] w-full overflow-hidden"
       >
         <div className="container-fluid flex h-full flex-col justify-center gap-10 py-16">
-          <div className="theme-fg flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="theme-fg flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="font-display max-w-xl text-3xl leading-tight sm:text-4xl lg:text-5xl">
               <span className="font-light">Priority </span>
               <span className="text-primary font-bold">
                 Markets
               </span>
             </h2>
-            <p className="max-w-sm text-lg leading-8 opacity-70">
-              Built for high-stakes work where local context and delivery discipline matter.
-            </p>
+            <div className="flex flex-col gap-4 max-w-sm">
+              <p className="text-lg leading-8 opacity-70">
+                Built for high-stakes work where local context and delivery discipline matter.
+              </p>
+              <CtaButton
+                onClick={handleContactScroll}
+                type="button"
+                circleClassName="theme-invert-bg theme-invert-fg"
+              >
+                Discuss your priorities
+              </CtaButton>
+            </div>
           </div>
 
           <div ref={trackRef} className="flex gap-6 will-change-transform pr-[100vw]">
             {priorityMarkets.map((market) => (
               <div
                 key={market.name}
-                className="group border-secondary/10 hover:border-primary/30 flex h-96 w-75 shrink-0 flex-col justify-between rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-lg shadow-secondary/6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-secondary/12 sm:w-85"
+                className="group border-secondary/10 hover:border-primary/30 flex h-96 w-75 shrink-0 flex-col gap-6 rounded-2xl border bg-white hover:bg-primary/2 p-8 shadow-lg shadow-secondary/6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-secondary/12 sm:w-85"
               >
                 <div className="flex h-16 w-16 items-center justify-center">
                   <Image
@@ -76,8 +94,8 @@ export default function PriorityMarkets() {
                   />
                 </div>
 
-                <div>
-                  <h3 className="font-semibold text-lg mb-2 theme-fg">
+                <div className="flex flex-col gap-3">
+                  <h3 className="font-semibold text-lg theme-fg">
                     {market.name}
                   </h3>
                   <p className="text-secondary/70 leading-7">

@@ -87,7 +87,9 @@ export default function Home() {
       </SectionAnimate>
       <TeamStories />
       <SectionAnimate variant="fade-up" delay={0.1}>
-        <ContactForm variant="home" />
+        <div id="contact-form">
+          <ContactForm variant="home" />
+        </div>
       </SectionAnimate>
     </div>
   );
