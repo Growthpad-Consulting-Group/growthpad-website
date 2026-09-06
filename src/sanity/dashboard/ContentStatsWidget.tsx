@@ -43,9 +43,24 @@ export function ContentStatsWidget() {
         <div style={{ padding: "16px 20px" }}>
           {/* Stat boxes */}
           <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
-            <StatBox label="Total Posts" value={stats.totalPosts} color="#f05d23" />
-            <StatBox label="Authors" value={stats.totalAuthors} color="#0a7c42" />
-            <StatBox label="Categories" value={stats.categories.length} color="#1a56db" />
+            <StatBox
+              label="Total Posts"
+              value={stats.totalPosts}
+              color="#f05d23"
+              href="/studio/structure/blog"
+            />
+            <StatBox
+              label="Authors"
+              value={stats.totalAuthors}
+              color="#0a7c42"
+              href="/studio/structure/author"
+            />
+            <StatBox
+              label="Categories"
+              value={stats.categories.length}
+              color="#1a56db"
+              href="/studio/structure/category"
+            />
           </div>
 
           {/* Donut chart */}
@@ -86,15 +101,25 @@ export function ContentStatsWidget() {
   );
 }
 
-function StatBox({ label, value, color }: { label: string; value: number; color: string }) {
+function StatBox({ label, value, color, href }: { label: string; value: number; color: string; href: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div style={{
-      flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-      padding: "12px 8px", borderRadius: 10, border: `2px solid ${color}`,
-      background: "#fafafa",
-    }}>
-      <span style={{ fontSize: 28, fontWeight: 700, color, lineHeight: 1 }}>{value}</span>
-      <span style={{ fontSize: 11, color: "#888", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</span>
-    </div>
+    <a
+      href={href}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+        padding: "12px 8px", borderRadius: 10, border: `2px solid ${color}`,
+        background: isHovered ? color : "#fafafa",
+        cursor: "pointer", transition: "all 0.2s ease",
+        transform: isHovered ? "translateY(-2px)" : "translateY(0)",
+        textDecoration: "none",
+      }}
+    >
+      <span style={{ fontSize: 28, fontWeight: 700, color: isHovered ? "#fff" : color, lineHeight: 1, transition: "color 0.2s ease" }}>{value}</span>
+      <span style={{ fontSize: 11, color: isHovered ? "#fff" : "#888", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.05em", transition: "color 0.2s ease" }}>{label}</span>
+    </a>
   );
 }
