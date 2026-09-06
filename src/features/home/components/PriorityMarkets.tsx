@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CtaButton from "@/shared/components/CtaButton";
 import { priorityMarkets } from "@/features/home/data/priorityMarkets";
 
 export default function PriorityMarkets() {
@@ -85,15 +84,6 @@ export default function PriorityMarkets() {
                     {market.description}
                   </p>
                 </div>
-
-                <CtaButton
-                  href={market.href}
-                  size="sm"
-                  className="mt-4"
-                  circleClassName="bg-primary group-hover:bg-primary/90 text-white"
-                >
-                  Priority Market
-                </CtaButton>
               </div>
             ))}
           </div>
