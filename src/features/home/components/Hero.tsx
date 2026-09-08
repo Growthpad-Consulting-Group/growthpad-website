@@ -50,14 +50,7 @@ export default function Hero() {
             <span className="hero-reveal opacity-0 text-primary block text-4xl font-bold sm:text-5xl lg:text-6xl">
               Into Impact.
             </span>
-          </h1>
-
-          <p
-            className="hero-reveal opacity-0 max-w-md text-xl font-medium"
-            data-rest-opacity="0.9"
-          >
-            We are obsessed with exceeding potential.
-          </p>
+          </h1>          
 
           <p
             className="hero-reveal opacity-0 max-w-xl text-lg leading-8"

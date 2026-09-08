@@ -84,6 +84,14 @@ export default function ScrollColorTransition() {
       const bottom = rootBottom();
       let theme = DEFAULT_THEME;
       sections.forEach((section) => {
+        // Skip elements inside a display:none ancestor — their
+        // getBoundingClientRect() returns all zeros (top=0), which
+        // ScrollColorTransition would misread as "already crossed the
+        // midpoint" and use to corrupt the theme everywhere below.
+        // Classic example: OurWork's desktop-only sticky card wrappers
+        // (each carrying data-theme-section) live inside
+        // `hidden lg:block`, so on mobile offsetParent is null.
+        if (!section.offsetParent && section !== document.documentElement) return;
         if (section.getBoundingClientRect().top < bottom) {
           theme = section.dataset.themeSection ?? theme;
         }
