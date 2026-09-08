@@ -36,7 +36,7 @@ function FlagTooltip({
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary relative w-full py-4 lg:pt-20">
+    <footer className="bg-secondary relative w-full py-4 pt-10 lg:pt-20">
       <div
         className="absolute top-0 bottom-0 left-0 hidden w-[4%] bg-repeat-y sm:block"
         style={{ backgroundImage: "url(/assets/images/footer-bg.png)" }}
@@ -71,7 +71,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/growthpad-consulting"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-10 inline-flex items-center gap-3 rounded-full bg-[#0A66C2] py-3 pr-6 pl-3 text-base font-semibold text-white transition-colors hover:bg-[#0A66C2]/90"
+              className="mt-10 mb-10 lg:mb-0 inline-flex items-center gap-3 rounded-full bg-[#0A66C2] py-3 pr-6 pl-3 text-base font-semibold text-white transition-colors hover:bg-[#0A66C2]/90"
             >
               <Icon icon="mdi:linkedin" width={24} height={24} />
               Connect with us on Linkedin
