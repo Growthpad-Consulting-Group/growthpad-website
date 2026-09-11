@@ -65,7 +65,7 @@ export default function Ambition() {
 
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="theme-fg text-xl">No goals is too</p>
+              <p className="theme-fg text-xl">No goal is too</p>
               <h2 className="font-display theme-fg text-6xl font-bold sm:text-7xl">
                 BIG
               </h2>
