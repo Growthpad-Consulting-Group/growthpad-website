@@ -59,8 +59,6 @@ export default function PaanNetwork() {
             {/* CTA */}
             <CtaButton
               href="https://paan.africa/"
-              target="_blank"
-              rel="noopener noreferrer"
               circleClassName="bg-primary text-white"
             >
               Explore the PAAN network
