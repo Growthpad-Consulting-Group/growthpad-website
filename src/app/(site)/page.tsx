@@ -43,6 +43,7 @@ import Ambition from "@/features/home/components/Ambition";
 import SpecialtiesTimeline from "@/features/home/components/SpecialtiesTimeline";
 import PickACard from "@/features/home/components/PickACard";
 import Clients from "@/features/home/components/Clients";
+import PaanNetwork from "@/features/home/components/PaanNetwork";
 import OfficeGallery from "@/features/home/components/OfficeGallery";
 import OurWork from "@/features/home/components/OurWork";
 import Testimonials from "@/features/home/components/Testimonials";
@@ -73,6 +74,7 @@ export default function Home() {
       </SectionAnimate>
       <SectionAnimate variant="fade-up" delay={0.25}>
         <Clients />
+      <PaanNetwork />
       </SectionAnimate>
       <OurWork />
       <Testimonials />
