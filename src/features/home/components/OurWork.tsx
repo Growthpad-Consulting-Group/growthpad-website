@@ -101,7 +101,7 @@ export default function OurWork({
     <section
       ref={sectionRef}
       data-theme-section="dark"
-      className="theme-bg relative w-full overflow-visible"
+      className="theme-bg relative w-full overflow-visible py-16 lg:py-16"
     >
       {showHeading && (
         <div className="container-fluid">
