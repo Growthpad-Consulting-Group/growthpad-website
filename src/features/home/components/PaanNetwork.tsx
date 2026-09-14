@@ -43,11 +43,11 @@ export default function PaanNetwork() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 sm:gap-8">
               <div className="flex flex-col gap-2">
-                <p ref={firmsRef} className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">0</p>
+                <p ref={firmsRef} className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">0+</p>
                 <p className="text-sm text-white/70 sm:text-base">Firms</p>
               </div>
               <div className="flex flex-col gap-2">
-                <p ref={countriesRef} className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">0</p>
+                <p ref={countriesRef} className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">0+</p>
                 <p className="text-sm text-white/70 sm:text-base">Countries</p>
               </div>
               <div className="flex flex-col gap-2">

@@ -28,7 +28,7 @@ export function useCountAnimation(
           once: true,
         },
         onUpdate: () => {
-          element.textContent = Math.floor(counterRef.current.value).toString();
+          element.textContent = Math.floor(counterRef.current.value).toString() + "+";
         },
       });
     }, ref);
