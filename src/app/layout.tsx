@@ -24,7 +24,7 @@ const cloverDisplay = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://growthpad.co.ke"),
+  metadataBase: new URL("https://growthpad.africa"),
   title: {
     template: "%s",
     default: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
-    url: "https://growthpad.co.ke/",
+    url: "https://growthpad.africa/",
     siteName: "Growthpad Consulting Group // Impact That Matters",
     images: [
       {

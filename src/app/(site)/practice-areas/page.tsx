@@ -19,12 +19,12 @@ export const metadata: Metadata = {
     "research",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/practice-areas",
+    canonical: "https://growthpad.africa/practice-areas",
   },
   openGraph: {
     title: "Practice Areas | Growthpad Consulting Group",
     description: "Explore our specialized practice areas in communication, digital delivery, learning systems and research organized around real-world progress.",
-    url: "https://growthpad.co.ke/practice-areas",
+    url: "https://growthpad.africa/practice-areas",
     images: [
       {
         url: "/assets/images/dna-hero.png",

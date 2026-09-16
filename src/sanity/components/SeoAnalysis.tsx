@@ -59,8 +59,8 @@ function runChecks(opts: {
   const headings = extractHeadings(blocks);
   const links = extractLinks(blocks);
   const images = extractImages(blocks);
-  const internalLinks = links.filter((l) => !l.href.startsWith("http") || l.href.includes("growthpad.co.ke"));
-  const externalLinks = links.filter((l) => l.href.startsWith("http") && !l.href.includes("growthpad.co.ke"));
+  const internalLinks = links.filter((l) => !l.href.startsWith("http") || l.href.includes("growthpad.africa"));
+  const externalLinks = links.filter((l) => l.href.startsWith("http") && !l.href.includes("growthpad.africa"));
   const imagesWithoutAlt = images.filter((i) => !i.alt?.trim());
   const h2h3 = headings.filter((h) => h.style === "h2" || h.style === "h3");
   const kwDensity = words > 0 && kw ? (countKeyword(bodyText, kw) / words) * 100 : 0;
@@ -218,7 +218,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
   const scoreColor = score >= 70 ? "#0a7c42" : score >= 40 ? "#b45309" : "#b91c1c";
   const scoreBg = score >= 70 ? "#dcfce7" : score >= 40 ? "#fef3c7" : "#fee2e2";
 
-  const displayUrl = `growthpad.co.ke/blog/${slug}`;
+  const displayUrl = `growthpad.africa/blog/${slug}`;
 
   const assetRef = coverImage?.asset?._ref ?? "";
   const ogImageUrl = assetRef
@@ -324,7 +324,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
           {/* Editable Slug */}
           <Section title="Permalink">
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>growthpad.co.ke/blog/</span>
+              <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>growthpad.africa/blog/</span>
               <input
                 type="text"
                 value={localSlug}
@@ -404,7 +404,7 @@ export function SeoAnalysis({ id, onChange }: InputProps) {
               </div>
             )}
             <div style={{ padding: "10px 14px" }}>
-              <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em" }}>growthpad.co.ke</div>
+              <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em" }}>growthpad.africa</div>
               <div style={{ fontWeight: 600, marginTop: 2, fontSize: 14 }}>{seoTitle.slice(0, 60)}{seoTitle.length > 60 ? "…" : ""}</div>
               <div style={{ color: "#555", fontSize: 13, marginTop: 2 }}>{seoDesc.slice(0, 100)}{seoDesc.length > 100 ? "…" : ""}</div>
             </div>

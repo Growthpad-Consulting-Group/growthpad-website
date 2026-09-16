@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     "Growthpad research",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/insights",
+    canonical: "https://growthpad.africa/insights",
   },
   openGraph: {
     title: "Insights | Growthpad Consulting Group",
     description: "Access curated research reports, white papers, and industry insights from Growthpad's experts. Explore data-driven analysis on digital transformation, communication for development, and business growth in Africa.",
-    url: "https://growthpad.co.ke/insights",
+    url: "https://growthpad.africa/insights",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",

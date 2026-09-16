@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "IT consulting Kenya",
   ],
   alternates: {
-    canonical: "https://growthpad.co.ke/",
+    canonical: "https://growthpad.africa/",
   },
   openGraph: {
     title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
-    url: "https://growthpad.co.ke/",
+    url: "https://growthpad.africa/",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",
