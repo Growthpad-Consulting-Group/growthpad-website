@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MediaHero from "@/shared/components/MediaHero";
+import PracticeAreasHero from "@/features/practice-areas/components/PracticeAreasHero";
 import PracticeAreasIntro from "@/features/practice-areas/components/PracticeAreasIntro";
 import CoordinatedDelivery from "@/features/practice-areas/components/CoordinatedDelivery";
 import PracticeAreasWithForm from "@/features/practice-areas/components/PracticeAreasWithForm";
@@ -43,15 +43,7 @@ export default function PracticeAreasPage() {
   return (
     <div className="flex flex-1 flex-col">
       <ScrollColorTransition />
-      <MediaHero
-        src="/assets/images/dna-hero.png"
-        showBadge={false}
-        showHeading={false}
-        showArrows={false}
-      />
-      <SectionAnimate variant="fade-up">
-        <PracticeAreasIntro />
-      </SectionAnimate>
+      <PracticeAreasHero />      
       <SectionAnimate variant="fade-up">
         <CoordinatedDelivery />
       </SectionAnimate>

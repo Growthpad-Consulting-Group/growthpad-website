@@ -5,6 +5,7 @@ export const practiceAreasAccordion: PracticeAreaItem[] = [
     title: "Strategic Communication, demand generation and Adoption",
     subtitle: "Build the trust and demand that move people to act.",
     cta: "Discuss a programme or product adoption mandate across Africa",
+    image: "/assets/images/strategic-communication.jpg",
     description: (
       <div className="flex w-full flex-col gap-6">
         <p>
@@ -23,6 +24,7 @@ export const practiceAreasAccordion: PracticeAreaItem[] = [
     title: "Digital Products, Data and Service Design",
     subtitle: "Design digital services organisations can implement and users can adopt.",
     cta: "Plan a digital discovery",
+    image: "/assets/images/digital-products.jpg",
     description: (
       <div className="flex w-full flex-col gap-6">
         <p>
@@ -41,6 +43,7 @@ export const practiceAreasAccordion: PracticeAreaItem[] = [
     title: "Learning and Evidence Systems",
     subtitle: "Build the systems that help people learn and organisations improve.",
     cta: "Discuss a learning or MELA system",
+    image: "/assets/images/learning-evidence.jpg",
     description: (
       <div className="flex w-full flex-col gap-6">
         <p>
@@ -59,6 +62,7 @@ export const practiceAreasAccordion: PracticeAreaItem[] = [
     title: "Market and Audience Intelligence",
     subtitle: "Resolve the market question before you commit the budget.",
     cta: "Share a research brief",
+    image: "/assets/images/market-audience.jpg",
     description: (
       <div className="flex w-full flex-col gap-6">
         <p>

@@ -3,7 +3,7 @@ export default function CoordinatedDelivery() {
     <section className="theme-bg theme-fg w-full pt-0 pb-20 lg:pb-28">
       <div className="container-fluid">
         <div className="border-b pb-12 lg:pb-16" style={{ borderColor: "color-mix(in srgb, var(--theme-fg) 20%, transparent)" }}>
-          <div className="mb-8 lg:mb-12">
+          <div className="mb-8">
             <p className="text-primary font-semibold text-sm tracking-wide uppercase">
               Practice Areas
             </p>

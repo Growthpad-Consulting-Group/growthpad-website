@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import NotchImage from "@/shared/components/NotchImage";
+import CtaButton from "@/shared/components/CtaButton";
 
 export type PracticeAreaItem = {
   title: string;
   subtitle: string;
   description: React.ReactNode;
   cta?: string;
+  image?: string;
 };
 
 export default function PracticeAreasAccordionCustom({
@@ -34,18 +37,32 @@ export default function PracticeAreasAccordionCustom({
             style={{
               borderColor: "color-mix(in srgb, var(--theme-fg) 20%, transparent)",
             }}
-            className="theme-fg group relative flex w-full flex-col border-b-2 py-6 text-left transition-all duration-300 ease-out sm:py-8 hover:bg-primary/2"
+            className="theme-fg relative flex w-full flex-col border-b-2 py-6 text-left transition-all duration-300 ease-out sm:py-8 hover:bg-primary/2"
           >
             <div className="flex w-full flex-col sm:flex-row gap-y-3 sm:gap-x-4">
-              <span className="shrink-0 text-sm font-semibold opacity-40 pt-1">
+              <span className="shrink-0 text-sm font-semibold text-primary pt-1">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
-              <div className="flex flex-col sm:flex-row flex-1 min-w-0 gap-y-2 sm:gap-x-4">
+              <div className="flex flex-col sm:flex-row flex-1 min-w-0 gap-y-2 sm:gap-x-12">
                 {/* Left: accordion title */}
-                <h3 className="font-display shrink-0 text-xl leading-tight font-bold transition-all duration-700 ease-out sm:text-2xl max-w-xs">
-                  {item.title}
-                </h3>
+                <div className="shrink-0 w-full sm:w-96">
+                  <h3 className="font-display text-xl leading-tight font-bold transition-all duration-700 ease-out sm:text-2xl">
+                    {item.title}
+                  </h3>
+                  {item.image && (
+                    <div className={`overflow-hidden transition-all ease-out ${
+                      isOpen ? "max-h-[700px] opacity-100 mt-8 duration-1000" : "max-h-0 opacity-0 duration-500"
+                    }`}>
+                      <NotchImage
+                        src={item.image}
+                        alt={item.title}
+                        variant="tab"
+                        sizes="(min-width: 1024px) 28vw, 100vw"
+                      />
+                    </div>
+                  )}
+                </div>
 
                 {/* Right: subtitle (+ content when expanded) */}
                 <div className="flex-1 min-w-0">
@@ -64,30 +81,29 @@ export default function PracticeAreasAccordionCustom({
                     </div>
                     {item.cta && onCTAClick && (
                       <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onCTAClick(item.title, item.cta!);
-                        }}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.stopPropagation();
-                            onCTAClick(item.title, item.cta!);
-                          }
-                        }}
-                        className="mt-6 inline-block bg-primary text-white rounded-full px-8 py-3 font-semibold hover:opacity-90 transition-opacity cursor-pointer"
+                        className="mt-6 [&_*]:pointer-events-auto"
+                        onMouseEnter={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        {item.cta} →
+                        <CtaButton
+                          onClick={() => onCTAClick(item.title, item.cta!)}
+                        >
+                          {item.cta}
+                        </CtaButton>
                       </div>
                     )}
                   </div>
                 </div>
               </div>
 
-              <span className="absolute right-6 top-6 sm:top-1/2 sm:-translate-y-1/2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-primary text-primary font-light text-2xl transition-colors duration-700 ease-out group-hover:opacity-80">
+              <button
+                type="button"
+                onClick={() => setOpenIndex((current) => (current === index ? null : index))}
+                aria-expanded={isOpen}
+                className="absolute right-6 top-6 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white font-light text-2xl transition-all duration-300 ease-out hover:bg-primary/80 hover:scale-110"
+              >
                 {isOpen ? "−" : "+"}
-              </span>
+              </button>
             </div>
           </button>
         );

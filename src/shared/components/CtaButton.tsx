@@ -16,13 +16,13 @@ type CtaButtonProps = {
 const SIZES = {
   md: {
     gap: "gap-4",
-    pill: "h-11 px-7 text-base",
+    pill: "min-h-11 px-7 py-2 text-base",
     circle: "h-11 w-11",
     icon: "h-4 w-4",
   },
   sm: {
     gap: "gap-3",
-    pill: "h-9 px-5 text-sm",
+    pill: "min-h-9 px-5 py-1.5 text-sm",
     circle: "h-9 w-9",
     icon: "h-3.5 w-3.5",
   },
@@ -44,7 +44,7 @@ export default function CtaButton({
   const content = (
     <>
       <span
-        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-nowrap text-white shadow-transparent transition-all duration-700 ease-out group-hover:shadow-xl group-hover:shadow-primary/30 ${sizes.pill} ${
+        className={`bg-primary group-hover:bg-primary/90 inline-flex items-center rounded-full font-semibold whitespace-normal text-white shadow-transparent transition-all duration-700 ease-out group-hover:shadow-xl group-hover:shadow-primary/30 ${sizes.pill} ${
           fullWidth ? "flex-1 justify-center" : ""
         }`}
       >

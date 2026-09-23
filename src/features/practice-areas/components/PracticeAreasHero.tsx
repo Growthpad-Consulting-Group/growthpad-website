@@ -1,33 +1,36 @@
-import Image from "next/image";
-import ArrowGroup from "@/shared/components/ArrowGroup";
+"use client";
+
+import { useRef } from "react";
+import PracticeAreasHeroVisual from "@/features/practice-areas/components/PracticeAreasHeroVisual";
+import { useRevealAnimation } from "@/shared/hooks/useRevealAnimation";
 
 export default function PracticeAreasHero() {
+  const introRef = useRef<HTMLDivElement>(null);
+
+  useRevealAnimation(introRef, ".practice-areas-hero-reveal");
+
   return (
-    <section className="theme-bg theme-fg w-full py-20 lg:py-28">
-      <div className="container-fluid">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
-          <div>
-            <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl">
-              <Image
-                src="/assets/images/Innovation.png"
-                alt="Practice areas strategy"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+    <section
+      ref={introRef}
+      className="theme-bg theme-fg w-full py-20 lg:py-28"
+    >
+      <div className="container-fluid grid items-start gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16">
+        <div className="flex flex-col gap-6">
+          <p
+            className="practice-areas-hero-reveal text-primary opacity-0 text-sm font-semibold tracking-wide uppercase"
+            data-rest-opacity="1"
+          >
+            Our Practice Areas
+          </p>
 
-            <ArrowGroup count={5} className="mt-8" />
-          </div>
+          <h1 className="text-secondary practice-areas-hero-reveal opacity-0 max-w-xl text-3xl leading-tight font-light sm:text-4xl lg:text-5xl">
+            Communication, digital delivery, learning systems and research
+            organised around real-world progress.
+          </h1>
+        </div>
 
-          <div className="flex flex-col gap-8 text-lg leading-8 opacity-90">
-            <p>
-              Our practice areas are built to address the most complex challenges in communication, digital delivery, learning systems and research.
-            </p>
-            <p>
-              We combine strategic expertise with practical execution to deliver real-world progress for organisations across Africa.
-            </p>
-          </div>
+        <div className="practice-areas-hero-reveal opacity-0">
+          <PracticeAreasHeroVisual />
         </div>
       </div>
     </section>
