@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import PracticeAreasHero from "@/features/practice-areas/components/PracticeAreasHero";
-import PracticeAreasIntro from "@/features/practice-areas/components/PracticeAreasIntro";
 import CoordinatedDelivery from "@/features/practice-areas/components/CoordinatedDelivery";
 import PracticeAreasWithForm from "@/features/practice-areas/components/PracticeAreasWithForm";
 import Partners from "@/shared/components/Partners";
