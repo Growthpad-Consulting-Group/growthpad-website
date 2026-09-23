@@ -12,7 +12,7 @@ export default function PracticeAreasHero() {
   return (
     <section
       ref={introRef}
-      className="theme-bg theme-fg w-full py-20 lg:py-28"
+      className="theme-bg theme-fg w-full pt-6 pb-20 sm:pt-10 lg:pb-28"
     >
       <div className="container-fluid grid items-start gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16">
         <div className="flex flex-col gap-6">

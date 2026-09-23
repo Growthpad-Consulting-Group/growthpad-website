@@ -248,15 +248,22 @@ export default function Navbar() {
       ref={headerRef}
       style={{
         transform: isHidden ? "translateY(calc(-100% - 2rem))" : "translateY(0)",
-        transition:
-          "top 500ms cubic-bezier(0.22, 1, 0.36, 1), margin 500ms cubic-bezier(0.22, 1, 0.36, 1), border-radius 500ms cubic-bezier(0.22, 1, 0.36, 1), transform 550ms cubic-bezier(0.65, 0, 0.35, 1)",
+        transition: "transform 550ms cubic-bezier(0.65, 0, 0.35, 1)",
       }}
-      className={`sticky z-60 isolate overflow-hidden ${
-        isScrolled
-          ? "top-4 mx-6 rounded-4xl lg:mx-24"
-          : "top-0 mx-0 w-full rounded-none"
-      }`}
+      className="sticky top-0 z-60 isolate will-change-transform w-full"
     >
+      <div
+        style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
+        className={`relative transition-[padding,margin] duration-500 ${
+          isScrolled ? "px-6 pt-4 lg:px-24" : ""
+        }`}
+      >
+      <div
+        style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
+        className={`relative isolate overflow-hidden transition-[border-radius] duration-500 ${
+          isScrolled ? "rounded-4xl" : "rounded-none"
+        }`}
+      >
       {/* "Liquid glass": a distorted+blurred backdrop layer, a faint
           white tint, and an inset specular highlight — stacked in that
           order behind the nav content so the distortion never touches
@@ -393,6 +400,8 @@ export default function Navbar() {
           </span>
         </button>
       </nav>
+    </div>
+    </div>
     </header>
 
     <MobileMenu
