@@ -12,12 +12,15 @@ export default function MediaHero({
   showBadge = true,
   showHeading = true,
   showArrows = true,
+  srHeading,
 }: {
   src?: string;
   aspectRatio?: string;
   showBadge?: boolean;
   showHeading?: boolean;
   showArrows?: boolean;
+  /** Visually hidden h1, used when the visible heading is hidden */
+  srHeading?: string;
 }) {
   const introRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +36,9 @@ export default function MediaHero({
   return (
     <section ref={introRef} className="w-full pt-6 sm:pt-10">
       <div className="container-fluid">
+        {!showHeading && srHeading && (
+          <h1 className="sr-only">{srHeading}</h1>
+        )}
         <div className="relative">
           <div
             className="media-hero-reveal opacity-0 relative w-full overflow-hidden"
@@ -67,10 +73,10 @@ export default function MediaHero({
 
         <div className="relative mt-10 flex flex-col items-center gap-10 sm:mt-14">
           {showHeading && (
-            <p className="media-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
+            <h1 className="media-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
               We&apos;re a company of people who love helping businesses
               succeed, taking great pride in their victories.
-            </p>
+            </h1>
           )}
 
           {showArrows && (

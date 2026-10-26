@@ -12,6 +12,7 @@ export default function BlogHero() {
   return (
     <section ref={introRef} className="w-full sm:pt-10">
       <div className="container-fluid">
+        <h1 className="sr-only">Growthpad Business Insights</h1>
         <div className="blog-hero-reveal opacity-0">
           <NotchImage
             src="/assets/images/blog-hero.jpg"
