@@ -81,6 +81,9 @@ export default function ContactFormCard({
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // OpenAI pixel conversion — the pixel is only loaded on /contact.
+        const oaiq = (window as unknown as { oaiq?: (...args: unknown[]) => void }).oaiq;
+        oaiq?.("measure", "custom", { type: "custom" }, { custom_event_name: "enquirysent" });
         setIsSubmitted(true);
       } else {
         setErrorMessage(
