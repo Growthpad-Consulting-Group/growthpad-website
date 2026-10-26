@@ -53,6 +53,7 @@ export default function CareersPage() {
         showBadge={false}
         showHeading={false}
         showArrows={false}
+        srHeading="Careers at Growthpad"
       />
       <SectionAnimate variant="fade-up">
         <CoreValues theme="dark" />

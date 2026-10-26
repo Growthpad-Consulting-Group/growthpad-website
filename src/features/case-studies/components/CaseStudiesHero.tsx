@@ -40,9 +40,9 @@ export default function CaseStudiesHero() {
             </div>
 
             <div className="relative flex h-full flex-1 items-center py-12 lg:py-20">
-              <p className="text-primary font-display max-w-md text-2xl leading-tight sm:text-3xl lg:text-4xl">
+              <h1 className="text-primary font-display max-w-md text-2xl leading-tight sm:text-3xl lg:text-4xl">
                 We are marked by troves of success stories.
-              </p>
+              </h1>
 
               <BigArrow
                 loop

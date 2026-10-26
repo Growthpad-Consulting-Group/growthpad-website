@@ -10,9 +10,9 @@ export default function ProjectInquiry() {
       <div className="container-fluid grid items-start gap-12 lg:grid-cols-[4fr_7fr] lg:gap-16">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
-            <h1 className="font-display text-secondary text-4xl leading-tight font-bold sm:text-5xl">
+            <h2 className="font-display text-secondary text-4xl leading-tight font-bold sm:text-5xl">
               Have a project in mind?
-            </h1>
+            </h2>
             <p className="text-secondary/80 max-w-md text-lg leading-8">
               Growthpad&apos;s expert team is here to guide you through the
               ever-evolving digital landscape. From Nairobi to the world,

@@ -29,10 +29,10 @@ export default function ServicesHero() {
         </div>
 
         <div className="relative mt-10 flex flex-col items-center gap-10 sm:mt-14">
-          <p className="services-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
+          <h1 className="services-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
             Bold moves to disrupt the present and build the future for your
             organization.
-          </p>
+          </h1>
 
           <ArrowGroup
             count={5}

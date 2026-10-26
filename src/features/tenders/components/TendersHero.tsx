@@ -26,10 +26,10 @@ export default function TendersHero() {
         </div>
 
         <div className="relative mt-10 flex flex-col items-center gap-10 sm:mt-14">
-          <p className="tenders-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
+          <h1 className="tenders-hero-reveal opacity-0 text-secondary max-w-5xl text-4xl leading-tight font-light sm:text-5xl lg:text-6xl">
             Open tenders and procurement opportunities from Growthpad
             Consulting Group.
-          </p>
+          </h1>
 
           <ArrowGroup
             count={5}
