@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://growthpad.africa"),
   title: {
     template: "%s",
-    default: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    default: "Growthpad | Technology, Digital Media & Communication Firm",
   },
   description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
   openGraph: {
-    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    title: "Growthpad | Technology, Digital Media & Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
     url: "https://growthpad.africa/",
     siteName: "Growthpad Consulting Group // Impact That Matters",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    title: "Growthpad | Technology, Digital Media & Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
     images: ["/assets/images/seo/opengraph.png"],
     site: "@growthpadEA",

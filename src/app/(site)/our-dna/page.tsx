@@ -11,7 +11,7 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export const metadata: Metadata = {
-  title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+  title: "About Growthpad | Innovative Tech Solutions In Nairobi",
   description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
   keywords: [
     "about Growthpad",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/our-dna",
   },
   openGraph: {
-    title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+    title: "About Growthpad | Innovative Tech Solutions In Nairobi",
     description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
     url: "https://growthpad.africa/our-dna",
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "About Growthpad Digital Consulting | Innovative Tech Solutions In Nairobi, Kenya",
+    title: "About Growthpad | Innovative Tech Solutions In Nairobi",
     description: "Discover our story and commitment at Growthpad Digital Consulting. We're a top digital media and tech consulting firm in Nairobi, Kenya, driving innovation and business growth. Learn how we deliver outstanding results for clients with data-driven solutions. Join us in realizing your full potential through innovation and technology. | Innovative Tech Solutions",
     images: ["/assets/images/dna-hero.png"],
   },

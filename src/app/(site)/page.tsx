@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+  title: "Growthpad | Technology, Digital Media & Communication Firm",
   description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
   keywords: [
     "digital consulting Kenya",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/",
   },
   openGraph: {
-    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    title: "Growthpad | Technology, Digital Media & Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
     url: "https://growthpad.africa/",
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Growthpad Consulting Group | Technology, Digital Media And Communication Firm",
+    title: "Growthpad | Technology, Digital Media & Communication Firm",
     description: "Elevate your business with Growthpad, a leading digital consulting firm in Nairobi. Our innovative solutions and bold strategies drive success through digital technology.",
     images: ["/assets/images/seo/opengraph.png"],
   },

@@ -8,7 +8,7 @@ import SectionAnimate from "@/shared/components/SectionAnimate";
 import PartnersHero from "@/features/for-partners/components/PartnersHero";
 
 export const metadata: Metadata = {
-  title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
+  title: "Contact Growthpad | Let's Explore How We Can Work Together",
   description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",
   keywords: [
     "contact Growthpad",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/contact",
   },
   openGraph: {
-    title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
+    title: "Contact Growthpad | Let's Explore How We Can Work Together",
     description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",
     url: "https://growthpad.africa/contact",
     images: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Contact Growthpad: Let's Connect And Explore How We Can Work Together | Contact Us",
+    title: "Contact Growthpad | Let's Explore How We Can Work Together",
     description: "Have questions or ready to explore how Growthpad Digital Consulting can help your business grow? Get in touch with us today. We're here to assist you and discuss your digital needs | Contact Us",
     images: ["/assets/images/about.png"],
   },
