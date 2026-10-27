@@ -1,4 +1,5 @@
-import { getBlogs, getJobOpenings, getCaseStudies } from "@/sanity/queries";
+import { getBlogs, getCaseStudies } from "@/sanity/queries";
+import { getKaziJobs } from "@/features/careers/lib/kazi-jobs";
 import { SITE_URL } from "@/shared/lib/site";
 
 // Follows the llms.txt proposal (https://llmstxt.org): a markdown index of the
@@ -95,7 +96,7 @@ function link(title: string, href: string, description?: string | null) {
 export async function GET() {
   const [blogs, jobs, caseStudies] = await Promise.all([
     getBlogs(),
-    getJobOpenings(),
+    getKaziJobs(),
     getCaseStudies(),
   ]);
 
@@ -133,7 +134,7 @@ ${jobs
     link(
       job.title,
       url(`careers/${job.slug}`),
-      [job.department, job.employmentType, job.workMode, job.city].filter(Boolean).join(", "),
+      [job.department, job.location].filter(Boolean).join(", "),
     ),
   )
   .join("\n")}`);
