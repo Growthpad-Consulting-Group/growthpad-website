@@ -94,16 +94,15 @@ export default async function JobOpeningPage({
       sameAs: "https://growthpad.africa",
       logo: "https://growthpad.africa/assets/images/gcg_logo_primary.png",
     },
-    ...(job.location && {
-      jobLocation: {
-        "@type": "Place",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: job.location,
-          addressCountry: "KE",
-        },
+    // Google requires a location on every JobPosting, so fall back to the country when none is set.
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: job.location || "Nairobi",
+        addressCountry: "KE",
       },
-    }),
+    },
     directApply: true,
   };
 
