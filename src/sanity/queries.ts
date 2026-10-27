@@ -60,69 +60,6 @@ export async function getTenders(): Promise<TenderListItem[]> {
   return client.fetch(TENDERS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["tender"] } });
 }
 
-export type JobOpeningItem = {
-  _id: string;
-  title: string;
-  slug: string;
-  department: string;
-  reportsTo: string | null;
-  experience: string | null;
-  employmentType: string;
-  workMode: string;
-  city: string;
-  deadline: string;
-  applyUrl: string | null;
-};
-
-const JOB_OPENINGS_QUERY = /* groq */ `
-  *[_type == "jobOpening" && isOpen != false && deadline >= now] | order(deadline asc) {
-    _id,
-    title,
-    "slug": slug.current,
-    department,
-    reportsTo,
-    experience,
-    employmentType,
-    workMode,
-    city,
-    deadline,
-    applyUrl
-  }
-`;
-
-export async function getJobOpenings(): Promise<JobOpeningItem[]> {
-  return client.fetch(JOB_OPENINGS_QUERY, {}, { next: { revalidate: FALLBACK_REVALIDATE, tags: ["jobOpening"] } });
-}
-
-export type JobOpeningDetail = JobOpeningItem & {
-  _createdAt: string;
-  description: PortableTextBlock[] | null;
-};
-
-const JOB_OPENING_QUERY = /* groq */ `
-  *[_type == "jobOpening" && slug.current == $slug][0] {
-    _id,
-    _createdAt,
-    title,
-    "slug": slug.current,
-    department,
-    reportsTo,
-    experience,
-    employmentType,
-    workMode,
-    city,
-    deadline,
-    applyUrl,
-    description
-  }
-`;
-
-export async function getJobOpening(slug: string): Promise<JobOpeningDetail | null> {
-  return client.fetch(JOB_OPENING_QUERY, { slug }, {
-    next: { revalidate: FALLBACK_REVALIDATE, tags: ["jobOpening", `jobOpening:${slug}`] },
-  });
-}
-
 export type BlogAuthor = {
   name: string;
   slug: string | null;

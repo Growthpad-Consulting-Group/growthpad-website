@@ -6,6 +6,8 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import CtaButton from "@/shared/components/CtaButton";
 
 interface CareerFormCardProps {
+  /** Kazi job ID the application is submitted against */
+  jobId?: string;
   /** The title of the job role (e.g. "Creative Director") */
   jobTitle?: string;
   /** Adds standard border/shadow styling */
@@ -22,6 +24,7 @@ interface CareerFormCardProps {
 }
 
 export default function CareerFormCard({
+  jobId,
   jobTitle,
   bordered = false,
   className = "",
@@ -42,7 +45,6 @@ export default function CareerFormCard({
   const MAX_FILE_SIZE_MB = 10;
   const ALLOWED_TYPES = [
     "application/pdf",
-    "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
 
@@ -57,10 +59,10 @@ export default function CareerFormCard({
     // Some systems report empty file type for docx/doc files in input. We can also fall back to extension check.
     const fileExtension = selectedFile.name.split(".").pop()?.toLowerCase();
     const isValidType = ALLOWED_TYPES.includes(selectedFile.type) || 
-                        ["pdf", "doc", "docx"].includes(fileExtension || "");
+                        ["pdf", "docx"].includes(fileExtension || "");
 
     if (!isValidType) {
-      setFileError("Invalid file type. Please upload a PDF or Word document (.pdf, .doc, .docx).");
+      setFileError("Invalid file type. Please upload a PDF or Word document (.pdf or .docx).");
       setFile(null);
       return false;
     }
@@ -127,7 +129,6 @@ export default function CareerFormCard({
     const linkedin = (formData.get("linkedin") as string) || undefined;
     const portfolio = (formData.get("portfolio") as string) || undefined;
     const message = (formData.get("message") as string) || undefined;
-    const role = jobTitle || undefined;
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -140,13 +141,14 @@ export default function CareerFormCard({
       const recaptchaToken = await executeRecaptcha("career_form");
       const base64Data = (reader.result as string).split(",")[1];
       const payload = {
-        name, phone, email, linkedin, portfolio, message, role,
+        jobId,
+        name, phone, email, linkedin, portfolio, message,
         recaptchaToken,
         attachment: { content: base64Data, filename: file.name },
       };
 
       try {
-        const response = await fetch("/api/send", {
+        const response = await fetch("/api/careers/apply", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -287,7 +289,7 @@ export default function CareerFormCard({
             type="file"
             ref={fileInputRef}
             onChange={handleFileChange}
-            accept=".pdf,.doc,.docx"
+            accept=".pdf,.docx"
             className="hidden"
           />
 

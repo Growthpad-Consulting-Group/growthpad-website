@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { getBlogs, getJobOpenings, getCaseStudies } from "@/sanity/queries";
+import { getBlogs, getCaseStudies } from "@/sanity/queries";
+import { getKaziJobs } from "@/features/careers/lib/kazi-jobs";
 import { SITE_URL } from "@/shared/lib/site";
 import staticRoutes from "@/generated/static-routes.json";
 
@@ -27,7 +28,7 @@ const DEFAULT_META: SitemapMeta = { priority: 0.5, changeFrequency: "monthly" };
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [blogs, jobs, caseStudies] = await Promise.all([
     getBlogs(),
-    getJobOpenings(),
+    getKaziJobs(),
     getCaseStudies(),
   ]);
 

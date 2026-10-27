@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ArrowGroup from "@/shared/components/ArrowGroup";
 import CtaButton from "@/shared/components/CtaButton";
-import { getJobOpenings, type JobOpeningItem } from "@/sanity/queries";
+import { getKaziJobs, type KaziJob } from "@/features/careers/lib/kazi-jobs";
 
 // Same notch silhouette as NotchCard/NotchPlaceholder, stretched taller
 // (via a scale transform rather than recomputing every path point) since
@@ -19,7 +19,7 @@ function formatDeadline(dateString: string) {
   });
 }
 
-function OpeningCard({ opening }: { opening: JobOpeningItem }) {
+function OpeningCard({ opening }: { opening: KaziJob }) {
   return (
     <Link
       href={`/careers/${opening.slug}`}
@@ -43,22 +43,25 @@ function OpeningCard({ opening }: { opening: JobOpeningItem }) {
                 {opening.title}
               </h3>
 
-              <div className="mt-1 mb-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
-                  {opening.employmentType}
-                </span>
-                <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
-                  {opening.workMode}
-                </span>
-              </div>
+              {opening.department && (
+                <div className="mt-1 mb-4 flex flex-wrap gap-2">
+                  <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-white">
+                    {opening.department}
+                  </span>
+                </div>
+              )}
 
-              <p className="mt-1 text-lg leading-7 text-white/70">
-                <span className="font-semibold text-white">Location:</span> {opening.city}
-              </p>
-              <p className="text-lg leading-7 text-white/70">
-                <span className="font-semibold text-white">Deadline:</span>{" "}
-                {formatDeadline(opening.deadline)}
-              </p>
+              {opening.location && (
+                <p className="mt-1 text-lg leading-7 text-white/70">
+                  <span className="font-semibold text-white">Location:</span> {opening.location}
+                </p>
+              )}
+              {opening.closes_at && (
+                <p className="text-lg leading-7 text-white/70">
+                  <span className="font-semibold text-white">Deadline:</span>{" "}
+                  {formatDeadline(opening.closes_at)}
+                </p>
+              )}
             </div>
 
             <div className="pointer-events-none pb-6" aria-hidden>
@@ -74,7 +77,7 @@ function OpeningCard({ opening }: { opening: JobOpeningItem }) {
 }
 
 export default async function CareersOpenings() {
-  const openings = await getJobOpenings();
+  const openings = await getKaziJobs();
 
   return (
     <section
@@ -108,7 +111,7 @@ export default async function CareersOpenings() {
         ) : (
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
             {openings.map((opening) => (
-              <OpeningCard key={opening._id} opening={opening} />
+              <OpeningCard key={opening.id} opening={opening} />
             ))}
           </div>
         )}
