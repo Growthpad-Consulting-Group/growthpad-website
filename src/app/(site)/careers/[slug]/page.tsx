@@ -99,7 +99,7 @@ export default async function JobOpeningPage({
       "@type": "Place",
       address: {
         "@type": "PostalAddress",
-        addressLocality: job.location || "Nairobi",
+        addressLocality: job.location?.split(",")[0].trim() || "Nairobi",
         addressCountry: "KE",
       },
     },
