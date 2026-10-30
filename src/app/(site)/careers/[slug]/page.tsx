@@ -117,6 +117,14 @@ export default async function JobOpeningPage({
       address: {
         "@type": "PostalAddress",
         addressLocality: job.location?.split(",")[0].trim() || "Nairobi",
+        // The office address applies to Nairobi-based roles; other locations keep only the city.
+        ...(job.location?.toLowerCase().includes("nairobi")
+          ? {
+              streetAddress: "7th Floor, Mitsumi Business Park, Westlands",
+              addressRegion: "Nairobi",
+              postalCode: "00606",
+            }
+          : {}),
         addressCountry: "KE",
       },
     },
