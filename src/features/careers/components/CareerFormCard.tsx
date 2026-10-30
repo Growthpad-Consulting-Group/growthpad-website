@@ -14,7 +14,7 @@ interface CareerFormCardProps {
   bordered?: boolean;
   /** Custom class name overrides */
   className?: string;
-  /** 
+  /**
    * "stacked" — description above the fields, single column layout (default).
    * "split"   — description in a left column, fields in a right column.
    */
@@ -42,7 +42,9 @@ export default function CareerFormCard({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Constants
-  const MAX_FILE_SIZE_MB = 10;
+  // The application relay receives this file as base64 JSON. Three MiB stays
+  // comfortably below the platform request limit after base64 expansion.
+  const MAX_FILE_SIZE_MB = 3;
   const ALLOWED_TYPES = [
     "application/pdf",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -58,18 +60,23 @@ export default function CareerFormCard({
 
     // Some systems report empty file type for docx/doc files in input. We can also fall back to extension check.
     const fileExtension = selectedFile.name.split(".").pop()?.toLowerCase();
-    const isValidType = ALLOWED_TYPES.includes(selectedFile.type) || 
-                        ["pdf", "docx"].includes(fileExtension || "");
+    const isValidType =
+      ALLOWED_TYPES.includes(selectedFile.type) ||
+      ["pdf", "docx"].includes(fileExtension || "");
 
     if (!isValidType) {
-      setFileError("Invalid file type. Please upload a PDF or Word document (.pdf or .docx).");
+      setFileError(
+        "Invalid file type. Please upload a PDF or Word document (.pdf or .docx).",
+      );
       setFile(null);
       return false;
     }
 
     const fileSizeInMB = selectedFile.size / (1024 * 1024);
     if (fileSizeInMB > MAX_FILE_SIZE_MB) {
-      setFileError(`File is too large. Max size allowed is ${MAX_FILE_SIZE_MB}MB.`);
+      setFileError(
+        `File is too large. Max size allowed is ${MAX_FILE_SIZE_MB}MB.`,
+      );
       setFile(null);
       return false;
     }
@@ -142,7 +149,12 @@ export default function CareerFormCard({
       const base64Data = (reader.result as string).split(",")[1];
       const payload = {
         jobId,
-        name, phone, email, linkedin, portfolio, message,
+        name,
+        phone,
+        email,
+        linkedin,
+        portfolio,
+        message,
         recaptchaToken,
         attachment: { content: base64Data, filename: file.name },
       };
@@ -161,10 +173,11 @@ export default function CareerFormCard({
           setIsSubmitted(true);
         } else {
           setFileError(
-            result.error || "Failed to submit your application. Please try again."
+            result.error ||
+              "Failed to submit your application. Please try again.",
           );
         }
-      } catch (err) {
+      } catch {
         setFileError("A network error occurred. Please check your connection.");
       } finally {
         setIsLoading(false);
@@ -190,10 +203,14 @@ export default function CareerFormCard({
           <Icon icon="solar:check-circle-broken" className="h-12 w-12" />
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="font-display text-2xl font-bold text-white">Application Received!</h3>
+          <h3 className="font-display text-2xl font-bold text-white">
+            Application Received!
+          </h3>
           <p className="max-w-md text-base leading-relaxed text-white/70">
-            Thank you for applying{jobTitle ? ` for the ${jobTitle} position` : ""}. 
-            Our talent acquisition team will review your credentials and get back to you shortly.
+            Thank you for applying
+            {jobTitle ? ` for the ${jobTitle} position` : ""}. Our talent
+            acquisition team will review your credentials and get back to you
+            shortly.
           </p>
         </div>
         <button
@@ -271,7 +288,9 @@ export default function CareerFormCard({
 
       {/* Interactive CV/Resume Drag and Drop */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-semibold text-white/70 mb-1 text-left">Resume / CV (Required)</label>
+        <label className="text-sm font-semibold text-white/70 mb-1 text-left">
+          Resume / CV (Required)
+        </label>
         <div
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -281,8 +300,8 @@ export default function CareerFormCard({
             isDragOver
               ? "border-primary bg-primary/5 text-white"
               : file
-              ? "border-emerald-500/50 bg-emerald-500/5 text-white"
-              : "border-white/20 hover:border-primary/50 hover:bg-white/5 text-white/60"
+                ? "border-emerald-500/50 bg-emerald-500/5 text-white"
+                : "border-white/20 hover:border-primary/50 hover:bg-white/5 text-white/60"
           }`}
         >
           <input
@@ -298,15 +317,18 @@ export default function CareerFormCard({
               <Icon
                 icon="solar:upload-cloud-broken"
                 className={`h-10 w-10 transition-colors duration-300 ${
-                  isDragOver ? "text-primary" : "text-white/40 group-hover:text-primary"
+                  isDragOver
+                    ? "text-primary"
+                    : "text-white/40 group-hover:text-primary"
                 }`}
               />
               <div>
                 <p className="text-base font-medium text-white">
-                  Drag & drop your Resume/CV here or <span className="text-primary hover:underline">browse</span>
+                  Drag & drop your Resume/CV here or{" "}
+                  <span className="text-primary hover:underline">browse</span>
                 </p>
                 <p className="mt-1 text-xs text-white/50">
-                  Supports PDF, DOC, DOCX (Max {MAX_FILE_SIZE_MB}MB)
+                  Supports PDF or DOCX (Max {MAX_FILE_SIZE_MB}MB)
                 </p>
               </div>
             </div>
@@ -338,7 +360,10 @@ export default function CareerFormCard({
         </div>
         {fileError && (
           <p className="mt-1.5 text-sm font-medium text-red-400 flex items-center gap-1.5 animate-pulse text-left">
-            <Icon icon="solar:danger-triangle-broken" className="h-4 w-4 shrink-0" />
+            <Icon
+              icon="solar:danger-triangle-broken"
+              className="h-4 w-4 shrink-0"
+            />
             {fileError}
           </p>
         )}
@@ -346,7 +371,9 @@ export default function CareerFormCard({
 
       {/* Cover Letter */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-semibold text-white/70 mb-1 text-left">Cover Letter / Message (Optional)</label>
+        <label className="text-sm font-semibold text-white/70 mb-1 text-left">
+          Cover Letter / Message (Optional)
+        </label>
         <textarea
           name="message"
           placeholder="Briefly introduce yourself and why you'd be a great fit..."
@@ -357,14 +384,28 @@ export default function CareerFormCard({
 
       <p className="text-xs text-white/30 text-center">
         Protected by reCAPTCHA —{" "}
-        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/50">Privacy</a>
-        {" "}&amp;{" "}
-        <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/50">Terms</a>
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-white/50"
+        >
+          Privacy
+        </a>{" "}
+        &amp;{" "}
+        <a
+          href="https://policies.google.com/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-white/50"
+        >
+          Terms
+        </a>
       </p>
 
       <div className="mt-2 flex justify-end">
-        <CtaButton 
-          type="submit" 
+        <CtaButton
+          type="submit"
           circleClassName="bg-primary text-white"
           fullWidth
           className="sm:w-auto"

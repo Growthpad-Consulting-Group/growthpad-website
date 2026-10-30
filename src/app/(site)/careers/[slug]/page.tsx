@@ -146,7 +146,7 @@ export default async function JobOpeningPage({
             </div>
 
             <div className="flex flex-col gap-4">
-              <h1 className="font-display text-4xl font-bold text-white sm:text-6xl">
+              <h1 className="font-display text-4xl font-bold text-white">
                 {job.title}
               </h1>
 
