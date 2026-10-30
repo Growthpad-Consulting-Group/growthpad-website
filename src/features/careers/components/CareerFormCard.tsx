@@ -275,7 +275,8 @@ export default function CareerFormCard({
         <input
           type="url"
           name="linkedin"
-          placeholder="LinkedIn URL (Optional)"
+          placeholder="LinkedIn profile URL"
+          required
           className={inputBase}
         />
         <input

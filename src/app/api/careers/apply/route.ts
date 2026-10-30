@@ -6,6 +6,20 @@ const KAZI_API_URL =
 // so the expanded request remains safely within Vercel's request-size limit.
 const MAX_CV_BYTES = 3 * 1024 * 1024;
 
+function isLinkedInProfile(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) return false;
+  try {
+    const url = new URL(value);
+    return (
+      (url.protocol === "https:" || url.protocol === "http:") &&
+      (url.hostname === "linkedin.com" ||
+        url.hostname.endsWith(".linkedin.com"))
+    );
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(req: Request) {
   const body = await req.json();
   const {
@@ -23,6 +37,12 @@ export async function POST(req: Request) {
   if (!jobId || !name || !email || !phone) {
     return NextResponse.json(
       { error: "Name, email and phone are required." },
+      { status: 400 },
+    );
+  }
+  if (!isLinkedInProfile(linkedin)) {
+    return NextResponse.json(
+      { error: "A valid LinkedIn profile URL is required." },
       { status: 400 },
     );
   }
