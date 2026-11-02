@@ -56,8 +56,8 @@ export default function Hero() {
             className="hero-reveal opacity-0 max-w-xl text-lg leading-8"
             data-rest-opacity="0.7"
           >
-            Tailored solutions in communication, technology and market
-            intelligence - built for growth across Africa.
+            We offer custom solutions in communication, technology and
+            market intelligence. We help you grow across Africa.
           </p>
 
           <CtaButton

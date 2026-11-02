@@ -69,10 +69,10 @@ export default function About() {
               take great pride in that.
             </p>
             <p>
-              We are a Nairobi Headquartered – cross-Africa communication,
-              technology, and digital services firm that blends strategy,
-              creativity, and technology to bring powerful results for
-              organizations in the African market.
+              We are a communication, technology and digital services firm
+              based in Nairobi, working across Africa. We blend strategy,
+              creativity and technology. Our goal is to bring powerful
+              results to organizations in the African market.
             </p>
           </div>
         </div>
