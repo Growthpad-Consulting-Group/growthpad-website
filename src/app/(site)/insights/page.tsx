@@ -4,7 +4,7 @@ import InsightsHero from "@/features/insights/components/InsightsHero";
 import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 
 export const metadata: Metadata = {
-  title: "Insights | Growthpad Consulting Group",
+  title: "Insights | Growthpad",
   description: "Access curated research reports, white papers, and industry insights from Growthpad's experts. Explore data-driven analysis on digital transformation, communication for development, and business growth in Africa.",
   keywords: [
     "digital insights Africa",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/insights",
   },
   openGraph: {
-    title: "Insights | Growthpad Consulting Group",
+    title: "Insights | Growthpad",
     description: "Access curated research reports, white papers, and industry insights from Growthpad's experts. Explore data-driven analysis on digital transformation, communication for development, and business growth in Africa.",
     url: "https://growthpad.africa/insights",
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Insights | Growthpad Consulting Group",
+    title: "Insights | Growthpad",
     description: "Access curated research reports, white papers, and industry insights from Growthpad's experts. Explore data-driven analysis on digital transformation, communication for development, and business growth in Africa.",
     images: ["/assets/images/seo/opengraph.png"],
   },

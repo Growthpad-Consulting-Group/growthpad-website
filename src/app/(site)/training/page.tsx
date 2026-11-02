@@ -8,7 +8,7 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export const metadata: Metadata = {
-  title: "Training | Growthpad Consulting Group",
+  title: "Training | Growthpad",
   description:
     "Many businesses face a skills shortfall due to today's rapid digital transformation. Through GDC Training, we enrich you and your teams with up-to-date essential digital skills.",
   keywords: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/training",
   },
   openGraph: {
-    title: "Training | Growthpad Consulting Group",
+    title: "Training | Growthpad",
     description:
       "Many businesses face a skills shortfall due to today's rapid digital transformation. Through GDC Training, we enrich you and your teams with up-to-date essential digital skills.",
     url: "https://growthpad.africa/training",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Training | Growthpad Consulting Group",
+    title: "Training | Growthpad",
     description:
       "Many businesses face a skills shortfall due to today's rapid digital transformation. Through GDC Training, we enrich you and your teams with up-to-date essential digital skills.",
     images: ["/assets/images/seo/opengraph.png"],

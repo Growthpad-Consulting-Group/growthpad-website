@@ -46,7 +46,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${job.title} | Careers | Growthpad Consulting Group`;
+  const title = `${job.title} | Careers | Growthpad`;
   const description = `Join Growthpad as a ${job.title}${job.location ? ` in ${job.location}` : ""}.${job.department ? ` Department: ${job.department}.` : ""}`;
 
   return {

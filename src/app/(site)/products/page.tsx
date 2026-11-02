@@ -7,7 +7,7 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export const metadata: Metadata = {
-  title: "Products | Growthpad Consulting Group",
+  title: "Products | Growthpad",
   description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
   keywords: [
     "digital products Kenya",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/products",
   },
   openGraph: {
-    title: "Products | Growthpad Consulting Group",
+    title: "Products | Growthpad",
     description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
     url: "https://growthpad.africa/products",
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Products | Growthpad Consulting Group",
+    title: "Products | Growthpad",
     description: "Explore Growthpad's suite of digital products built for African businesses — from data intelligence platforms to content management and audience engagement tools that drive measurable impact.",
     images: ["/assets/images/seo/opengraph.png"],
   },

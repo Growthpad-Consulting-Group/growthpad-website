@@ -4,7 +4,7 @@ import TendersHero from "@/features/tenders/components/TendersHero";
 import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 
 export const metadata: Metadata = {
-  title: "Tenders | Growthpad Consulting Group",
+  title: "Tenders | Growthpad",
   description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
   keywords: [
     "Growthpad tenders",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/tenders",
   },
   openGraph: {
-    title: "Tenders | Growthpad Consulting Group",
+    title: "Tenders | Growthpad",
     description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
     url: "https://growthpad.africa/tenders",
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Tenders | Growthpad Consulting Group",
+    title: "Tenders | Growthpad",
     description: "View active procurement opportunities and supplier registration at Growthpad Consulting Group. Submit expressions of interest for open tenders across consulting, technology, and digital media categories.",
     images: ["/assets/images/tender-bg.jpg"],
   },

@@ -7,7 +7,7 @@ import ScrollColorTransition from "@/shared/components/ScrollColorTransition";
 import SectionAnimate from "@/shared/components/SectionAnimate";
 
 export const metadata: Metadata = {
-  title: "Practice Areas | Growthpad Consulting Group",
+  title: "Practice Areas | Growthpad",
   description: "Explore our specialized practice areas in communication, digital delivery, learning systems and research organized around real-world progress.",
   keywords: [
     "practice areas",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://growthpad.africa/practice-areas",
   },
   openGraph: {
-    title: "Practice Areas | Growthpad Consulting Group",
+    title: "Practice Areas | Growthpad",
     description: "Explore our specialized practice areas in communication, digital delivery, learning systems and research organized around real-world progress.",
     url: "https://growthpad.africa/practice-areas",
     images: [
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title: "Practice Areas | Growthpad Consulting Group",
+    title: "Practice Areas | Growthpad",
     description: "Explore our specialized practice areas in communication, digital delivery, learning systems and research organized around real-world progress.",
     images: ["/assets/images/dna-hero.png"],
   },

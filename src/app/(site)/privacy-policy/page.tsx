@@ -7,26 +7,26 @@ import TableOfContents from "@/features/blog/components/TableOfContents";
 import type { Heading } from "@/features/blog/lib/toc";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Growthpad Consulting Group",
+  title: "Privacy Policy | Growthpad",
   description:
     "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
   alternates: {
     canonical: "https://growthpad.africa/privacy-policy",
   },
   openGraph: {
-    title: "Privacy Policy | Growthpad Consulting Group",
+    title: "Privacy Policy | Growthpad",
     description:
       "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
     url: "https://growthpad.africa/privacy-policy",
     images: [
       {
         url: "/assets/images/seo/opengraph.png",
-        alt: "Privacy Policy | Growthpad Consulting Group",
+        alt: "Privacy Policy | Growthpad",
       },
     ],
   },
   twitter: {
-    title: "Privacy Policy | Growthpad Consulting Group",
+    title: "Privacy Policy | Growthpad",
     description:
       "Growthpad Consulting Group's commitment to data privacy, transparency, and the protection of your personal information.",
     images: ["/assets/images/seo/opengraph.png"],

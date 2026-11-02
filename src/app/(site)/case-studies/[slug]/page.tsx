@@ -115,7 +115,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${caseStudy.brand} Case Study | Growthpad Consulting Group`;
+  const title = `${caseStudy.brand} Case Study | Growthpad`;
   const description = caseStudy.description || caseStudy.heroTitle;
   const imageUrl = caseStudy.heroImage;
 
