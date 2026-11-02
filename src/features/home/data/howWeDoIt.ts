@@ -17,21 +17,21 @@ export const howWeDoIt: HowWeDoItStep[] = [
     number: "02",
     title: "Understanding Your Audience",
     description:
-      "We dig into who you're really speaking to, so every strategy is built around real people, not assumptions.",
+      "We study who you are really speaking to. Every strategy is built around real people, not assumptions.",
     image: "/assets/images/audience.png",
   },
   {
     number: "03",
     title: "Grounded in Data",
     description:
-      "Every recommendation we make is backed by research and evidence, not guesswork.",
+      "Every recommendation is backed by research and evidence, not guesswork.",
     image: "/assets/images/data-driven.png",
   },
   {
     number: "04",
     title: "Building Internal Capability",
     description:
-      "We don't just deliver — we transfer skills and tools so your team can carry the work forward.",
+      "We don't just deliver. We pass on skills and tools so your team can carry the work forward.",
     image: "/assets/images/internal.png",
   },
 ];

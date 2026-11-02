@@ -7,7 +7,7 @@ export const pickACard: PickACardItem[] = [
   {
     title: "Achieve & exceed team potential",
     description:
-      "We build capacity from within, equipping your teams with the skills and tools to outperform their own targets.",
+      "We build skills from within. We give your teams the tools to beat their own targets.",
   },
   {
     title: "Reach & engage your audience effectively",
@@ -27,12 +27,12 @@ export const pickACard: PickACardItem[] = [
   {
     title: "Create unmatched consumer experiences through design",
     description:
-      "Wow consumers with top-rated UI/UX and human-centered design for your products and services.",
+      "Win over customers with top-rated UI/UX and human-centered design for your products and services.",
   },
   {
     title: "Results-driven, cutting-edge strategy",
     description:
-      "We pair bold thinking with rigorous execution, so every strategy is built to actually move the needle.",
+      "We pair bold ideas with careful execution. Every strategy is built to get real results.",
   },
   {
     title: "Create winning corporate events",

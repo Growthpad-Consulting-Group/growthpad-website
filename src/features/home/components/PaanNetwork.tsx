@@ -37,7 +37,7 @@ export default function PaanNetwork() {
 
             {/* Description */}
             <p className="text-lg leading-8 text-white">
-              Growthpad is a founding member of the Pan African Agency Network (PAAN), an alliance of over 200 firms spanning at least 23 African countries. Through PAAN, we give clients access to locally grounded expertise and coordinated delivery across multiple markets, without the complexity of sourcing and managing a separate partner in every country.
+              Growthpad is a founding member of the Pan African Agency Network (PAAN). PAAN is an alliance of over 200 firms in at least 23 African countries. Through PAAN, clients get local expertise and coordinated work across many markets. They do not need to find and manage a separate partner in each country.
             </p>
 
             {/* Stats */}
