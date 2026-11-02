@@ -37,6 +37,8 @@ export default function CareerFormCard({
   const [isDragOver, setIsDragOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [linkedinPreview, setLinkedinPreview] = useState("");
+  const [portfolioPreview, setPortfolioPreview] = useState("");
 
   // References
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -53,6 +55,33 @@ export default function CareerFormCard({
   const inputBase = `placeholder:text-white/40 text-white w-full bg-white/[0.05] border border-white/10 px-6 py-4 text-base outline-none rounded-2xl transition-all duration-300 hover:border-white/20 focus:bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/20`;
 
   const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const normalizeUrl = (value: string, linkedIn = false) => {
+    try {
+      const input = value.trim();
+      const url = new URL(
+        /^https?:\/\//i.test(input) ? input : `https://${input}`,
+      );
+      if (!["https:", "http:"].includes(url.protocol)) return "";
+      url.pathname = url.pathname
+        .split("/")
+        .map((part) => encodeURIComponent(decodeURIComponent(part).trim()))
+        .join("/");
+      if (
+        linkedIn &&
+        !(
+          (url.hostname === "linkedin.com" ||
+            url.hostname.endsWith(".linkedin.com")) &&
+          url.pathname.startsWith("/in/") &&
+          url.pathname !== "/in/"
+        )
+      )
+        return "";
+      return url.toString();
+    } catch {
+      return "";
+    }
+  };
 
   // Validation helper
   const validateAndSetFile = (selectedFile: File) => {
@@ -272,19 +301,57 @@ export default function CareerFormCard({
 
       {/* LinkedIn & Portfolio */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input
-          type="url"
-          name="linkedin"
-          placeholder="LinkedIn profile URL"
-          required
-          className={inputBase}
-        />
-        <input
-          type="url"
-          name="portfolio"
-          placeholder="Portfolio / Website URL (Optional)"
-          className={inputBase}
-        />
+        <div>
+          <input
+            type="url"
+            name="linkedin"
+            placeholder="LinkedIn profile URL"
+            required
+            className={inputBase}
+            onBlur={(event) => {
+              const url = normalizeUrl(event.currentTarget.value, true);
+              if (url) {
+                event.currentTarget.value = url;
+                setLinkedinPreview(url);
+              } else setLinkedinPreview("");
+            }}
+          />
+          {linkedinPreview && (
+            <a
+              href={linkedinPreview}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 inline-block text-xs text-primary hover:underline"
+            >
+              Open LinkedIn profile
+            </a>
+          )}
+        </div>
+        <div>
+          <input
+            type="url"
+            name="portfolio"
+            placeholder="Portfolio / Website URL (Optional)"
+            className={inputBase}
+            onBlur={(event) => {
+              const url = normalizeUrl(event.currentTarget.value);
+              if (url) {
+                event.currentTarget.value = url;
+                setPortfolioPreview(url);
+              } else setPortfolioPreview("");
+            }}
+          />
+          {portfolioPreview && (
+            <a
+              href={portfolioPreview}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 inline-block text-xs text-primary hover:underline"
+            >
+              Open portfolio / website
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Interactive CV/Resume Drag and Drop */}

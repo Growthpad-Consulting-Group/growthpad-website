@@ -6,17 +6,31 @@ const KAZI_API_URL =
 // so the expanded request remains safely within Vercel's request-size limit.
 const MAX_CV_BYTES = 3 * 1024 * 1024;
 
-function isLinkedInProfile(value: unknown) {
-  if (typeof value !== "string" || !value.trim()) return false;
+function normalizeUrl(value: unknown, linkedIn = false) {
+  if (typeof value !== "string" || !value.trim()) return null;
   try {
-    const url = new URL(value);
-    return (
-      (url.protocol === "https:" || url.protocol === "http:") &&
-      (url.hostname === "linkedin.com" ||
-        url.hostname.endsWith(".linkedin.com"))
+    const input = value.trim();
+    const url = new URL(
+      /^https?:\/\//i.test(input) ? input : `https://${input}`,
     );
+    if (!(url.protocol === "https:" || url.protocol === "http:")) return null;
+    url.pathname = url.pathname
+      .split("/")
+      .map((part) => encodeURIComponent(decodeURIComponent(part).trim()))
+      .join("/");
+    if (
+      linkedIn &&
+      !(
+        (url.hostname === "linkedin.com" ||
+          url.hostname.endsWith(".linkedin.com")) &&
+        url.pathname.startsWith("/in/") &&
+        url.pathname !== "/in/"
+      )
+    )
+      return null;
+    return url.toString();
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -40,12 +54,19 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  if (!isLinkedInProfile(linkedin)) {
+  const linkedinUrl = normalizeUrl(linkedin, true);
+  const portfolioUrl = portfolio ? normalizeUrl(portfolio) : null;
+  if (!linkedinUrl) {
     return NextResponse.json(
       { error: "A valid LinkedIn profile URL is required." },
       { status: 400 },
     );
   }
+  if (portfolio && !portfolioUrl)
+    return NextResponse.json(
+      { error: "Enter a valid portfolio or website URL." },
+      { status: 400 },
+    );
   if (!attachment?.content || !attachment?.filename) {
     return NextResponse.json(
       { error: "Please upload your Resume/CV." },
@@ -98,8 +119,8 @@ export async function POST(req: Request) {
   form.append("full_name", String(name));
   form.append("email", String(email));
   form.append("phone", String(phone));
-  form.append("linkedin_url", linkedin ? String(linkedin) : "");
-  form.append("portfolio_url", portfolio ? String(portfolio) : "");
+  form.append("linkedin_url", linkedinUrl);
+  form.append("portfolio_url", portfolioUrl ?? "");
   form.append("cover_message", message ? String(message) : "");
   form.append("source", "website");
   form.append("consented", "true");
