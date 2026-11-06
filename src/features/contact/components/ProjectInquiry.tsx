@@ -59,7 +59,13 @@ export default function ProjectInquiry() {
           inputShape="pill"
           serviceOptions={[
             "Communication",
+            "Marketing",
             "Technology",
+            "Demand Generation",
+            "Software Design",
+            "Learning Management",
+            "MELA Solutions",
+            "Design",
             "Market Intelligence",
             "Other",
           ]}

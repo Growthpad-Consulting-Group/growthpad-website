@@ -7,29 +7,12 @@ import Accordion from "@/shared/components/Accordion";
 import { specialties } from "@/features/services/data/specialties";
 
 export default function Specialties({ showHeader = true }: { showHeader?: boolean }) {
-  const headerRef = useRef<HTMLDivElement>(null);
   const accordionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headerRef.current,
-        { y: 40, autoAlpha: 0 },
-        {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
-
       gsap.fromTo(
         accordionRef.current,
         { y: 40, autoAlpha: 0 },
