@@ -12,7 +12,6 @@ import {
 
 const POOL = [
   "deloitte.png",
-  "pwc.png",
   "uber.png",
   "kenya-airways.png",
   "usaid.png",
