@@ -20,7 +20,6 @@ export const clients: Client[] = [
   { name: "Mayfair Casino", logo: "mayfair.png" },
   { name: "Oxfam", logo: "oxfam.png" },
   { name: "Pigeon", logo: "pigeon.png" },
-  { name: "PwC", logo: "pwc.png" },
   { name: "SBI Motor Japan", logo: "sbi.png" },
   { name: "Science For Africa Foundation", logo: "scienceforafrica.png" },
   { name: "SGA Security", logo: "sga.png" },
