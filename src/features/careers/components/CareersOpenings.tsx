@@ -53,7 +53,8 @@ function OpeningCard({ opening }: { opening: KaziJob }) {
 
               {opening.location && (
                 <p className="mt-1 text-lg leading-7 text-white/70">
-                  <span className="font-semibold text-white">Location:</span> {opening.location}
+                  <span className="font-semibold text-white">Location:</span>{" "}
+                  {opening.location}
                 </p>
               )}
               {opening.closes_at && (
@@ -95,7 +96,8 @@ export default async function CareersOpenings() {
         {openings.length === 0 ? (
           <div className="theme-fg mt-12 space-y-4">
             <p className="text-lg opacity-90">
-              No open positions currently, but we&apos;re always looking for exceptional talent.
+              No open positions currently, but we&apos;re always looking for
+              exceptional talent.
             </p>
             <p className="text-lg opacity-75">
               Interested in joining Growthpad?{" "}
@@ -104,14 +106,14 @@ export default async function CareersOpenings() {
                 className="font-semibold text-primary hover:underline"
               >
                 Get in touch
-              </a>
-              {" "}and we&apos;ll keep you posted on upcoming opportunities.
+              </a>{" "}
+              and we&apos;ll keep you posted on upcoming opportunities.
             </p>
           </div>
         ) : (
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
             {openings.map((opening) => (
-              <OpeningCard key={opening.id} opening={opening} />
+              <OpeningCard key={opening.slug} opening={opening} />
             ))}
           </div>
         )}

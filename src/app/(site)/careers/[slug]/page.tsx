@@ -252,51 +252,12 @@ export default async function JobOpeningPage({
               </div>
             )}
 
-            {job.benefits && (
-              <section className="mt-12 border-t border-white/10 pt-8">
-                <h3 className="font-display text-xl font-bold text-white">
-                  What we offer
-                </h3>
-                <p className="mt-4 whitespace-pre-wrap text-base leading-8 text-white/70">
-                  {job.benefits}
-                </p>
-              </section>
-            )}
-
-            {(job.application_instructions || job.selection_process) && (
-              <section className="mt-12 border-t border-white/10 pt-8">
-                <h3 className="font-display text-xl font-bold text-white">
-                  Application process
-                </h3>
-                {job.application_instructions && (
-                  <div className="mt-4">
-                    <p className="text-sm font-bold text-white/90">
-                      How to apply
-                    </p>
-                    <p className="mt-2 whitespace-pre-wrap text-base leading-8 text-white/70">
-                      {job.application_instructions}
-                    </p>
-                  </div>
-                )}
-                {job.selection_process && (
-                  <div className="mt-6">
-                    <p className="text-sm font-bold text-white/90">
-                      What happens next
-                    </p>
-                    <p className="mt-2 whitespace-pre-wrap text-base leading-8 text-white/70">
-                      {job.selection_process}
-                    </p>
-                  </div>
-                )}
-              </section>
-            )}
-
             <div className="mt-12 border-t border-white/10 pt-10">
               <h3 className="font-display mb-6 text-xl font-bold text-white">
                 Apply now
               </h3>
               <CareerFormCard
-                jobId={job.id}
+                jobSlug={job.slug}
                 jobTitle={job.title}
                 bordered
                 className="border border-white/10"

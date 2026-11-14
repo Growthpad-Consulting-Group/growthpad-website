@@ -37,7 +37,7 @@ function normalizeUrl(value: unknown, linkedIn = false) {
 export async function POST(req: Request) {
   const body = await req.json();
   const {
-    jobId,
+    jobSlug,
     name,
     email,
     phone,
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     recaptchaToken,
   } = body;
 
-  if (!jobId || !name || !email || !phone) {
+  if (!jobSlug || !name || !email || !phone) {
     return NextResponse.json(
       { error: "Name, email and phone are required." },
       { status: 400 },
@@ -115,7 +115,8 @@ export async function POST(req: Request) {
   }
 
   const form = new FormData();
-  form.append("job_id", String(jobId));
+  form.append("company_slug", "growthpad");
+  form.append("job_slug", String(jobSlug));
   form.append("full_name", String(name));
   form.append("email", String(email));
   form.append("phone", String(phone));

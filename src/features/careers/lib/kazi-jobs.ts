@@ -1,5 +1,4 @@
 export type KaziJob = {
-  id: string;
   slug: string;
   title: string;
   department: string | null;
@@ -11,9 +10,6 @@ export type KaziJob = {
   contract_duration: string | null;
   compensation: string | null;
   reports_to: string | null;
-  benefits: string | null;
-  application_instructions: string | null;
-  selection_process: string | null;
   published_at: string | null;
   closes_at: string | null;
 };
@@ -24,9 +20,12 @@ const REVALIDATE_SECONDS = 300;
 
 export async function getKaziJobs(): Promise<KaziJob[]> {
   try {
-    const res = await fetch(`${KAZI_API_URL}/api/public/jobs`, {
-      next: { revalidate: REVALIDATE_SECONDS, tags: ["kaziJobs"] },
-    });
+    const res = await fetch(
+      `${KAZI_API_URL}/api/public/jobs?company=growthpad`,
+      {
+        next: { revalidate: REVALIDATE_SECONDS, tags: ["kaziJobs"] },
+      },
+    );
     if (!res.ok) return [];
     const json = (await res.json()) as { jobs: KaziJob[] };
     return json.jobs;
@@ -38,7 +37,7 @@ export async function getKaziJobs(): Promise<KaziJob[]> {
 export async function getKaziJob(slug: string): Promise<KaziJob | null> {
   try {
     const res = await fetch(
-      `${KAZI_API_URL}/api/public/jobs/${encodeURIComponent(slug)}`,
+      `${KAZI_API_URL}/api/public/jobs/${encodeURIComponent(slug)}?company=growthpad`,
       {
         next: {
           revalidate: REVALIDATE_SECONDS,

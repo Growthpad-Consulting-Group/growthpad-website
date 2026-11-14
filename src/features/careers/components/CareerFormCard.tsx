@@ -6,8 +6,8 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import CtaButton from "@/shared/components/CtaButton";
 
 interface CareerFormCardProps {
-  /** Kazi job ID the application is submitted against */
-  jobId?: string;
+  /** Public Kazi job slug the application is submitted against */
+  jobSlug?: string;
   /** The title of the job role (e.g. "Creative Director") */
   jobTitle?: string;
   /** Adds standard border/shadow styling */
@@ -24,7 +24,7 @@ interface CareerFormCardProps {
 }
 
 export default function CareerFormCard({
-  jobId,
+  jobSlug,
   jobTitle,
   bordered = false,
   className = "",
@@ -177,7 +177,7 @@ export default function CareerFormCard({
       const recaptchaToken = await executeRecaptcha("career_form");
       const base64Data = (reader.result as string).split(",")[1];
       const payload = {
-        jobId,
+        jobSlug,
         name,
         phone,
         email,
